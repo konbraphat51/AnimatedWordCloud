@@ -18,7 +18,7 @@ If the output is graphical, show the demonstrating output in the PR.
 But also add a test code to see if there is an error.
 * Get rid of commented out codes.
 * All `#TODO` must be reported at issues.
-* Comments cannot be too much. Write what you intended
+* Comments cannot be too much. Write what you intended **in English**.
 
 ### Commit message
 Please clearify what you did.
