@@ -26,4 +26,4 @@ Please clearify what you did.
 ### PR
 Submit PR to `dev` branch (Not `main` branch!!).
 
-If there is something pointed out from 
+If there is something pointed out from GitHub Actions, please fix it.
