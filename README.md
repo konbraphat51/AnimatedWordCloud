@@ -1,4 +1,8 @@
 # AnimatedWordCloud
 **UNDER CONSTRUCTION**
 
+<a href="https://codeclimate.com/github/konbraphat51/AnimatedWordCloud/maintainability"><img src="https://api.codeclimate.com/v1/badges/a33a5ab7f9295be2cd35/maintainability" /></a>
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/20a71da0d9d841a2af236f6362a08ae7)](https://app.codacy.com/gh/konbraphat51/AnimatedWordCloud/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 AnimatedWordCloud animates the timelapse of your words vector.
