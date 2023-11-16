@@ -20,7 +20,7 @@ class AllocationInFrame:
         Prepare empty data
         """
 
-        # word -> (size, position)
+        # word -> (font size, position)
         self.words: Dict[str, Tuple[float, Tuple[float, float]]] = {}
 
 
