@@ -65,7 +65,7 @@ def allocate(
     #   and save them as Word instances
     for word_raw, weight in word_weights:
         # get attributes
-        font_size = get_font_size(
+        font_size = calculate_font_size(
             weight, word_weights[0][1], max_word_size, min_word_size
         )
         text_size = estimate_text_size(word_raw, font_size, font_path)
@@ -83,7 +83,7 @@ def allocate(
         raise ValueError("Unknown strategy: {}".format(strategy))
 
 
-def get_font_size(
+def calculate_font_size(
     weight: float, weight_max: float, font_max: int, font_min: int
 ) -> int:
     """
