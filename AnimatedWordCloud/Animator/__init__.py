@@ -1,5 +1,6 @@
-from TimelapseWordVector import TimelapseWordVector, TimeFrame, WordVector
-from AnimatedWordCloud.Animator.PositionCalculator import PositionInFrame
+from AnimatedWordCloud.Animator.AllocationCalculator.AllocationCalculator import (
+    AllocationInFrame,
+)
 
 
-__all__ = ["TimelapseWordVector", "TimeFrame", "WordVector", "PositionInFrame"]
+__all__ = ["AllocationInFrame"]
