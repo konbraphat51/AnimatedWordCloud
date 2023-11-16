@@ -7,8 +7,11 @@
 One strategy to allocate words in static time.
 
 First, put the largest word in the center.
-Then, put the next largest word at empty point.
-The point will be evaluated by evaluate_position().
+Regard this word as a magnet.
+Then, put the next largest word at empty point, 
+    contacting with the magnet at the center.
+The point will be evaluated by evaluate_position(),
+    and the most best point will be selected.
 Repeating this process, all words will be allocated.
 """
 
@@ -19,6 +22,10 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator 
 )
 from AnimatedWordCloud.Animator import AllocationInFrame
 
+class Rect:
+    def __init__(self, left_top: Tuple[int, int], right_bottom: Tuple[int, int]):
+        self.left_top = left_top
+        self.right_bottom = right_bottom
 
 def allocate_magnetic(
     words: Iterable[Word], image_width: int, image_height: int
@@ -32,8 +39,17 @@ def allocate_magnetic(
     :return: Allocation data of the frame
     :rtype: AllocationInFrame
     """
-    pass
-
+    
+    # Word rectangles that already putted
+    rects_putted = []
+    
+    #put the first word at the center
+    center = (image_width / 2, image_height / 2)
+    first_word = words[0]
+    first_word_position = (center[0] - first_word.text_size[0] / 2, center[1] - first_word.text_size[1] / 2)
+   
+    #register
+    rects_putted.append(Rect(first_word_position, (first_word_position[0] + first_word.text_size[0], first_word_position[1] + first_word.text_size[1])))
 
 def evaluate_position(
     position_from: Tuple[int, int],
