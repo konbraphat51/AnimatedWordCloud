@@ -21,6 +21,7 @@ But also add a test code to see if there is an error.
 * Get rid of commented out codes.
 * All `#TODO` must be reported at issues.
 * Comments cannot be too much. Write what you intended **in English**.
+* One module's responsibility (to-do) should be only one. If you are trying to adding a method of another function, **make a new module**
 
 ### Commit message
 Please clearify what you did.  
@@ -32,4 +33,9 @@ Add: rid duplication of words
 ### PR
 Submit PR to `dev` branch (Not `main` branch!!).
 
+Submit PR as **draft** for the first. The GitHub Actions will start analyzing your contribution.
+
 If there is something pointed out from GitHub Actions, please fix it.
+
+**If all problems solved, turn your draft PR to open PR, and report as comment that you are ready to get review**
+
