@@ -48,4 +48,4 @@ class AllocationTimelapse:
         :rtype: None
         """
 
-        self.timelapse.append(time_name, allocation_in_frame)
+        self.timelapse.append((time_name, allocation_in_frame))
