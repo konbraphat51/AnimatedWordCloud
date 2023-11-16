@@ -89,6 +89,8 @@ def get_font_size(
     """
     Evaluate how much font size the word should be
 
+    Simply calculate linearly
+
     :param float weight: The weight of the word
     :param float weight_max: The maximum weight of the word
     :param int font_max: The maximum font size
@@ -96,7 +98,11 @@ def get_font_size(
     :return: The font size estimated
     :rtype: int
     """
-    return 1  # temp
+
+    # calculate font size linearly
+    font_size = int((font_max - font_min) * (weight / weight_max) + font_min)
+
+    return font_size
 
 
 def estimate_text_size(
