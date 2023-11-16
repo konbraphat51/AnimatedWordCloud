@@ -70,7 +70,7 @@ def create_images(
         os.makedirs(TMP_OUTPUT_PATH)
     image_paths = []
     color_func = color_func or colormap_color_func(color_map)
-    for time_name, allocation_in_frame in AllocationTimelapse.timelapse:
+    for time_name, allocation_in_frame in position_in_frames.timelapse:
         image = Image.new("RGB", image_size, background_color)
         draw = ImageDraw.Draw(image)
         for word, (font_size, (x, y)) in allocation_in_frame.words.items():
