@@ -12,7 +12,13 @@ from collections.abc import Iterable, Tuple
 from AnimatedWordCloud.Animator import PositionInFrame, AllocationTimelapse
 from PIL import Image, ImageDraw, ImageFont
 
-def create_images(position_in_frames: AllocationTimelapse, image_size: Tuple[float, float], font_path: str, background_color: str = "white") -> List[str]:
+
+def create_images(
+    position_in_frames: AllocationTimelapse,
+    image_size: Tuple[float, float],
+    font_path: str,
+    background_color: str = "white",
+) -> List[str]:
     """
     Create images of each frame
 
@@ -26,8 +32,10 @@ def create_images(position_in_frames: AllocationTimelapse, image_size: Tuple[flo
         draw = ImageDraw.Draw(image)
         for word, (font_size, (x, y)) in allocation_in_frame.words.items():
             font = ImageFont.truetype(font_path, font_size)
-            draw.text((x, y), word, fill="black", font=font) #TODO:  Allow specifying the text color dynamically.
+            draw.text(
+                (x, y), word, fill="black", font=font
+            )  # TODO:  Allow specifying the text color dynamically.
         # save the image
-        image.save(f"{time_name}.png") #TODO: changing the file path
+        image.save(f"{time_name}.png")  # TODO: changing the file path
         image_paths.append(f"{time_name}.png")
     return image_paths
