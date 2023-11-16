@@ -1,5 +1,6 @@
 from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
-    AllocationInFrame, AllocationTimelapse
+    AllocationInFrame,
+    AllocationTimelapse,
 )
 
 

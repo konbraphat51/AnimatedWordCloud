@@ -7,17 +7,36 @@
 Calculate allocation of each words in each static time
 """
 
+from typing import Literal
 import numpy as np
 from PIL import Image, ImageFont, ImageDraw
 from AnimatedWordCloud import WordVector, TimelapseWordVector
 from AnimatedWordCloud.Animator import AllocationInFrame, AllocationTimelapse
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
+    allocate_magnetic,
+)
 
-def allocate(word_vector: WordVector, 
-             max_words: int, 
-             max_word_size: float,
-             image_width: int,
-             image_height: int,
-             font_path: str) -> AllocationInFrame:
+
+class Word:
+    def __init__(
+        self, text: str, weight: float, font_size: int, text_size: (int, int)
+    ):
+        self.text = text
+        self.weight = weight
+        self.font_size = font_size
+        self.text_size = text_size
+
+
+def allocate(
+    word_vector: WordVector,
+    max_words: int,
+    max_word_size: float,
+    min_word_size: float,
+    image_width: int,
+    image_height: int,
+    font_path: str,
+    strategy: Literal["magnetic"] = "magnetic",
+) -> AllocationInFrame:
     """
     Calculate allocation of each words in each static time
 
@@ -26,13 +45,45 @@ def allocate(word_vector: WordVector,
     :param float max_word_size: Maximum size of the word
     :param int image_width: Width of the image
     :param int image_height: Height of the image
+    :param str font_path: Path to the font
+    :param str strategy: Strategy to allocate words.
+    There are "magnetic" only for now.
     :return: Allocation data of the frame
     :rtype: AllocationInFrame
     """
-    
-    words = word_vector.get_ranking(0, max_words)
-    
-def estimate_text_size(word: str, font_size: int, font_path: str) -> (int, int):
+
+    word_weights = word_vector.get_ranking(0, max_words)
+
+    words = []
+
+    for word_raw, weight in word_weights:
+        font_size = get_font_size(
+            weight, word_weights[0][1], max_word_size, min_word_size
+        )
+        text_size = estimate_text_size(word_raw, font_size, font_path)
+
+        # make instance
+        word = Word(word_raw, weight, font_size, text_size)
+
+        # save instance
+        words.append(word)
+
+    # calculate allocation by selected strategy
+    if strategy == "magnetic":
+        return allocate_magnetic(words, image_width, image_height)
+    else:
+        raise ValueError("Unknown strategy: {}".format(strategy))
+
+
+def get_font_size(
+    weight: float, weight_max: float, font_max: int, font_min: int
+) -> int:
+    return 1  # temp
+
+
+def estimate_text_size(
+    word: str, font_size: int, font_path: str
+) -> (int, int):
     """
     Estimate text box size
 
@@ -44,34 +95,36 @@ def estimate_text_size(word: str, font_size: int, font_path: str) -> (int, int):
     :return: Text box size (x, y)
     :rtype: (int, int)
     """
-    
-    #empty image
-    image = np.zeros((font_size*2, font_size*(len(word)+1), 3), dtype=np.uint8)
+
+    # empty image
+    image = np.zeros(
+        (font_size * 2, font_size * (len(word) + 1), 3), dtype=np.uint8
+    )
     font = ImageFont.truetype(font_path, font_size)
     image = Image.fromarray(image)
     draw = ImageDraw.Draw(image)
-    
-    #get size
+
+    # get size
     w, h = draw.textsize(word, font=font)
-    
+
     return (w, h)
-    
-    
+
+
 def allocate_all(timelapse: TimelapseWordVector) -> AllocationTimelapse:
     """
     Calculate allocation of each words in several each static time
 
-    :param TimelapseWordVector timelapse: The word vector    
+    :param TimelapseWordVector timelapse: The word vector
     :return: Allocation data of each frame
     :rtype: AllocationTimelapse
     """
-    
+
     times = len(timelapse)
 
     allocation_timelapse = AllocationTimelapse()
-    
+
     for cnt in range(times):
         allocation = allocate(timelapse[cnt].word_vector)
         allocation_timelapse.add(timelapse[cnt].time_name, allocation)
-        
+
     return allocation_timelapse
