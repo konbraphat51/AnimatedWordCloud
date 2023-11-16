@@ -33,4 +33,9 @@ Add: rid duplication of words
 ### PR
 Submit PR to `dev` branch (Not `main` branch!!).
 
+Submit PR as **draft** for the first. The GitHub Actions will start analyzing your contribution.
+
 If there is something pointed out from GitHub Actions, please fix it.
+
+**If all problems solved, turn your draft PR to open PR, and report as comment that you are ready to get review**
+
