@@ -24,6 +24,7 @@ readme = """
 """
 
 requirements = [
+    "numpy",
     "Pillow==10.0"
 ]
 
