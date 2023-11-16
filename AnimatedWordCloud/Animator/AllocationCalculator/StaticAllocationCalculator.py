@@ -22,6 +22,7 @@ class Word:
     Data class contains attributes of each words.
     This is used to contact with allocation strategies.
     """
+
     def __init__(
         self, text: str, weight: float, font_size: int, text_size: (int, int)
     ):
@@ -63,7 +64,7 @@ def allocate(
     # get attributes for each words,
     #   and save them as Word instances
     for word_raw, weight in word_weights:
-        #get attributes
+        # get attributes
         font_size = get_font_size(
             weight, word_weights[0][1], max_word_size, min_word_size
         )
