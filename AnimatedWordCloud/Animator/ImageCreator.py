@@ -78,7 +78,9 @@ def create_images(
             draw.text(
                 (x, y),
                 word,
-                fill=color_func(word=word, font_size=font_size, position=(x, y)),
+                fill=color_func(
+                    word=word, font_size=font_size, position=(x, y)
+                ),
                 font=font,
             )
         # save the image
