@@ -1,0 +1,1 @@
+from AnimatedWordCloud.Animator.PositionCalculator.PositionCalculator import PositionInFrame

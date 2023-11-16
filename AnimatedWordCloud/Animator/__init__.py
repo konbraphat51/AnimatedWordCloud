@@ -1,1 +1,2 @@
 from TimelapseWordVector import TimelapseWordVector, TimeFrame, WordVector
+from AnimatedWordCloud.Animator.PositionCalculator import PositionInFrame
