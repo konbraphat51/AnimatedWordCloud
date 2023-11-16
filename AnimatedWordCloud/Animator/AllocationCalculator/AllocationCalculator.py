@@ -25,7 +25,9 @@ class AllocationInFrame:
         self.words: Dict[str, Tuple[float, Tuple[float, float]]] = {}
 
 
-def calculate(word_vector_timelapse: TimelapseWordVector) -> List[AllocationInFrame]:
+def calculate(
+    word_vector_timelapse: TimelapseWordVector,
+) -> List[AllocationInFrame]:
     """
     Calculate positions and size of words during each frame
 

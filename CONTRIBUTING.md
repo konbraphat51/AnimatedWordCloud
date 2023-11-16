@@ -8,7 +8,7 @@ We love your contributing, but there is a possibility that somebody else already
 
 ## Code
 ### Writing Python
-* Follow [PEP8](https://peps.python.org/pep-0008/), you can automatically do this by using [black](https://github.com/psf/black) with `--line-length = 99`
+* Follow [PEP8](https://peps.python.org/pep-0008/), you can automatically do this by using [black](https://github.com/psf/black) with `--line-length = 79`
 
 * Please follow this [naming convention](https://namingconvention.org/python/). For example, global constant variables must be in `ALL_CAPS`;
   <img src="https://i.stack.imgur.com/uBr10.png" />
