@@ -7,7 +7,7 @@
 Calculate positions and size of words during each frame
 """
 
-from typing import List, Dict, Tuple
+from typing import List
 from AnimatedWordCloud import TimelapseWordVector
 from AnimatedWordCloud.Animator import AllocationInFrame
 
