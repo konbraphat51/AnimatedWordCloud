@@ -21,6 +21,7 @@ But also add a test code to see if there is an error.
 * Get rid of commented out codes.
 * All `#TODO` must be reported at issues.
 * Comments cannot be too much. Write what you intended **in English**.
+* One module's responsibility (to-do) should be only one. If you are trying to adding a method of another function, **make a new module**
 
 ### Commit message
 Please clearify what you did.  
