@@ -7,7 +7,7 @@
 Calculate allocation of each words in each static time
 """
 
-from typing import Literal
+from typing import Literal, List
 import numpy as np
 from PIL import Image, ImageFont, ImageDraw
 from AnimatedWordCloud import WordVector, TimelapseWordVector
@@ -18,6 +18,10 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies 
 
 
 class Word:
+    """
+    Data class contains attributes of each words.
+    This is used to contact with allocation strategies.
+    """
     def __init__(
         self, text: str, weight: float, font_size: int, text_size: (int, int)
     ):
@@ -54,9 +58,12 @@ def allocate(
 
     word_weights = word_vector.get_ranking(0, max_words)
 
-    words = []
+    words: List[Word] = []
 
+    # get attributes for each words,
+    #   and save them as Word instances
     for word_raw, weight in word_weights:
+        #get attributes
         font_size = get_font_size(
             weight, word_weights[0][1], max_word_size, min_word_size
         )
@@ -78,6 +85,16 @@ def allocate(
 def get_font_size(
     weight: float, weight_max: float, font_max: int, font_min: int
 ) -> int:
+    """
+    Evaluate how much font size the word should be
+
+    :param float weight: The weight of the word
+    :param float weight_max: The maximum weight of the word
+    :param int font_max: The maximum font size
+    :param int font_min: The minimum font size
+    :return: The font size estimated
+    :rtype: int
+    """
     return 1  # temp
 
 
@@ -96,7 +113,7 @@ def estimate_text_size(
     :rtype: (int, int)
     """
 
-    # empty image
+    # prepare empty image
     image = np.zeros(
         (font_size * 2, font_size * (len(word) + 1), 3), dtype=np.uint8
     )
@@ -123,6 +140,7 @@ def allocate_all(timelapse: TimelapseWordVector) -> AllocationTimelapse:
 
     allocation_timelapse = AllocationTimelapse()
 
+    # calculate allocation for each frame
     for cnt in range(times):
         allocation = allocate(timelapse[cnt].word_vector)
         allocation_timelapse.add(timelapse[cnt].time_name, allocation)
