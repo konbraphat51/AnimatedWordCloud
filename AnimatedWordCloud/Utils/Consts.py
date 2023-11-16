@@ -18,7 +18,7 @@ LIBRARY_DIR = Path(__file__).parent.parent
 
 # path of Eng font file exists
 DEFAULT_ENG_FONT_PATH = os.path.join(
-    os.path.dirname(__file__),
+    LIBRARY_DIR,
     "Assets",
     "Fonts",
     "NotoSansMono-VariableFont_wdth,wght.ttf",
