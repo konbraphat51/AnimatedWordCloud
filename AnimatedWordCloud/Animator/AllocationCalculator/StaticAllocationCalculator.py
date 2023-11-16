@@ -120,6 +120,8 @@ def estimate_text_size(
     :rtype: (int, int)
     """
 
+    # according to https://watlab-blog.com/2019/08/27/add-text-pixel/
+
     # prepare empty image
     image = np.zeros(
         (font_size * 2, font_size * (len(word) + 1), 3), dtype=np.uint8
