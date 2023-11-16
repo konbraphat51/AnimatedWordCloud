@@ -23,9 +23,7 @@ readme = """
 (readme here)
 """
 
-requirements = [
-
-]
+requirements = []
 
 setup(
     name="AnimatedWordCloud",
@@ -40,6 +38,9 @@ setup(
     test_suite="tests",
     python_requires=">=3.7",
     package_data={
+        "AnimatedWordCloud/Assets": [
+            "Fonts/NotoSansMono-VariableFont_wdth,wght.ttf"
+        ]
     },
     include_package_data=True,
     install_requires=requirements,
@@ -52,7 +53,7 @@ setup(
         "Natural Language Processing",
         "video",
         "Visualization",
-        "Data Science"
+        "Data Science",
     ],
     classifiers=[
         "Development Status :: 1 - Planning",
@@ -63,14 +64,13 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Topic :: Multimedia :: Video",
         "Topic :: Scientific/Engineering :: Information Analysis",
-        "Topic :: Text Processing"
+        "Topic :: Text Processing",
     ],
     entry_points={
         # "console_scripts": [
         # ],
     },
-    project_urls={
-    },
+    project_urls={},
 )
 
 # TODO: Check extras and decide whether or not additional data, like model files, should be downloaded
