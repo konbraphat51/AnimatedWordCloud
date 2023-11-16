@@ -1,4 +1,4 @@
-from AnimatedWordCloud.Animator.AllocationCalculator.AllocationCalculator import (
+from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
     AllocationInFrame,
 )
 
