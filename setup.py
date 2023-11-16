@@ -24,7 +24,7 @@ readme = """
 """
 
 requirements = [
-
+    "Pillow==10.0"
 ]
 
 setup(
