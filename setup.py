@@ -1,17 +1,8 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2016-2023 PyThaiNLP Project
+# Copyright (C) 2023 AnimatedWordCloud Project
+# https://github.com/konbraphat51/AnimatedWordCloud
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# Licensed under the MIT License.
 """
 Setup script for PyThaiNLP.
 
@@ -23,9 +14,7 @@ readme = """
 (readme here)
 """
 
-requirements = [
-
-]
+requirements = []
 
 setup(
     name="AnimatedWordCloud",
@@ -40,6 +29,9 @@ setup(
     test_suite="tests",
     python_requires=">=3.7",
     package_data={
+        "AnimatedWordCloud/Assets": [
+            "Fonts/NotoSansMono-VariableFont_wdth,wght.ttf"
+        ]
     },
     include_package_data=True,
     install_requires=requirements,
@@ -52,7 +44,7 @@ setup(
         "Natural Language Processing",
         "video",
         "Visualization",
-        "Data Science"
+        "Data Science",
     ],
     classifiers=[
         "Development Status :: 1 - Planning",
@@ -63,14 +55,13 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Topic :: Multimedia :: Video",
         "Topic :: Scientific/Engineering :: Information Analysis",
-        "Topic :: Text Processing"
+        "Topic :: Text Processing",
     ],
     entry_points={
         # "console_scripts": [
         # ],
     },
-    project_urls={
-    },
+    project_urls={},
 )
 
 # TODO: Check extras and decide whether or not additional data, like model files, should be downloaded
