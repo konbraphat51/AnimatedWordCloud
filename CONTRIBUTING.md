@@ -13,6 +13,8 @@ We love your contributing, but there is a possibility that somebody else already
 * Please follow this [naming convention](https://namingconvention.org/python/). For example, global constant variables must be in `ALL_CAPS`;
   <img src="https://i.stack.imgur.com/uBr10.png" />
 
+* Variables, classes, modules names should be **nouns**, and functions, methods names should be **verb**.
+
 * Write your test for your new features in `tests/` directory.
 If the output is graphical, show the demonstrating output in the PR.
 But also add a test code to see if there is an error.
@@ -21,7 +23,11 @@ But also add a test code to see if there is an error.
 * Comments cannot be too much. Write what you intended **in English**.
 
 ### Commit message
-Please clearify what you did.
+Please clearify what you did.  
+Verb at the very front will make easier to see.  
+ex)
+Refac: clearify commentation  
+Add: rid duplication of words
 
 ### PR
 Submit PR to `dev` branch (Not `main` branch!!).
