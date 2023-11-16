@@ -20,7 +20,7 @@ class AllocationInFrame:
         Prepare empty data
         """
 
-        # word -> (size, position)
+        # word -> (font size, position)
         self.words: Dict[str, Tuple[float, Tuple[float, float]]] = {}
 
 
@@ -48,4 +48,4 @@ class AllocationTimelapse:
         :rtype: None
         """
 
-        self.timelapse.append(time_name, allocation_in_frame)
+        self.timelapse.append((time_name, allocation_in_frame))
