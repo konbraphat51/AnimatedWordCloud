@@ -23,6 +23,7 @@ def create_images(position_in_frames: Iterable[PositionInFrame]) -> List[str]:
 
     return [""]
 
+
 def a():
     for b in range(10):
         for c in range(10):
