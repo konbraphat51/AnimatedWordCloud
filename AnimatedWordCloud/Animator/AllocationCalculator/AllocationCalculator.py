@@ -11,7 +11,7 @@ from typing import List, Dict, Tuple
 from AnimatedWordCloud import TimelapseWordVector
 
 
-class PositionInFrame:
+class AllocationInFrame:
     """
     Positions and size of each words
     """
@@ -25,7 +25,7 @@ class PositionInFrame:
         self.words: Dict[str, Tuple[float, Tuple[float, float]]] = {}
 
 
-def calculate(word_vector_timelapse: TimelapseWordVector) -> List[PositionInFrame]:
+def calculate(word_vector_timelapse: TimelapseWordVector) -> List[AllocationInFrame]:
     """
     Calculate positions and size of words during each frame
 
