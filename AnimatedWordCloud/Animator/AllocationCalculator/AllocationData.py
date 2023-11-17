@@ -23,9 +23,7 @@ class AllocationInFrame:
         # word -> (font size, left-top position)
         self.words: Dict[str, Tuple[float, Tuple[float, float]]] = {}
 
-    def add(
-        self, word: str, font_size: float, left_top: Tuple[float, float]
-    ) -> None:
+    def add(self, word: str, font_size: float, left_top: Tuple[float, float]) -> None:
         """
         Add a word
 
@@ -51,9 +49,7 @@ class AllocationTimelapse:
         # (time_name, AllocationInFrame)
         self.timelapse: List[Tuple(str, AllocationInFrame)] = []
 
-    def add(
-        self, time_name: str, allocation_in_frame: AllocationInFrame
-    ) -> None:
+    def add(self, time_name: str, allocation_in_frame: AllocationInFrame) -> None:
         """
         Add a frame of allocation data
 

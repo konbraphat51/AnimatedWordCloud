@@ -15,21 +15,9 @@ from AnimatedWordCloud.Animator import AllocationInFrame, AllocationTimelapse
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
     allocate_magnetic,
 )
-
-
-class Word:
-    """
-    Data class contains attributes of each words.
-    This is used to contact with allocation strategies.
-    """
-
-    def __init__(
-        self, text: str, weight: float, font_size: int, text_size: (int, int)
-    ):
-        self.text = text
-        self.weight = weight
-        self.font_size = font_size
-        self.text_size = text_size
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
+    Word,
+)
 
 
 def allocate(
@@ -105,9 +93,7 @@ def calculate_font_size(
     return font_size
 
 
-def estimate_text_size(
-    word: str, font_size: int, font_path: str
-) -> (int, int):
+def estimate_text_size(word: str, font_size: int, font_path: str) -> (int, int):
     """
     Estimate text box size
 
@@ -123,9 +109,7 @@ def estimate_text_size(
     # according to https://watlab-blog.com/2019/08/27/add-text-pixel/
 
     # prepare empty image
-    image = np.zeros(
-        (font_size * 2, font_size * (len(word) + 1), 3), dtype=np.uint8
-    )
+    image = np.zeros((font_size * 2, font_size * (len(word) + 1), 3), dtype=np.uint8)
     font = ImageFont.truetype(font_path, font_size)
     image = Image.fromarray(image)
     draw = ImageDraw.Draw(image)

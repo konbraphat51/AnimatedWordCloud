@@ -13,9 +13,7 @@ from typing import Dict, Tuple
 from collections.abc import Iterable
 
 
-def animate(
-    word_vector_timelapse: Iterable[Tuple[str, Dict[str, float]]]
-) -> str:
+def animate(word_vector_timelapse: Iterable[Tuple[str, Dict[str, float]]]) -> str:
     """
     Create an animation of word cloud,
         from the timelapse data of words vectors
