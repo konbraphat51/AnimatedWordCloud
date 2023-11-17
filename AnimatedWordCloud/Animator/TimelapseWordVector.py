@@ -8,11 +8,12 @@ Handful class of containing timelapse data of word vectors.
 """
 
 from __future__ import annotations
+from dataclasses import dataclass
 from typing import Dict, Tuple, List
 from collections.abc import Iterable
 import heapq
 
-
+@dataclass
 class WordVector:
     """
     Contains each word's weight
@@ -101,6 +102,7 @@ class WordVector:
         return instance
 
 
+@dataclass
 class TimeFrame:
     """
     A single time frame of word vector
@@ -118,6 +120,7 @@ class TimeFrame:
         self.word_vector: WordVector = word_vector
 
 
+@dataclass
 class TimelapseWordVector:
     """
     Timelapse data of word vectors.
