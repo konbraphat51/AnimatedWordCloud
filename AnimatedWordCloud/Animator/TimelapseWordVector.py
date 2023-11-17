@@ -213,6 +213,8 @@ class TimelapseWordVector:
         instance = TimelapseWordVector()
 
         for word_weights in data:
-            instance.add_time_frame(TimeFrame.convert_from_tup_dict(word_weights))
+            instance.add_time_frame(
+                TimeFrame.convert_from_tup_dict(word_weights)
+            )
 
         return instance
