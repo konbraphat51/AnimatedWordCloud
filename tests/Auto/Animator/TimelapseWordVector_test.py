@@ -28,10 +28,10 @@ def test_wordvector():
     instance.add("test4", 2)
 
     assert instance._word_heap == [
-        (4, "test2"),
-        (3, "test3"),
-        (2, "test4"),
-        (1, "test"),
+        (-4, "test2"),
+        (-3, "test3"),
+        (-2, "test4"),
+        (-1, "test"),
     ]
     assert instance._word_dictionary == {
         "test": 1,
@@ -48,10 +48,10 @@ def test_wordvector():
     )
 
     assert instance._word_heap == [
-        (4, "test2"),
-        (3, "test3"),
-        (2, "test4"),
-        (1, "test"),
+        (-4, "test2"),
+        (-3, "test3"),
+        (-2, "test4"),
+        (-1, "test"),
     ]
     assert instance._word_dictionary == {
         "test": 1,
@@ -78,10 +78,10 @@ def test_wordvector():
     )
 
     assert instance._word_heap == [
-        (4, "test2"),
-        (3, "test3"),
-        (2, "test4"),
-        (1, "test"),
+        (-4, "test2"),
+        (-3, "test3"),
+        (-2, "test4"),
+        (-1, "test"),
     ]
     assert instance._word_dictionary == {
         "test": 1,
@@ -100,21 +100,21 @@ def test_timeframe():
     instance = TimeFrame("test_time", word_vector)
 
     assert instance.time_name == "test_time"
-    assert instance.word_vector._word_heap == [
-        (4, "test2"),
-        (3, "test3"),
-        (2, "test4"),
-        (1, "test"),
+    assert instance.word_vector.get_ranking(0, -1) == [
+        ("test2", 4),
+        ("test3", 3),
+        ("test4", 2),
+        ("test", 1),
     ]
 
     # test convert_from_dict
     assert TimeFrame.convert_from_dict(
         "test_time", test_dict
-    ).word_vector._word_heap == [
-        (4, "test2"),
-        (3, "test3"),
-        (2, "test4"),
-        (1, "test"),
+    ).word_vector.get_ranking(0, -1) == [
+        ("test2", 4),
+        ("test3", 3),
+        ("test4", 2),
+        ("test", 1),
     ]
 
     assert (
@@ -125,11 +125,11 @@ def test_timeframe():
     # test convert_from_tup_dict
     assert TimeFrame.convert_from_tup_dict(
         ["test_time", test_dict]
-    ).word_vector._word_heap == [
-        (4, "test2"),
-        (3, "test3"),
-        (2, "test4"),
-        (1, "test"),
+    ).word_vector.get_ranking(0, -1) == [
+        ("test2", 4),
+        ("test3", 3),
+        ("test4", 2),
+        ("test", 1),
     ]
 
 
@@ -148,20 +148,20 @@ def test_timelapsewordvector():
     instance.add_time_frame(time_frame0)
     instance.add_time_frame(time_frame1)
 
-    assert instance[0].word_vector._word_heap == [
-        (4, "test2"),
-        (3, "test3"),
-        (2, "test4"),
-        (1, "test"),
+    assert instance[0].word_vector.get_ranking(0, -1) == [
+        ("test2", 4),
+        ("test3", 3),
+        ("test4", 2),
+        ("test", 1),
     ]
 
     assert instance[0].time_name == "test_time"
 
-    assert instance[1].word_vector._word_heap == [
-        (10, "test4"),
-        (4, "test"),
-        (1, "test2"),
-        (-2, "test3"),
+    assert instance[1].word_vector.get_ranking(0, -1) == [
+        ("test4", 10),
+        ("test", 4),
+        ("test2", 1),
+        ("test3", -2),
     ]
 
     # test __len__
@@ -172,9 +172,9 @@ def test_timelapsewordvector():
 
     assert TimelapseWordVector.convert_from_dicts_list(dicts_list)[
         0
-    ].word_vector._word_heap == [
-        (4, "test2"),
-        (3, "test3"),
-        (2, "test4"),
-        (1, "test"),
+    ].word_vector.get_ranking(0, -1) == [
+        ("test2", 4),
+        ("test3", 3),
+        ("test4", 2),
+        ("test", 1),
     ]
