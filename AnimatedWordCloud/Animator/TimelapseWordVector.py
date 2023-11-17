@@ -116,7 +116,35 @@ class TimeFrame:
 
         self.time_name: str = time_name
         self.word_vector: WordVector = word_vector
+        
+    def convert_from_dict(time_name: str, word_weights: Dict[str, float]) -> TimeFrame:
+        """
+        Convert from a dictionary of word and weight to TimeFrame instance.
 
+        This is static conversion method.
+
+        :param str time_name: Name of the time
+        :param Dict[str, float] word_weights: The words and their weights
+        :return: The TimeFrame instance
+        :rtype: TimeFrame
+        """
+
+        word_vector = WordVector.convert_from_dict(word_weights)
+
+        return TimeFrame(time_name, word_vector)
+
+    def convert_from_tup_dict(data: Iterable[str, Dict[str, float]]):
+        """
+        Convert from a dictionary of word and weight to TimeFrame instance.
+
+        This is static conversion method.
+
+        :param Iterable[str, Dict[str, float]] data: The words and their weights
+        :return: The TimeFrame instance
+        :rtype: TimeFrame
+        """
+
+        return TimeFrame.convert_from_dict(data[0], data[1])
 
 class TimelapseWordVector:
     """
