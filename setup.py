@@ -14,7 +14,10 @@ readme = """
 (readme here)
 """
 
-requirements = ["numpy", "Pillow==10.0"]
+
+def requirements_from_file(file_name):
+    return open(file_name).read().splitlines()
+
 
 setup(
     name="AnimatedWordCloud",
@@ -32,7 +35,7 @@ setup(
         "AnimatedWordCloud/Assets": ["Fonts/NotoSansMono-VariableFont_wdth,wght.ttf"]
     },
     include_package_data=True,
-    install_requires=requirements,
+    install_requires=requirements_from_file("requirements.txt"),
     license="MIT License",
     zip_safe=False,
     keywords=[

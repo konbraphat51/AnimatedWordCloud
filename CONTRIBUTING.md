@@ -6,6 +6,17 @@ Please see [Code of Conduct](CODE_OF_CONDUCT.md).
 ## Declear an issue before develop
 We love your contribution, but there is a possibility that somebody else already doing your work, or your plan is unnecessary. Please make an issue and notify us before starting to develop.
 
+## Environment
+
+You need to pip install this library (`dev`branch) and update submodules
+```
+git clone (your fork)
+cd (your fork)
+pip install -e .
+git submodule init
+git submodule update
+```
+
 ## Code
 ### Writing Python
 * Follow [PEP8](https://peps.python.org/pep-0008/), you can automatically do this by using [black](https://github.com/psf/black) with `--line-length = 79`
