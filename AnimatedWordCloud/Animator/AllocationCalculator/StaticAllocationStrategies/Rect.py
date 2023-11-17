@@ -12,7 +12,9 @@ from collections.abc import Iterable
 
 
 class Rect:
-    def __init__(self, left_top: Tuple[int, int], right_bottom: Tuple[int, int]):
+    def __init__(
+        self, left_top: Tuple[int, int], right_bottom: Tuple[int, int]
+    ):
         self.left_top = left_top
         self.right_bottom = right_bottom
 

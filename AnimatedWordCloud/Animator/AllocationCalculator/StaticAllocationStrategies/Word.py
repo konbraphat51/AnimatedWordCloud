@@ -14,7 +14,9 @@ class Word:
     This is used to contact with allocation strategies.
     """
 
-    def __init__(self, text: str, weight: float, font_size: int, text_size: (int, int)):
+    def __init__(
+        self, text: str, weight: float, font_size: int, text_size: (int, int)
+    ):
         self.text = text
         self.weight = weight
         self.font_size = font_size

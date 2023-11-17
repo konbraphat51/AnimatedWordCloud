@@ -95,7 +95,9 @@ def calculate_font_size(
     return font_size
 
 
-def estimate_text_size(word: str, font_size: int, font_path: str) -> (int, int):
+def estimate_text_size(
+    word: str, font_size: int, font_path: str
+) -> (int, int):
     """
     Estimate text box size
 
@@ -111,7 +113,9 @@ def estimate_text_size(word: str, font_size: int, font_path: str) -> (int, int):
     # according to https://watlab-blog.com/2019/08/27/add-text-pixel/
 
     # prepare empty image
-    image = np.zeros((font_size * 2, font_size * (len(word) + 1), 3), dtype=np.uint8)
+    image = np.zeros(
+        (font_size * 2, font_size * (len(word) + 1), 3), dtype=np.uint8
+    )
     font = ImageFont.truetype(font_path, font_size)
     image = Image.fromarray(image)
     draw = ImageDraw.Draw(image)
@@ -137,7 +141,9 @@ def allocate_all(timelapse: TimelapseWordVector) -> AllocationTimelapse:
 
     # calculate allocation for each frame
     for cnt in range(times):
-        allocation = allocate(timelapse[cnt].word_vector)  # TODO: add parameters
+        allocation = allocate(
+            timelapse[cnt].word_vector
+        )  # TODO: add parameters
         allocation_timelapse.add(timelapse[cnt].time_name, allocation)
 
     return allocation_timelapse

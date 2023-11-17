@@ -158,7 +158,9 @@ def find_magnet_outer_frontier(
     # from up
     for x in range(1, image_width, X_INTERVAL):
         for y in range(0, image_height + 1, Y_INTERVAL):
-            flag_hitted, hitted_rect = is_point_hitting_rects((x, y), rects_outermost)
+            flag_hitted, hitted_rect = is_point_hitting_rects(
+                (x, y), rects_outermost
+            )
             if flag_hitted:
                 current_hitted_rects.add(hitted_rect)
                 magnet_outer_frontier.from_up.append((x, y))
@@ -167,7 +169,9 @@ def find_magnet_outer_frontier(
     # from down
     for x in range(1, image_width, X_INTERVAL):
         for y in range(image_height, -1, -Y_INTERVAL):
-            flag_hitted, hitted_rect = is_point_hitting_rects((x, y), rects_outermost)
+            flag_hitted, hitted_rect = is_point_hitting_rects(
+                (x, y), rects_outermost
+            )
             if flag_hitted:
                 current_hitted_rects.add(hitted_rect)
                 magnet_outer_frontier.from_down.append((x, y))
@@ -176,7 +180,9 @@ def find_magnet_outer_frontier(
     # from left
     for y in range(1, image_height, Y_INTERVAL):
         for x in range(0, image_width + 1, X_INTERVAL):
-            flag_hitted, hitted_rect = is_point_hitting_rects((x, y), rects_outermost)
+            flag_hitted, hitted_rect = is_point_hitting_rects(
+                (x, y), rects_outermost
+            )
             if flag_hitted:
                 current_hitted_rects.add(hitted_rect)
                 magnet_outer_frontier.from_left.append((x, y))
@@ -185,7 +191,9 @@ def find_magnet_outer_frontier(
     # from right
     for y in range(1, image_height, Y_INTERVAL):
         for x in range(image_width, -1, -X_INTERVAL):
-            flag_hitted, hitted_rect = is_point_hitting_rects((x, y), rects_outermost)
+            flag_hitted, hitted_rect = is_point_hitting_rects(
+                (x, y), rects_outermost
+            )
             if flag_hitted:
                 current_hitted_rects.add(hitted_rect)
                 magnet_outer_frontier.from_right.append((x, y))

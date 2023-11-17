@@ -32,7 +32,9 @@ setup(
     test_suite="tests",
     python_requires=">=3.7",
     package_data={
-        "AnimatedWordCloud/Assets": ["Fonts/NotoSansMono-VariableFont_wdth,wght.ttf"]
+        "AnimatedWordCloud/Assets": [
+            "Fonts/NotoSansMono-VariableFont_wdth,wght.ttf"
+        ]
     },
     include_package_data=True,
     install_requires=requirements_from_file("requirements.txt"),
