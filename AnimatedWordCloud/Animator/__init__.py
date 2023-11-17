@@ -10,8 +10,8 @@ from AnimatedWordCloud.Animator.TimelapseWordVector import (
 
 
 __all__ = [
-    "AllocationInFrame",
-    "AllocationTimelapse",
+#    "AllocationInFrame",
+#    "AllocationTimelapse",
     "TimelapseWordVector",
     "TimeFrame",
     "WordVector",
