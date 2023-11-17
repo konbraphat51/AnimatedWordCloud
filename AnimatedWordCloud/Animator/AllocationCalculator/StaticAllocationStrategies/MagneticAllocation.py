@@ -25,6 +25,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies 
     Rect,
     is_point_hitting_rects,
 )
+import math
 
 
 class MagnetOuterFrontier:
@@ -110,7 +111,26 @@ def evaluate_position(
     position_to: Tuple[int, int],
     center: Tuple[int, int],
 ) -> float:
-    return 1.0  # temp
+    """
+    Evaluate the position the word beginf to put
+
+    :param Tuple[int,int] position_from: Position of the center of the word comming from
+    :param Tuple[int,int] position_to: Position of the center of the word going to be putted
+    :param Tuple[int,int] center: Position of the center of the magnet
+    :return: Evaluation value. Smaller is the better
+    """
+
+    distance_movement = math.sqrt(
+        (position_from[0] - position_to[0]) ** 2
+        + (position_from[1] - position_to[1]) ** 2
+    )
+
+    distance_center = math.sqrt(
+        (position_to[0] - center[0]) ** 2 + (position_to[1] - center[1]) ** 2
+    )
+
+    # the smaller, the better; This need manual adjustment
+    return distance_movement**2 + distance_center**2
 
 
 def find_magnet_outer_frontier(
