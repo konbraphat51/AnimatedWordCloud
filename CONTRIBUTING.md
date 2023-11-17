@@ -4,7 +4,7 @@ Greetings, Thanks for your interest in contributing to AnimatedWordCloud.
 Please see [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Declear an issue before develop
-We love your contributing, but there is a possibility that somebody else already doing your work, or your plan is unnecessary. Please make an issue and notice us before start developing.
+We love your contribution, but there is a possibility that somebody else already doing your work, or your plan is unnecessary. Please make an issue and notify us before starting to develop.
 
 ## Code
 ### Writing Python
@@ -21,13 +21,13 @@ But also add a test code to see if there is an error.
 * Get rid of commented out codes.
 * All `#TODO` must be reported at issues.
 * Comments cannot be too much. Write what you intended **in English**.
-* One module's responsibility (to-do) should be only one. If you are trying to adding a method of another function, **make a new module**
+* One module's responsibility (to-do) should be only one. If you are trying to add a method of another functionality, **make a new module**
 
 ### Commit message
-Please clearify what you did.  
-Verb at the very front will make easier to see.  
+Please clarify what you did.  
+Verb at the very front will make it easier to see.  
 ex)
-Refac: clearify commentation  
+Refac: clarify commentation  
 Add: rid duplication of words
 
 ### PR
@@ -37,5 +37,5 @@ Submit PR as **draft** for the first. The GitHub Actions will start analyzing yo
 
 If there is something pointed out from GitHub Actions, please fix it.
 
-**If all problems solved, turn your draft PR to open PR, and report as comment that you are ready to get review**
+**If all problems are solved, turn your draft PR to open PR, and report as a comment that you are ready to get reviewed**
 
