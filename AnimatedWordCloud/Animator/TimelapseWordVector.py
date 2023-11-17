@@ -199,7 +199,7 @@ class TimelapseWordVector:
 
     def convert_from_dicts_list(
         data: Iterable[Iterable[str, Dict[str, float]]]
-    ) -> None:
+    ) -> TimelapseWordVector:
         """
         Convert from a list of dictionary of word and weight to TimelapseWordVector instance.
 
