@@ -26,6 +26,7 @@ class WordVector:
         # use heap to easily get the rankings
         # to order by weight,
         #   the weight must be the first element of the tuple
+        #   and negate the weight to get the descending order
         # but the output must be the word first
         self._word_heap: List[Tuple[float, str]] = []
 
@@ -41,7 +42,9 @@ class WordVector:
         :rtype: None
         """
 
-        heapq.heappush(self._word_heap, (weight, word))
+        # negate the weight to get the descending order
+        heapq.heappush(self._word_heap, (-weight, word))
+
         self._word_dictionary[word] = weight
 
     def add_multiple(self, word_weights: Iterable[Tuple[str, float]]) -> None:
@@ -68,7 +71,9 @@ class WordVector:
         :rtype: List[Tuple(str, float)]
         """
 
-        return [(tup[1], tup[0]) for tup in self._word_heap[start:end]]
+        # weight was negated
+        #   so negate it back
+        return [(tup[1], -tup[0]) for tup in self._word_heap[start:end]]
 
     def get_weight(self, word: str) -> float:
         """
