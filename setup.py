@@ -66,5 +66,3 @@ setup(
     },
     project_urls={},
 )
-
-# TODO: Check extras and decide whether or not additional data, like model files, should be downloaded

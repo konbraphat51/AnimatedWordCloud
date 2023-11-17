@@ -7,6 +7,7 @@
 Handful class of containing timelapse data of word vectors.
 """
 
+from __future__ import annotations
 from typing import Dict, Tuple, List
 from collections.abc import Iterable
 import heapq
@@ -23,10 +24,14 @@ class WordVector:
         """
 
         # use heap to easily get the rankings
-        self._word_heap: List[Tuple[str, float]] = []
+        # to order by weight,
+        #   the weight must be the first element of the tuple
+        #   and negate the weight to get the descending order
+        # but the output must be the word first
+        self._word_heap: List[Tuple[float, str]] = []
 
         # also prepare a dictionary for direct access to word
-        self._word_dictionary: Dict[str, int] = {}
+        self._word_dictionary: Dict[str, float] = {}
 
     def add(self, word: str, weight: float) -> None:
         """
@@ -37,7 +42,9 @@ class WordVector:
         :rtype: None
         """
 
-        heapq.heappush(self._word_heap, (weight, word))
+        # negate the weight to get the descending order
+        heapq.heappush(self._word_heap, (-weight, word))
+
         self._word_dictionary[word] = weight
 
     def add_multiple(self, word_weights: Iterable[Tuple[str, float]]) -> None:
@@ -64,7 +71,9 @@ class WordVector:
         :rtype: List[Tuple(str, float)]
         """
 
-        return self._word_heap[start:end]
+        # weight was negated
+        #   so negate it back
+        return [(tup[1], -tup[0]) for tup in self._word_heap[start:end]]
 
     def get_weight(self, word: str) -> float:
         """
@@ -75,6 +84,24 @@ class WordVector:
         :rtype: float
         """
         return self._word_dictionary[word]
+
+    def convert_from_dict(word_weights: Dict[str, float]) -> WordVector:
+        """
+        Convert from a dictionary of word and weight to WordVector instance.
+
+        This is static conversion method.
+
+        :param Dict[str, float] word_weights: The words and their weights
+        :return: The WordVector instance
+        :rtype: WordVector
+        """
+
+        instance = WordVector()
+
+        for word, weight in word_weights.items():
+            instance.add(word, weight)
+
+        return instance
 
 
 class TimeFrame:
@@ -92,6 +119,37 @@ class TimeFrame:
 
         self.time_name: str = time_name
         self.word_vector: WordVector = word_vector
+
+    def convert_from_dict(
+        time_name: str, word_weights: Dict[str, float]
+    ) -> TimeFrame:
+        """
+        Convert from a dictionary of word and weight to TimeFrame instance.
+
+        This is static conversion method.
+
+        :param str time_name: Name of the time
+        :param Dict[str, float] word_weights: The words and their weights
+        :return: The TimeFrame instance
+        :rtype: TimeFrame
+        """
+
+        word_vector = WordVector.convert_from_dict(word_weights)
+
+        return TimeFrame(time_name, word_vector)
+
+    def convert_from_tup_dict(data: Iterable[str, Dict[str, float]]):
+        """
+        Convert from a dictionary of word and weight to TimeFrame instance.
+
+        This is static conversion method.
+
+        :param Iterable[str, Dict[str, float]] data: The words and their weights
+        :return: The TimeFrame instance
+        :rtype: TimeFrame
+        """
+
+        return TimeFrame.convert_from_dict(data[0], data[1])
 
 
 class TimelapseWordVector:
@@ -138,3 +196,23 @@ class TimelapseWordVector:
         """
 
         self.timeframes.append(timeframe)
+
+    def convert_from_dicts_list(
+        data: Iterable[Iterable[str, Dict[str, float]]]
+    ) -> None:
+        """
+        Convert from a list of dictionary of word and weight to TimelapseWordVector instance.
+
+        This is static conversion method.
+
+        :param Iterable[Iterable[str, Dict[str, float]]] data: list[(time_name, Dict[word, weight])]
+        :return: The TimelapseWordVector instance
+        :rtype: TimelapseWordVector
+        """
+
+        instance = TimelapseWordVector()
+
+        for word_weights in data:
+            instance.add_time_frame(TimeFrame.convert_from_dict(word_weights))
+
+        return instance
