@@ -38,13 +38,7 @@ class MagnetOuterFrontier:
     And find the first point that is not overlapped with the magnet.
     """
 
-    def __init__(
-        self,
-        from_up: Tuple[int, int],
-        from_down: Tuple[int, int],
-        from_left: Tuple[int, int],
-        from_right: Tuple[int, int],
-    ):
+    def __init__(self) -> None:
         self.from_up: Tuple[int, int] = []
         self.from_down: Tuple[int, int] = []
         self.from_left: Tuple[int, int] = []
@@ -53,6 +47,7 @@ class MagnetOuterFrontier:
 
 def allocate_magnetic(
     words: Iterable[Word],
+    allocation_before: AllocationInFrame,
     image_width: int,
     image_height: int,
     image_division: int = 100,
@@ -61,6 +56,7 @@ def allocate_magnetic(
     Allocate words in magnetic strategy
 
     :param Iterable[Word] words: Words to allocate. Order changes the result.
+    :param AllocationInFrame allocation_before: Allocation data at one static frame before
     :param int image_width: Width of the image
     :param int image_height: Height of the image
     :param int image_division: How much the image is divided when finding a new position.

@@ -22,6 +22,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies 
 
 def allocate(
     word_vector: WordVector,
+    allocation_before: AllocationInFrame,
     max_words: int,
     max_word_size: float,
     min_word_size: float,
@@ -34,6 +35,7 @@ def allocate(
     Calculate allocation of each words in each static time
 
     :param WordVector word_vector: The word vector
+    :param AllocationInFrame allocation_before: Allocation data of the previous frame
     :param int max_words: Maximum number of words shown
     :param float max_word_size: Maximum size of the word
     :param int image_width: Width of the image
@@ -135,7 +137,7 @@ def allocate_all(timelapse: TimelapseWordVector) -> AllocationTimelapse:
 
     # calculate allocation for each frame
     for cnt in range(times):
-        allocation = allocate(timelapse[cnt].word_vector)
+        allocation = allocate(timelapse[cnt].word_vector)  # TODO: add parameters
         allocation_timelapse.add(timelapse[cnt].time_name, allocation)
 
     return allocation_timelapse
