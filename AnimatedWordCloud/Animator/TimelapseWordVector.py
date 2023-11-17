@@ -24,10 +24,13 @@ class WordVector:
         """
 
         # use heap to easily get the rankings
-        self._word_heap: List[Tuple[str, float]] = []
+        # to order by weight,
+        #   the weight must be the first element of the tuple
+        # but the output must be the word first
+        self._word_heap: List[Tuple[float, str]] = []
 
         # also prepare a dictionary for direct access to word
-        self._word_dictionary: Dict[str, int] = {}
+        self._word_dictionary: Dict[str, float] = {}
         
 
     def add(self, word: str, weight: float) -> None:
@@ -67,7 +70,7 @@ class WordVector:
         :rtype: List[Tuple(str, float)]
         """
 
-        return self._word_heap[start:end]
+        return [(tup[1], tup[0]) for tup in self._word_heap[start:end]]
 
     def get_weight(self, word: str) -> float:
         """
