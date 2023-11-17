@@ -190,3 +190,22 @@ class TimelapseWordVector:
         """
 
         self.timeframes.append(timeframe)
+        
+    def convert_from_dicts_list(data: Iterable[Iterable[str, Dict[str, float]]]) -> None:
+        """
+        Convert from a list of dictionary of word and weight to TimelapseWordVector instance.
+
+        This is static conversion method.
+
+        :param Iterable[Iterable[str, Dict[str, float]]] data: list[(time_name, Dict[word, weight])]
+        :return: The TimelapseWordVector instance
+        :rtype: TimelapseWordVector
+        """
+        
+        instance = TimelapseWordVector()
+
+        for word_weights in data:
+            instance.add_time_frame(TimeFrame.convert_from_dict(word_weights))
+
+
+        return instance
