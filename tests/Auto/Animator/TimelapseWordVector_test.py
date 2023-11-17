@@ -94,8 +94,7 @@ def test_wordvector():
 def test_timeframe():
     # demo word vector
     test_dict = {"test": 1, "test2": 4, "test3": 3, "test4": 2}
-    word_vector = WordVector()
-    word_vector.convert_from_dict(test_dict)
+    word_vector = WordVector.convert_from_dict(test_dict)
 
     # test constructor
     instance = TimeFrame("test_time", word_vector)
