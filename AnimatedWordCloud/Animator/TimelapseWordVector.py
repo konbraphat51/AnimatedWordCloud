@@ -7,6 +7,7 @@
 Handful class of containing timelapse data of word vectors.
 """
 
+from __future__ import annotations
 from typing import Dict, Tuple, List
 from collections.abc import Iterable
 import heapq
@@ -27,6 +28,7 @@ class WordVector:
 
         # also prepare a dictionary for direct access to word
         self._word_dictionary: Dict[str, int] = {}
+        
 
     def add(self, word: str, weight: float) -> None:
         """
@@ -39,6 +41,7 @@ class WordVector:
 
         heapq.heappush(self._word_heap, (weight, word))
         self._word_dictionary[word] = weight
+
 
     def add_multiple(self, word_weights: Iterable[Tuple[str, float]]) -> None:
         """
@@ -75,6 +78,24 @@ class WordVector:
         :rtype: float
         """
         return self._word_dictionary[word]
+    
+    def convert_from_dict(word_weights: Dict[str, float]) -> WordVector:
+        """
+        Convert from a dictionary of word and weight to WordVector instance.
+
+        This is static conversion method.
+
+        :param Dict[str, float] word_weights: The words and their weights
+        :return: The WordVector instance
+        :rtype: WordVector
+        """
+
+        instance = WordVector()
+
+        for word, weight in word_weights.items():
+            instance.add(word, weight)
+
+        return instance
 
 
 class TimeFrame:
