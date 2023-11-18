@@ -61,7 +61,7 @@ class WordVector:
         for word, weight in word_weights:
             self.add(word, weight)
 
-    def get_ranking(self, start: int, end: int) -> list[tuple(str, float)]:
+    def get_ranking(self, start: int, end: int) -> list[tuple[str, float]]:
         """
         Get the ranking of the words
 
