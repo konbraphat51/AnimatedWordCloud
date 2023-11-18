@@ -27,7 +27,7 @@ def test_wordvector():
     instance.add("test3", 3)
     instance.add("test4", 2)
 
-    assert instance._word_heap == [
+    assert instance._word_bisect == [
         (-4, "test2"),
         (-3, "test3"),
         (-2, "test4"),
@@ -47,7 +47,7 @@ def test_wordvector():
         [("test", 1), ("test2", 4), ("test3", 3), ("test4", 2)]
     )
 
-    assert instance._word_heap == [
+    assert instance._word_bisect == [
         (-4, "test2"),
         (-3, "test3"),
         (-2, "test4"),
@@ -77,7 +77,7 @@ def test_wordvector():
         {"test": 1, "test2": 4, "test3": 3, "test4": 2}
     )
 
-    assert instance._word_heap == [
+    assert instance._word_bisect == [
         (-4, "test2"),
         (-3, "test3"),
         (-2, "test4"),
