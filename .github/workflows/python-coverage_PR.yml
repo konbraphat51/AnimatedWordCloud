@@ -1,16 +1,15 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+# https://github.com/marketplace/actions/pytest-coverage-comment#example-usage
 
-name: coverage
+name: coverage-PR
 
 on:
-  push:
-    branches: [ "dev", "main" ]
   pull_request:
     branches: [ "dev", "main" ]
 
 jobs:
   build:
+    permissions:
+      pull-requests: write
 
     runs-on: ubuntu-latest
     strategy:
