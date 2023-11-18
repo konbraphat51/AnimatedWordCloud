@@ -10,7 +10,7 @@ Handful class of containing timelapse data of word vectors.
 from __future__ import annotations
 from typing import Dict, Tuple, List
 from collections.abc import Iterable
-import heapq
+import bisect
 
 
 class WordVector:
@@ -23,12 +23,12 @@ class WordVector:
         Prepare empty data
         """
 
-        # use heap to easily get the rankings
+        # use bisect to easily get the rankings
         # to order by weight,
         #   the weight must be the first element of the tuple
         #   and negate the weight to get the descending order
         # but the output must be the word first
-        self._word_heap: List[Tuple[float, str]] = []
+        self._word_bisect: List[Tuple[float, str]] = []
 
         # also prepare a dictionary for direct access to word
         self._word_dictionary: Dict[str, float] = {}
@@ -43,7 +43,7 @@ class WordVector:
         """
 
         # negate the weight to get the descending order
-        heapq.heappush(self._word_heap, (-weight, word))
+        bisect.insort(self._word_bisect, (-weight, word))
 
         self._word_dictionary[word] = weight
 
@@ -62,7 +62,7 @@ class WordVector:
         """
         Get the ranking of the words
 
-        This is simply a slice of the heap.
+        This is simply a slice of the bisect_list.
 
         :param int start: Start of the ranking.
         :param int end: End of the ranking. This index will not included. (such as list slice)
@@ -73,7 +73,7 @@ class WordVector:
 
         # weight was negated
         #   so negate it back
-        return [(tup[1], -tup[0]) for tup in self._word_heap[start:end]]
+        return [(tup[1], -tup[0]) for tup in self._word_bisect[start:end]]
 
     def get_weight(self, word: str) -> float:
         """
