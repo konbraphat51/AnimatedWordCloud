@@ -23,10 +23,14 @@ class WordVector:
         """
 
         # use bisect to easily get the rankings
+        #
         # to order by weight,
         #   the weight must be the first element of the tuple
         #   and negate the weight to get the descending order
         # but the output must be the word first
+        #
+        # Words should be inserted by `add()`,
+        #   otherwise the order will be broken
         self._word_bisect: list[tuple[float, str]] = []
 
         # also prepare a dictionary for direct access to word
