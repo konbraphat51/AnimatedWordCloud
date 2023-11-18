@@ -73,7 +73,10 @@ class WordVector:
 
         # weight was negated
         #   so negate it back
-        return [(tup[1], -tup[0]) for tup in self._word_bisect[start:end]]
+        if end == -1:
+            return [(tup[1], -tup[0]) for tup in self._word_bisect[start:]]
+        else:
+            return [(tup[1], -tup[0]) for tup in self._word_bisect[start:end]]
 
     def get_weight(self, word: str) -> float:
         """
