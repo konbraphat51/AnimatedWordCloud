@@ -29,6 +29,13 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install pytest
         python -m pip install .
-    - name: Test with pytest
+    - name: run pytest
       run: |
-        pytest
+          set -o pipefail
+          python -m pytest --junitxml=pytest.xml --cov-report=term-missing --cov=src tests/ | tee pytest-coverage.txt
+
+    - name: Pytest coverage comment
+      uses: MishaKav/pytest-coverage-comment@v1.1.47
+      with:
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml
