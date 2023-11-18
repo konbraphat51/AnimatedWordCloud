@@ -1,6 +1,6 @@
 # https://github.com/marketplace/actions/pytest-coverage-comment#example-usage
 
-name: coverage-PR
+name: coveragePR
 
 on:
   pull_request:
