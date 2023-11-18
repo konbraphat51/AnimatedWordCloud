@@ -173,13 +173,15 @@ class TimelapseWordVector:
         # main data
         self.timeframes: list[TimeFrame] = []
 
-    def __getitem__(self, index: int) -> TimeFrame:
+    def __getitem__(
+        self, index: int | list[int]
+    ) -> TimeFrame | list[TimeFrame]:
         """
         Returns the item at the given index
 
-        :param int index: The index
+        :param int|list[int] index: The index or slice
         :return: The timeframe at the given index
-        :rtype: TimeFrame
+        :rtype: TimeFrame|List[TimeFrame]
         """
         return self.timeframes[index]
 
