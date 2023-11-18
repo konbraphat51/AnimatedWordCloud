@@ -14,7 +14,10 @@ readme = """
 (readme here)
 """
 
-requirements = []
+
+def requirements_from_file(file_name):
+    return open(file_name).read().splitlines()
+
 
 setup(
     name="AnimatedWordCloud",
@@ -34,7 +37,7 @@ setup(
         ]
     },
     include_package_data=True,
-    install_requires=requirements,
+    install_requires=requirements_from_file("requirements.txt"),
     license="MIT License",
     zip_safe=False,
     keywords=[
