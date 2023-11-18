@@ -2,7 +2,6 @@
 Greetings, Thanks for your interest in contributing to AnimatedWordCloud.
 
 ## Status of `dev` branch.
-[![coveragePR](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/python-coverage-PR.yml/badge.svg?branch=dev)](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/python-coverage-PR.yml)
 [![unit-test](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/python-tester.yml/badge.svg?branch=dev)](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/python-tester.yml)
 [![Lint](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/lint.yml/badge.svg)](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/lint.yml)
 
