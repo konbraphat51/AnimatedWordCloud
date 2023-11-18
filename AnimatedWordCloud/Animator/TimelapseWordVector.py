@@ -8,7 +8,6 @@ Handful class of containing timelapse data of word vectors.
 """
 
 from __future__ import annotations
-from typing import Dict, Tuple, List
 from collections.abc import Iterable
 import bisect
 
@@ -28,10 +27,10 @@ class WordVector:
         #   the weight must be the first element of the tuple
         #   and negate the weight to get the descending order
         # but the output must be the word first
-        self._word_bisect: List[Tuple[float, str]] = []
+        self._word_bisect: list[tuple[float, str]] = []
 
         # also prepare a dictionary for direct access to word
-        self._word_dictionary: Dict[str, float] = {}
+        self._word_dictionary: dict[str, float] = {}
 
     def add(self, word: str, weight: float) -> None:
         """
@@ -47,7 +46,7 @@ class WordVector:
 
         self._word_dictionary[word] = weight
 
-    def add_multiple(self, word_weights: Iterable[Tuple[str, float]]) -> None:
+    def add_multiple(self, word_weights: Iterable[tuple[str, float]]) -> None:
         """
         Add multiple words to the data
 
@@ -58,7 +57,7 @@ class WordVector:
         for word, weight in word_weights:
             self.add(word, weight)
 
-    def get_ranking(self, start: int, end: int) -> List[Tuple(str, float)]:
+    def get_ranking(self, start: int, end: int) -> list[tuple(str, float)]:
         """
         Get the ranking of the words
 
@@ -88,7 +87,7 @@ class WordVector:
         """
         return self._word_dictionary[word]
 
-    def convert_from_dict(word_weights: Dict[str, float]) -> WordVector:
+    def convert_from_dict(word_weights: dict[str, float]) -> WordVector:
         """
         Convert from a dictionary of word and weight to WordVector instance.
 
@@ -124,7 +123,7 @@ class TimeFrame:
         self.word_vector: WordVector = word_vector
 
     def convert_from_dict(
-        time_name: str, word_weights: Dict[str, float]
+        time_name: str, word_weights: dict[str, float]
     ) -> TimeFrame:
         """
         Convert from a dictionary of word and weight to TimeFrame instance.
@@ -141,7 +140,7 @@ class TimeFrame:
 
         return TimeFrame(time_name, word_vector)
 
-    def convert_from_tup_dict(data: Iterable[str, Dict[str, float]]):
+    def convert_from_tup_dict(data: Iterable[str, dict[str, float]]):
         """
         Convert from a dictionary of word and weight to TimeFrame instance.
 
@@ -168,7 +167,7 @@ class TimelapseWordVector:
         """
 
         # main data
-        self.timeframes: List[TimeFrame] = []
+        self.timeframes: list[TimeFrame] = []
 
     def __getitem__(self, index: int) -> TimeFrame:
         """
@@ -201,7 +200,7 @@ class TimelapseWordVector:
         self.timeframes.append(timeframe)
 
     def convert_from_dicts_list(
-        data: Iterable[Iterable[str, Dict[str, float]]]
+        data: Iterable[Iterable[str, dict[str, float]]]
     ) -> TimelapseWordVector:
         """
         Convert from a list of dictionary of word and weight to TimelapseWordVector instance.

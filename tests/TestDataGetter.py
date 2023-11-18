@@ -7,12 +7,12 @@
 Get data from test_data submodule
 """
 
+from __future__ import annotations
 import json
-from typing import Dict, List, Tuple
 from AnimatedWordCloud.Animator.TimelapseWordVector import TimelapseWordVector
 
 
-def get_test_timelapses_raw() -> List[List[Tuple[str, Dict[str, float]]]]:
+def get_test_timelapses_raw() -> list[list[tuple[str, dict[str, float]]]]:
     """
     Get the raw data of word vectors from test_data submodule
 

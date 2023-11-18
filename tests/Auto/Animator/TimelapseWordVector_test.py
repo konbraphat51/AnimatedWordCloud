@@ -15,9 +15,6 @@ from AnimatedWordCloud.Animator.TimelapseWordVector import (
 )
 
 
-# test WordVector
-
-
 def test_wordvector():
     # test add
     instance = WordVector()
