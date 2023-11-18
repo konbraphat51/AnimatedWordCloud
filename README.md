@@ -8,4 +8,6 @@
 [![unit-test](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/python-tester.yml/badge.svg?branch=main)](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/python-tester.yml)
 
 
+[![coveragePR](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/python-coverage_PR.yml/badge.svg?branch=main)](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/python-coverage_PR.yml)
+
 AnimatedWordCloud animates the timelapse of your words vector.
