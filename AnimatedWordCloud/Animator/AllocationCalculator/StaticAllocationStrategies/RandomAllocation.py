@@ -50,7 +50,7 @@ class RandomAllocation(StaticAllocationStrategy):
         for word in words:
             # put
             text_lefttop_position = put_randomly(
-                self.image_width, self.image_height, word
+                self.image_width, self.image_height, word.text_size
             )
 
             # allocate in the output
@@ -60,7 +60,7 @@ class RandomAllocation(StaticAllocationStrategy):
 
 
 def put_randomly(
-    image_width: int, image_height: int, word: Word
+    image_width: int, image_height: int, word_size: tuple[int, int]
 ) -> tuple[int, int]:
     """
     Randomly allocate words AROUND the image.
@@ -73,13 +73,13 @@ def put_randomly(
 
     :param int image_width: Width of the image
     :param int image_height: Height of the image
-    :param Word word: The word to allocate
+    :param tuple[int, int] word_size: Size of the word
     :return: Left-top position of the word
     :rtype: tuple[int, int]
     """
     # calculate the radius of the circle
     image_diagnal = (image_width**2 + image_height**2) ** 0.5
-    text_diagnal = (word.text_size[0] ** 2 + word.text_size[1] ** 2) ** 0.5
+    text_diagnal = (word_size[0] ** 2 + word_size[1] ** 2) ** 0.5
     radius = (image_diagnal + text_diagnal) / 2
 
     # randomly choose where on the circle to put
@@ -89,8 +89,8 @@ def put_randomly(
     x = image_center_x + radius * cos(angle)
     y = image_center_y + radius * sin(angle)
     text_lefttop_position = (
-        x - word.text_size[0] / 2,
-        y - word.text_size[1] / 2,
+        x - word_size[0] / 2,
+        y - word_size[1] / 2,
     )
 
     return text_lefttop_position
