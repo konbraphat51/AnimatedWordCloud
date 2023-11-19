@@ -198,8 +198,10 @@ class MagneticAllocation(StaticAllocationStrategy):
         """
         Evaluate the position the word beginf to put
 
-        :param tuple[int,int] position_from: Position of the center of the word comming from
-        :param tuple[int,int] position_to: Position of the center of the word going to be putted
+        :param tuple[int,int] position_from:
+            Position of the center of the word comming from
+        :param tuple[int,int] position_to:
+            Position of the center of the word going to be putted
         :param tuple[int,int] center: Position of the center of the magnet
         :return: Evaluation value. Smaller is the better
         """
@@ -231,8 +233,10 @@ class MagneticAllocation(StaticAllocationStrategy):
             and the best scored position will be returned.
 
         :param Word word: Word to put
-        :param MagnetOuterFrontier magnet_outer_frontier: Outer frontier of the magnet at the center
-        :param tuple[int,int] position_from: Position of the center of the word comming from
+        :param MagnetOuterFrontier magnet_outer_frontier:
+            Outer frontier of the magnet at the center
+        :param tuple[int,int] position_from:
+            Position of the center of the word comming from
         :return: Best left-top position to put the word
         :rtype: tuple[int,int]
         """
@@ -331,10 +335,13 @@ class MagneticAllocation(StaticAllocationStrategy):
         Put all pivots on the each point on the side,
             and find the best position by `evaluate_position()`.
 
-        :param Iterable[tuple[int,int]] pivots_to_center: Vector of  (center of the word) - (pivot)
+        :param Iterable[tuple[int,int]] pivots_to_center:
+            Vector of  (center of the word) - (pivot)
         :param tuple[int,int] size: Size of the word
-        :param Iterable[tuple[int,int]] points_on_side: Points on the side
-        :param tuple[int,int] position_from: Position of the center of the word comming from
+        :param Iterable[tuple[int,int]] points_on_side:
+            Points on the side
+        :param tuple[int,int] position_from:
+            Position of the center of the word comming from
         :return: (Best position, Best score)
         :rtype: tuple[tuple[int,int], float]
         """
