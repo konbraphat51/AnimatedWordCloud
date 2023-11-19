@@ -70,7 +70,7 @@ def test_wordvector():
         ("test4", 2),
         ("test", 1),
     ]
-    
+
     # test get_weight
     assert instance.get_weight("test") == 1
 

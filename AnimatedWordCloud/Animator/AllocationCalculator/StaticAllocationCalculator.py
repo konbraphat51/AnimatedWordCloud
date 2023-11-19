@@ -80,7 +80,11 @@ def allocate(
 
 
 def calculate_font_size(
-    weight: float, weight_max: float, weight_min: float, font_max: int, font_min: int
+    weight: float,
+    weight_max: float,
+    weight_min: float,
+    font_max: int,
+    font_min: int,
 ) -> int:
     """
     Evaluate how much font size the word should be
