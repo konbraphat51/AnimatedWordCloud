@@ -124,6 +124,8 @@ class MagneticAllocation(StaticAllocationStrategy):
             # register to output
             output.add(word.text, word.font_size, position)
 
+        self.handle_missing_words(self.allocations_before, output, self.words)
+
         return output
 
     def get_magnet_outer_frontier(self) -> MagnetOuterFrontier:
