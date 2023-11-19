@@ -248,70 +248,57 @@ class MagneticAllocation(StaticAllocationStrategy):
         left_top_to_center = (x_half, y_half)
         right_top_to_center = (-x_half, y_half)
 
-        # from upper of the magnet
-        pivots_to_center = [
-            left_bottom_to_center,
-            (0, -y_half),
-            right_bottom_to_center,
+        # find the best position among 4 sides
+        pivots_to_center_list = [
+            # from lower
+            [
+                left_top_to_center,
+                (0, y_half),
+                right_top_to_center,
+            ],
+            # from top
+            [
+                left_bottom_to_center,
+                (0, -y_half),
+                right_bottom_to_center,
+            ],
+            # from left
+            [
+                right_bottom_to_center,
+                (x_half, 0),
+                right_top_to_center,
+            ],
+            # from right
+            [
+                left_bottom_to_center,
+                (-x_half, 0),
+                left_top_to_center,
+            ],
         ]
-        best_from_up = self.put_on_one_side(
-            pivots_to_center,
-            word.text_size,
-            magnet_outer_frontier.from_up,
-            position_from,
-        )
 
-        # from lower of the magnet
-        pivots_to_center = [
-            left_top_to_center,
-            (0, y_half),
-            right_top_to_center,
-        ]
-        best_from_down = self.put_on_one_side(
-            pivots_to_center,
-            word.text_size,
+        frontier_sides = [
             magnet_outer_frontier.from_down,
-            position_from,
-        )
-
-        # from left of the magnet
-        pivots_to_center = [
-            right_bottom_to_center,
-            (x_half, 0),
-            right_top_to_center,
-        ]
-        best_from_left = self.put_on_one_side(
-            pivots_to_center,
-            word.text_size,
+            magnet_outer_frontier.from_up,
             magnet_outer_frontier.from_left,
-            position_from,
-        )
-
-        # from right of the magnet
-        pivots_to_center = [
-            left_bottom_to_center,
-            (-x_half, 0),
-            left_top_to_center,
-        ]
-        best_from_right = self.put_on_one_side(
-            pivots_to_center,
-            word.text_size,
             magnet_outer_frontier.from_right,
-            position_from,
-        )
+        ]
 
-        # conclude the best position
+        # conclusion
         best_position = None
         best_score = None
-        for position, score in [
-            best_from_up,
-            best_from_down,
-            best_from_left,
-            best_from_right,
-        ]:
-            if best_score is None or score < best_score:
-                best_position = position
-                best_score = score
+
+        # for each side
+        for cnt in range(4):
+            side_best_position, side_best_score = self.put_on_one_side(
+                pivots_to_center_list[cnt],
+                word.text_size,
+                frontier_sides[cnt],
+                position_from,
+            )
+
+            if (best_score is None) or (side_best_score < best_score):
+                best_position = side_best_position
+                best_score = side_best_score
 
         # to left-top
         best_position = (
