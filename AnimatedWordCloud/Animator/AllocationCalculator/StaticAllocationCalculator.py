@@ -24,8 +24,8 @@ def allocate(
     word_vector: WordVector,
     allocation_before: AllocationInFrame,
     max_words: int,
-    max_word_size: float,
-    min_word_size: float,
+    max_font_size: float,
+    min_font_size: float,
     image_width: int,
     image_height: int,
     font_path: str,
@@ -38,7 +38,8 @@ def allocate(
     :param WordVector word_vector: The word vector
     :param AllocationInFrame allocation_before: Allocation data of the previous frame
     :param int max_words: Maximum number of words shown
-    :param float max_word_size: Maximum size of the word
+    :param float max_font_size: Maximum font size of the word
+    :param float min_font_size: Minimum font size of the word
     :param int image_width: Width of the image
     :param int image_height: Height of the image
     :param str font_path: Path to the font
@@ -59,7 +60,11 @@ def allocate(
     for word_raw, weight in word_weights:
         # get attributes
         font_size = calculate_font_size(
-            weight, word_weights[0][1], word_weights[-1][1], min_word_size
+            weight,
+            word_weights[0][1],
+            word_weights[-1][1],
+            max_font_size,
+            min_font_size,
         )
         text_size = estimate_text_size(word_raw, font_size, font_path)
 
