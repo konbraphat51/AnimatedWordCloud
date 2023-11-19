@@ -23,28 +23,14 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator 
 from AnimatedWordCloud.Animator import AllocationInFrame
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
     Rect,
-    is_point_hitting_rects,
     StaticAllocationStrategy,
     is_rect_hitting_rects,
 )
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.MagneticAllocation import (
+    MagnetOuterFrontier,
+    get_magnet_outer_frontier,
+)
 import math
-
-
-class MagnetOuterFrontier:
-    """
-    Outer frontier of the magnet at the center.
-    This is used to find the next position of the next word.
-
-    This described by launching a lazer from the boarder of the image;
-        from up, down, left, and right.
-    And find the first point that is not overlapped with the magnet.
-    """
-
-    def __init__(self) -> None:
-        self.from_up: list[tuple[int, int]] = []
-        self.from_down: list[tuple[int, int]] = []
-        self.from_left: list[tuple[int, int]] = []
-        self.from_right: list[tuple[int, int]] = []
 
 
 class MagneticAllocation(StaticAllocationStrategy):
@@ -101,7 +87,15 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # from second word
         for word in self.words[1:]:
-            magnet_outer_frontier = self.get_magnet_outer_frontier()
+            (
+                magnet_outer_frontier,
+                self.rects_outermost,
+            ) = get_magnet_outer_frontier(
+                self.rects_outermost,
+                self.image_width,
+                self.image_height,
+                self.image_division,
+            )
 
             # find the best left-top position
             position = self.find_best_position(
@@ -127,70 +121,6 @@ class MagneticAllocation(StaticAllocationStrategy):
         self.handle_missing_words(self.allocations_before, output, self.words)
 
         return output
-
-    def get_magnet_outer_frontier(self) -> MagnetOuterFrontier:
-        """
-        Find the outer frontier of the magnet at the center
-
-        :return: Outer frontier of the magnet at the center
-        :rtype: MagnetOuterFrontier
-        """
-
-        X_INTERVAL = self.image_width / self.image_division
-        Y_INTERVAL = self.image_height / self.image_division
-
-        current_hitted_rects = set()
-
-        magnet_outer_frontier = MagnetOuterFrontier()
-
-        # from up
-        for x in range(1, self.image_width, X_INTERVAL):
-            for y in range(0, self.image_height + 1, Y_INTERVAL):
-                flag_hitted, hitted_rect = is_point_hitting_rects(
-                    (x, y), self.rects_outermost
-                )
-                if flag_hitted:
-                    current_hitted_rects.add(hitted_rect)
-                    magnet_outer_frontier.from_up.append((x, y))
-                    break
-
-        # from down
-        for x in range(1, self.image_width, X_INTERVAL):
-            for y in range(self.image_height, -1, -Y_INTERVAL):
-                flag_hitted, hitted_rect = is_point_hitting_rects(
-                    (x, y), self.rects_outermost
-                )
-                if flag_hitted:
-                    current_hitted_rects.add(hitted_rect)
-                    magnet_outer_frontier.from_down.append((x, y))
-                    break
-
-        # from left
-        for y in range(1, self.image_height, Y_INTERVAL):
-            for x in range(0, self.image_width + 1, X_INTERVAL):
-                flag_hitted, hitted_rect = is_point_hitting_rects(
-                    (x, y), self.rects_outermost
-                )
-                if flag_hitted:
-                    current_hitted_rects.add(hitted_rect)
-                    magnet_outer_frontier.from_left.append((x, y))
-                    break
-
-        # from right
-        for y in range(1, self.image_height, Y_INTERVAL):
-            for x in range(self.image_width, -1, -X_INTERVAL):
-                flag_hitted, hitted_rect = is_point_hitting_rects(
-                    (x, y), self.rects_outermost
-                )
-                if flag_hitted:
-                    current_hitted_rects.add(hitted_rect)
-                    magnet_outer_frontier.from_right.append((x, y))
-                    break
-
-        # update rects_outermost
-        self.rects_outermost = current_hitted_rects
-
-        return magnet_outer_frontier
 
     def evaluate_position(
         self, position_from: tuple[int, int], position_to: tuple[int, int]
