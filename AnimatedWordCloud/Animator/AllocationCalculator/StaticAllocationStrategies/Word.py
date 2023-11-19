@@ -10,6 +10,7 @@ Data class contains attributes of each words
 
 from __future__ import annotations
 
+
 class Word:
     """
     Data class contains attributes of each words.
@@ -17,7 +18,11 @@ class Word:
     """
 
     def __init__(
-        self, text: str, weight: float, font_size: int, text_size: tuple[int, int]
+        self,
+        text: str,
+        weight: float,
+        font_size: int,
+        text_size: tuple[int, int],
     ):
         self.text = text
         self.weight = weight
