@@ -9,7 +9,9 @@ Get data from test_data submodule
 
 from __future__ import annotations
 import json
+from pathlib import Path
 from AnimatedWordCloud.Animator.TimelapseWordVector import TimelapseWordVector
+from AnimatedWordCloud.Utils import LIBRARY_DIR
 
 
 def get_test_timelapses_raw() -> list[list[tuple[str, dict[str, float]]]]:
@@ -24,7 +26,10 @@ def get_test_timelapses_raw() -> list[list[tuple[str, dict[str, float]]]]:
 
     # from Elon Musk's tweets
     with open(
-        "tests/test_data/ElonMusk/wordvector_timelapse_elon.json", "r"
+        Path.joinpath(
+            LIBRARY_DIR, "tests/test_data/ElonMusk/wordvector_elon.json"
+        ),
+        "r",
     ) as f:
         output.append(json.load(f))
 
@@ -45,3 +50,9 @@ The inner class data of word vector timelapses got from test_data submodule
 for raw_timelapse in raw_timelapses_test:
     timelapse = TimelapseWordVector.convert_from_dicts_list(raw_timelapse)
     timelapses_test.append(timelapse)
+
+
+# test this module
+def test_module():
+    assert get_test_timelapses_raw() is not None
+    assert len(timelapses_test) == 1
