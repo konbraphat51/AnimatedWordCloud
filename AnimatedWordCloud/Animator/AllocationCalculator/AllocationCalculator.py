@@ -23,4 +23,4 @@ def calculate(
     :rtype: List[PositionInFrame]
     """
 
-    return word_vector_timelapse
+    raise NotImplementedError()
