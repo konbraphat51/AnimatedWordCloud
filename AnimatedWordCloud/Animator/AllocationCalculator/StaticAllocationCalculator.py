@@ -13,7 +13,7 @@ from PIL import Image, ImageFont, ImageDraw
 from AnimatedWordCloud import WordVector, TimelapseWordVector
 from AnimatedWordCloud.Animator import AllocationInFrame, AllocationTimelapse
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
-    allocate_magnetic,
+    MagneticAllocation,
 )
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
     Word,
@@ -30,6 +30,7 @@ def allocate(
     image_height: int,
     font_path: str,
     strategy: Literal["magnetic"] = "magnetic",
+    image_division: int = 100,
 ) -> AllocationInFrame:
     """
     Calculate allocation of each words in each static time
@@ -42,7 +43,9 @@ def allocate(
     :param int image_height: Height of the image
     :param str font_path: Path to the font
     :param str strategy: Strategy to allocate words.
-    There are "magnetic" only for now.
+        There are "magnetic" only for now.
+    :param int image_division: The number of division of the image.
+        Used by magnetic strategy.
     :return: Allocation data of the frame
     :rtype: AllocationInFrame
     """
@@ -68,7 +71,10 @@ def allocate(
 
     # calculate allocation by selected strategy
     if strategy == "magnetic":
-        return allocate_magnetic(words, image_width, image_height)
+        allocator = MagneticAllocation(
+            image_width, image_height, allocation_before
+        )
+        return allocator.allocate(words, image_division)
     else:
         raise ValueError("Unknown strategy: {}".format(strategy))
 
