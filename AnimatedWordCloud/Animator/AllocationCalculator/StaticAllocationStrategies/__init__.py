@@ -22,6 +22,10 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.
     is_rect_hitting_rects,
 )
 
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.put_randomly import (
+    put_randomly,
+)
+
 __all__ = [
     "StaticAllocationStrategy",
     "RandomAllocation",

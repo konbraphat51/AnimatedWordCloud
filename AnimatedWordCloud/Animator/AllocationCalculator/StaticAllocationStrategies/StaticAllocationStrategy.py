@@ -12,7 +12,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator 
     Word,
 )
 from AnimatedWordCloud.Animator import AllocationInFrame
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.RandomAllocation import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
     put_randomly,
 )
 
