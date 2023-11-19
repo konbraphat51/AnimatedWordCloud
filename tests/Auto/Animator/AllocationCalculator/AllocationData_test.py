@@ -21,10 +21,6 @@ def test_AllocationInFrame():
     instance.add("test2", 20, (10, 10))
     assert instance["test"] == (10, (0, 0))
 
-    # test setitem
-    instance["test3"] = (20, (0, 0))
-    assert instance["test3"] == (20, (0, 0))
-
 
 def test_AllocationTimelapse():
     instance = AllocationTimelapse()

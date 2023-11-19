@@ -48,19 +48,6 @@ class AllocationInFrame:
 
         return self.words[word]
 
-    def __setitem__(
-        self, word: str, value: tuple[float, tuple[float, float]]
-    ) -> None:
-        """
-        Set the data of the word
-
-        :param str word: Word to set
-        :param tuple[float, tuple[float, float]] value: (font size, left-top position)
-        :rtype: None
-        """
-
-        self.words[word] = value
-
 
 class AllocationTimelapse:
     """
