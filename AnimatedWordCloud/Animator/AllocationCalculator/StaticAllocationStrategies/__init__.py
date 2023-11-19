@@ -6,6 +6,10 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.
     MagneticAllocation,
 )
 
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.RandomAllocation import (
+    RandomAllocation,
+)
+
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.Word import (
     Word,
 )
@@ -20,6 +24,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.
 
 __all__ = [
     "StaticAllocationStrategy",
+    "RandomAllocation",
     "allocate_magnetic",
     "Word",
     "Rect",

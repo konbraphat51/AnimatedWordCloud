@@ -23,11 +23,9 @@ class StaticAllocationStrategy:
         self,
         image_width: int,
         image_height: int,
-        image_division: int = 100,
     ):
         self.image_width = image_width
         self.image_height = image_height
-        self.image_division = image_division
 
     def allocate(
         self, words: Iterable[Word], allocation_before: AllocationInFrame

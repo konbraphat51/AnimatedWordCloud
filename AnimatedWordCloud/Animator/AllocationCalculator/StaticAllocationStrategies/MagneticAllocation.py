@@ -48,6 +48,12 @@ class MagnetOuterFrontier:
 
 
 class MagneticAllocation(StaticAllocationStrategy):
+    def __init__(
+        self, image_width: int, image_height: int, image_division: int = 100
+    ):
+        super().__init__(image_width, image_height)
+        self.image_division = image_division
+
     def allocate(
         self, words: Iterable[Word], allocation_before: AllocationInFrame
     ) -> AllocationInFrame:
