@@ -25,6 +25,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies 
     Rect,
     is_point_hitting_rects,
     StaticAllocationStrategy,
+    is_rect_hitting_rects,
 )
 import math
 
@@ -94,7 +95,14 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # from second word
         for word in self.words[1:]:
-            mnagnet_outer_frontier = self.find_magnet_outer_frontier()
+            magnet_outer_frontier = self.find_magnet_outer_frontier()
+
+            # find the best position
+            position = self.find_best_position(
+                word,
+                magnet_outer_frontier,
+                self.allocations_before[word.text][1],
+            )
 
     def find_magnet_outer_frontier(self) -> MagnetOuterFrontier:
         """
@@ -155,7 +163,10 @@ class MagneticAllocation(StaticAllocationStrategy):
                     magnet_outer_frontier.from_right.append((x, y))
                     break
 
-        return (magnet_outer_frontier, current_hitted_rects)
+        # update rects_outermost
+        self.rects_outermost = current_hitted_rects
+
+        return magnet_outer_frontier
 
     def evaluate_position(
         self, position_from: tuple[int, int], position_to: tuple[int, int]
@@ -181,3 +192,142 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # the smaller, the better; This need manual adjustment
         return distance_movement**2 + distance_center**2
+
+    def find_best_position(
+        self,
+        word: Word,
+        magnet_outer_frontier: MagnetOuterFrontier,
+        position_from: tuple[int, int],
+    ) -> tuple[int, int]:
+        """
+        Find the best position to put the word
+
+        Find the best position to put the word in the `magnet_outer_frontier`.
+        The positions will be evaluated by `evaluate_position()`,
+            and the best scored position will be returned.
+
+        :param Word word: Word to put
+        :param MagnetOuterFrontier magnet_outer_frontier: Outer frontier of the magnet at the center
+        :param tuple[int,int] position_from: Position of the center of the word comming from
+        :return: Best position to put the word
+        :rtype: tuple[int,int]
+        """
+
+        x_half = word.text_size[0] / 2
+        y_half = word.text_size[1] / 2
+        left_bottom_to_center = (x_half, -y_half)
+        right_bottom_to_center = (-x_half, -y_half)
+        left_top_to_center = (x_half, y_half)
+        right_top_to_center = (-x_half, y_half)
+
+        # from upper of the magnet
+        pivots_to_center = [
+            left_bottom_to_center,
+            (0, -y_half),
+            right_bottom_to_center,
+        ]
+        best_from_up = self.put_on_one_side(
+            pivots_to_center,
+            word.text_size,
+            magnet_outer_frontier.from_up,
+            position_from,
+        )
+        
+        # from lower of the magnet
+        pivots_to_center = [
+            left_top_to_center,
+            (0, y_half),
+            right_top_to_center,
+        ]
+        best_from_down = self.put_on_one_side(
+            pivots_to_center,
+            word.text_size,
+            magnet_outer_frontier.from_down,
+            position_from,
+        )
+        
+        # from left of the magnet
+        pivots_to_center = [
+            right_bottom_to_center,
+            (x_half, 0),
+            right_top_to_center,
+        ]
+        best_from_left = self.put_on_one_side(
+            pivots_to_center,
+            word.text_size,
+            magnet_outer_frontier.from_left,
+            position_from,
+        )
+        
+        # from right of the magnet
+        pivots_to_center = [
+            left_bottom_to_center,
+            (-x_half, 0),
+            left_top_to_center,
+        ]
+        best_from_right = self.put_on_one_side(
+            pivots_to_center,
+            word.text_size,
+            magnet_outer_frontier.from_right,
+            position_from,
+        )
+
+    def put_on_one_side(
+        self,
+        pivots_to_center: Iterable[tuple[int, int]],
+        size: tuple[int, int],
+        points_on_side: Iterable[tuple[int, int]],
+        position_from: tuple[int, int],
+    ) -> tuple[tuple[int, int], float]:
+        """
+        Try to put on one side of the magnet,
+            and find the best position on that side
+
+        Put all pivots on the each point on the side,
+            and find the best position by `evaluate_position()`.
+
+        :param Iterable[tuple[int,int]] pivots_to_center: Vector of  (center of the word) - (pivot)
+        :param tuple[int,int] size: Size of the word
+        :param Iterable[tuple[int,int]] points_on_side: Points on the side
+        :param tuple[int,int] position_from: Position of the center of the word comming from
+        :return: (Best position, Best score)
+        :rtype: tuple[tuple[int,int], float]
+        """
+
+        best_position = None
+        best_score = None
+
+        for point_on_side in points_on_side:
+            for pivot_to_center in pivots_to_center:
+                # try put the pivot on the point
+                center_position = (
+                    point_on_side[0] + pivot_to_center[0],
+                    point_on_side[1] + pivot_to_center[1],
+                )
+
+                # if hitting with other word...
+                if is_rect_hitting_rects(
+                    Rect(
+                        #left_top
+                        (
+                            center_position[0] - size[0]/2,
+                            center_position[1] - size[1]/2,
+                        ),
+                        #right_bottom
+                        (
+                            center_position[0] + size[0]/2,
+                            center_position[1] + size[1]/2,
+                        ),
+                    ),
+                    self.rects_outermost,
+                ):
+                    #...skip this position
+                    continue
+
+                score = self.evaluate_position(position_from, center_position)
+
+                if best_score is None or score < best_score:
+                    best_position = center_position
+                    best_score = score
+
+        return (best_position, best_score)
