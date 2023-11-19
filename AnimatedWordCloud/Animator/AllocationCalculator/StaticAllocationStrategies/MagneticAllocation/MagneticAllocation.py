@@ -275,21 +275,7 @@ class MagneticAllocation(StaticAllocationStrategy):
                 )
 
                 # if hitting with other word...
-                if is_rect_hitting_rects(
-                    Rect(
-                        # left_top
-                        (
-                            center_position[0] - size[0] / 2,
-                            center_position[1] - size[1] / 2,
-                        ),
-                        # right_bottom
-                        (
-                            center_position[0] + size[0] / 2,
-                            center_position[1] + size[1] / 2,
-                        ),
-                    ),
-                    self.rects_outermost,
-                ):
+                if self._is_hitting_other_words(center_position, size):
                     # ...skip this position
                     continue
 
@@ -300,3 +286,31 @@ class MagneticAllocation(StaticAllocationStrategy):
                     best_score = score
 
         return (best_position, best_score)
+
+    def _is_hitting_other_words(
+        self, center_position: tuple[int, int], size: [int, int]
+    ) -> bool:
+        """
+        Check if the given rect is hitting with other words
+
+        :param tuple[int,int] center_position: Center point of the word
+        :param tuple[int,int] size: Size of the word
+        :return: True if the center point is hitting with other words
+        :rtype: bool
+        """
+
+        return is_rect_hitting_rects(
+            Rect(
+                # left_top
+                (
+                    center_position[0] - size[0] / 2,
+                    center_position[1] - size[1] / 2,
+                ),
+                # right_bottom
+                (
+                    center_position[0] + size[0] / 2,
+                    center_position[1] + size[1] / 2,
+                ),
+            ),
+            self.rects_outermost,
+        )
