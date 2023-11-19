@@ -12,6 +12,9 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator 
     Word,
 )
 from AnimatedWordCloud.Animator import AllocationInFrame
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.RandomAllocation import (
+    put_randomly,
+)
 
 
 class StaticAllocationStrategy:
@@ -40,3 +43,25 @@ class StaticAllocationStrategy:
         """
 
         raise NotImplementedError
+
+    def add_word_in_previous_frame(
+        self, frame_previous: AllocationInFrame, word: Word
+    ) -> None:
+        """
+        Add word in instance of the previous frame
+
+        Randomly put the word in the previous frame.
+        The putting algorithm is the same as the one in RandomAllocation.
+
+        :param AllocationInFrame frame_previous:
+            The allocation data of the previous frame
+        :rtype: None
+        """
+
+        # put
+        text_lefttop_position = put_randomly(
+            self.image_width, self.image_height, word
+        )
+
+        # allocate in the output
+        frame_previous[word.text] = (word.font_size, text_lefttop_position)
