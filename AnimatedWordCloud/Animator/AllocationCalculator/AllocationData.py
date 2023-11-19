@@ -37,6 +37,16 @@ class AllocationInFrame:
 
         self.words[word] = (font_size, left_top)
 
+    def __getitem__(self, word: str) -> tuple[float, tuple[float, float]]:
+        """
+        Get the data of the word
+
+        :param str word: Word to get
+        :return: (font size, left-top position)
+        :rtype: tuple[float, tuple[float, float]]
+        """
+
+        return self.words[word]
 
 class AllocationTimelapse:
     """
