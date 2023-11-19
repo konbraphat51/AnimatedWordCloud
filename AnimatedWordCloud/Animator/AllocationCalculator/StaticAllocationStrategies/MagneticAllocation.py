@@ -95,16 +95,32 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # from second word
         for word in self.words[1:]:
-            magnet_outer_frontier = self.find_magnet_outer_frontier()
+            magnet_outer_frontier = self.get_magnet_outer_frontier()
 
-            # find the best position
+            # find the best left-top position
             position = self.find_best_position(
                 word,
                 magnet_outer_frontier,
                 self.allocations_before[word.text][1],
             )
 
-    def find_magnet_outer_frontier(self) -> MagnetOuterFrontier:
+            # register rect
+            self.rects_outermost.add(
+                Rect(
+                    position,
+                    (
+                        position[0] + word.text_size[0],
+                        position[1] + word.text_size[1],
+                    ),
+                )
+            )
+
+            # register to output
+            output.add(word.text, word.font_size, position)
+
+        return output
+
+    def get_magnet_outer_frontier(self) -> MagnetOuterFrontier:
         """
         Find the outer frontier of the magnet at the center
 
@@ -209,7 +225,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         :param Word word: Word to put
         :param MagnetOuterFrontier magnet_outer_frontier: Outer frontier of the magnet at the center
         :param tuple[int,int] position_from: Position of the center of the word comming from
-        :return: Best position to put the word
+        :return: Best left-top position to put the word
         :rtype: tuple[int,int]
         """
 
@@ -232,7 +248,7 @@ class MagneticAllocation(StaticAllocationStrategy):
             magnet_outer_frontier.from_up,
             position_from,
         )
-        
+
         # from lower of the magnet
         pivots_to_center = [
             left_top_to_center,
@@ -245,7 +261,7 @@ class MagneticAllocation(StaticAllocationStrategy):
             magnet_outer_frontier.from_down,
             position_from,
         )
-        
+
         # from left of the magnet
         pivots_to_center = [
             right_bottom_to_center,
@@ -258,7 +274,7 @@ class MagneticAllocation(StaticAllocationStrategy):
             magnet_outer_frontier.from_left,
             position_from,
         )
-        
+
         # from right of the magnet
         pivots_to_center = [
             left_bottom_to_center,
@@ -271,7 +287,7 @@ class MagneticAllocation(StaticAllocationStrategy):
             magnet_outer_frontier.from_right,
             position_from,
         )
-        
+
         # conclude the best position
         best_position = None
         best_score = None
@@ -284,7 +300,13 @@ class MagneticAllocation(StaticAllocationStrategy):
             if best_score is None or score < best_score:
                 best_position = position
                 best_score = score
-                
+
+        # to left-top
+        best_position = (
+            best_position[0] - x_half,
+            best_position[1] - y_half,
+        )
+
         return best_position
 
     def put_on_one_side(
@@ -323,20 +345,20 @@ class MagneticAllocation(StaticAllocationStrategy):
                 # if hitting with other word...
                 if is_rect_hitting_rects(
                     Rect(
-                        #left_top
+                        # left_top
                         (
-                            center_position[0] - size[0]/2,
-                            center_position[1] - size[1]/2,
+                            center_position[0] - size[0] / 2,
+                            center_position[1] - size[1] / 2,
                         ),
-                        #right_bottom
+                        # right_bottom
                         (
-                            center_position[0] + size[0]/2,
-                            center_position[1] + size[1]/2,
+                            center_position[0] + size[0] / 2,
+                            center_position[1] + size[1] / 2,
                         ),
                     ),
                     self.rects_outermost,
                 ):
-                    #...skip this position
+                    # ...skip this position
                     continue
 
                 score = self.evaluate_position(position_from, center_position)
