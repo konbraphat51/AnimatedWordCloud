@@ -47,7 +47,7 @@ class MagnetOuterFrontier:
 
 
 class MagneticAllocation(StaticAllocationStrategy):
-    def allocate_magnetic(
+    def allocate(
         self, words: Iterable[Word], allocation_before: AllocationInFrame
     ) -> AllocationInFrame:
         """
