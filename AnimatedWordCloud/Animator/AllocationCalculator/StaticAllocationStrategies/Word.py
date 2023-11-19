@@ -7,7 +7,6 @@
 Data class contains attributes of each words
 """
 
-
 from __future__ import annotations
 
 
