@@ -7,7 +7,7 @@
 Calculate allocation of each words in each static time
 """
 
-from typing import Literal, List
+from typing import Literal
 import numpy as np
 from PIL import Image, ImageFont, ImageDraw
 from AnimatedWordCloud import WordVector, TimelapseWordVector
@@ -55,7 +55,7 @@ def allocate(
 
     word_weights = word_vector.get_ranking(0, max_words)
 
-    words: List[Word] = []
+    words: list[Word] = []
 
     # get attributes for each words,
     #   and save them as Word instances
