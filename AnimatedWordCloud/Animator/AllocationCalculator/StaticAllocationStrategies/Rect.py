@@ -7,13 +7,13 @@
 Handling rect in static allocation strategies
 """
 
-from typing import Tuple, Set
+from __future__ import annotations
 from collections.abc import Iterable
 
 
 class Rect:
     def __init__(
-        self, left_top: Tuple[int, int], right_bottom: Tuple[int, int]
+        self, left_top: tuple[int, int], right_bottom: tuple[int, int]
     ) -> None:
         """
         :param Tuple[int,int] left_top: Left top position of the rect
@@ -24,8 +24,8 @@ class Rect:
 
 
 def is_point_hitting_rects(
-    point: Tuple[int, int], rects: Iterable[Rect]
-) -> Tuple[bool, Rect]:
+    point: tuple[int, int], rects: Iterable[Rect]
+) -> tuple[bool, Rect]:
     """
     Check if the point is hitting any of the rects given.
 
@@ -41,7 +41,7 @@ def is_point_hitting_rects(
     return (False, None)
 
 
-def is_point_hitting_rect(point: Tuple[int, int], rect: Rect) -> bool:
+def is_point_hitting_rect(point: tuple[int, int], rect: Rect) -> bool:
     """
     Check if the point is hitting the single rect given.
 
