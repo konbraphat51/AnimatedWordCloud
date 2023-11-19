@@ -59,7 +59,7 @@ def allocate(
     for word_raw, weight in word_weights:
         # get attributes
         font_size = calculate_font_size(
-            weight, word_weights[0][1], max_word_size, min_word_size
+            weight, word_weights[0][1], word_weights[-1][1], min_word_size
         )
         text_size = estimate_text_size(word_raw, font_size, font_path)
 
@@ -80,7 +80,7 @@ def allocate(
 
 
 def calculate_font_size(
-    weight: float, weight_max: float, font_max: int, font_min: int
+    weight: float, weight_max: float, weight_min: float, font_max: int, font_min: int
 ) -> int:
     """
     Evaluate how much font size the word should be
@@ -89,6 +89,7 @@ def calculate_font_size(
 
     :param float weight: The weight of the word
     :param float weight_max: The maximum weight of the word
+    :param float weight_min: The minimum weight of the word
     :param int font_max: The maximum font size
     :param int font_min: The minimum font size
     :return: The font size estimated
@@ -96,7 +97,8 @@ def calculate_font_size(
     """
 
     # calculate font size linearly
-    font_size = int((font_max - font_min) * (weight / weight_max) + font_min)
+    weight_ratio = (weight - weight_min) / (weight_max - weight_min)
+    font_size = int((font_max - font_min) * weight_ratio + font_min)
 
     return font_size
 
