@@ -65,7 +65,12 @@ def test_wordvector():
         ("test4", 2),
         ("test", 1),
     ]
-
+    assert instance.get_ranking(1, 100) == [
+        ("test3", 3),
+        ("test4", 2),
+        ("test", 1),
+    ]
+    
     # test get_weight
     assert instance.get_weight("test") == 1
 
