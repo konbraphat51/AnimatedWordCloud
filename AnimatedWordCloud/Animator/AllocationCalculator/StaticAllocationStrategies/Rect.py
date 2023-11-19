@@ -14,7 +14,11 @@ from collections.abc import Iterable
 class Rect:
     def __init__(
         self, left_top: Tuple[int, int], right_bottom: Tuple[int, int]
-    ):
+    ) -> None:
+        """
+        :param Tuple[int,int] left_top: Left top position of the rect
+        :param Tuple[int,int] right_bottom: Right bottom position of the rect
+        """
         self.left_top = left_top
         self.right_bottom = right_bottom
 
