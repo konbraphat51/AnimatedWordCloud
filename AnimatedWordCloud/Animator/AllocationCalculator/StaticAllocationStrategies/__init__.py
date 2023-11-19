@@ -1,5 +1,5 @@
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.MagneticAllocation import (
-    allocate_magnetic,
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.StaticAllocationStrategy import (
+    StaticAllocationStrategy,
 )
 
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.Word import (
