@@ -87,3 +87,14 @@ class AllocationTimelapse:
         """
 
         self.timelapse.append((time_name, allocation_in_frame))
+
+    def get_frame(self, index: int) -> AllocationInFrame:
+        """
+        Get the allocation data of the frame
+
+        :param int index: Index of the frame
+        :return: Allocation data of the frame
+        :rtype: AllocationInFrame
+        """
+
+        return self.timelapse[index][1]
