@@ -1,7 +1,7 @@
-# from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
-#     AllocationInFrame,
-#     AllocationTimelapse,
-# )
+from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
+    AllocationInFrame,
+    AllocationTimelapse,
+)
 from AnimatedWordCloud.Animator.TimelapseWordVector import (
     TimelapseWordVector,
     TimeFrame,
