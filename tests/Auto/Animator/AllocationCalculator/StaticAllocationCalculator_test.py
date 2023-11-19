@@ -7,12 +7,13 @@
 Testing the StaticAllocationCalculator module
 """
 
+
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator import (
     calculate_font_size,
     estimate_text_size,
 )
-
 from AnimatedWordCloud.Utils import DEFAULT_ENG_FONT_PATH
+from tests.TestDataGetter import timelapses_test
 
 
 def test_calculate_font_size():
@@ -37,3 +38,8 @@ def test_estimate_text_size():
     # just a exceessive test
     assert estimate_text_size("Hello", 100, DEFAULT_ENG_FONT_PATH)[0] > 50
     assert estimate_text_size("Hello", 100, DEFAULT_ENG_FONT_PATH)[1] > 50
+
+
+def test_allocate():
+    # TODO: make after Random Allocater made
+    pass
