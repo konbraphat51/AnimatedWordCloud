@@ -51,7 +51,7 @@ class StaticAllocationStrategy:
         Add word in instance of the previous frame
 
         Randomly put the word in the previous frame.
-        The putting algorithm is the same as the one in RandomAllocation.
+        The putting algorithm is the same as the one in `RandomAllocation`.
 
         :param AllocationInFrame frame_previous:
             The allocation data of the previous frame
@@ -65,3 +65,39 @@ class StaticAllocationStrategy:
 
         # allocate in the output
         frame_previous[word.text] = (word.font_size, text_lefttop_position)
+
+    def add_missing_word(
+        self,
+        frame_previous: AllocationInFrame,
+        frame_current: AllocationInFrame,
+    ) -> None:
+        """
+        Add missing word from the previous frame
+            to the instance of the current frame
+
+        Find words existed in previous frame but not in current,
+            and add them to the current frame.
+        Added words are putted randomly, same as `RandomAllocation`.
+        This must be called after all words are allocated in the current frame.
+        This is intended to let disappearing words disappear smoothly.
+
+        :param AllocationInFrame frame_previous:
+            The allocation data of the previous frame
+        :param AllocationInFrame frame_current:
+            The allocation data of the current frame
+        :rtype: None
+        """
+
+        # find missing words
+        words_previous = set(frame_previous.words.keys())
+        words_current = set(frame_current.words.keys())
+        words_missing = words_previous - words_current
+
+        # add missing words
+        for word in words_missing:
+            lefttop_position = put_randomly(
+                self.image_width, self.image_height, word
+            )
+            frame_current.add(
+                word, (frame_previous[word][0], lefttop_position)
+            )
