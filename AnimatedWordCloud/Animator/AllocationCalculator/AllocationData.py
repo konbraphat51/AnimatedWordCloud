@@ -48,6 +48,7 @@ class AllocationInFrame:
 
         return self.words[word]
 
+
 class AllocationTimelapse:
     """
     Timelapse of positions and size of each words
