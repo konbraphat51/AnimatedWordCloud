@@ -14,10 +14,12 @@ from AnimatedWordCloud import WordVector, TimelapseWordVector
 from AnimatedWordCloud.Animator import AllocationInFrame, AllocationTimelapse
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
     MagneticAllocation,
+    RandomAllocation,
 )
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
     Word,
 )
+from AnimatedWordCloud.Utils import TRANSITION_SYMBOL
 
 
 def allocate(
@@ -77,9 +79,9 @@ def allocate(
     # calculate allocation by selected strategy
     if strategy == "magnetic":
         allocator = MagneticAllocation(
-            image_width, image_height, allocation_before
+            image_width, image_height, image_division
         )
-        return allocator.allocate(words, image_division)
+        return allocator.allocate(words, allocation_before)
     else:
         raise ValueError("Unknown strategy: {}".format(strategy))
 
@@ -143,18 +145,45 @@ def estimate_text_size(
     return (w, h)
 
 
-def allocate_all(timelapse: TimelapseWordVector) -> AllocationTimelapse:
+def allocate_all(
+    timelapse: TimelapseWordVector,
+    max_words: int,
+    max_font_size: float,
+    min_font_size: float,
+    image_width: int,
+    image_height: int,
+    font_path: str,
+    strategy: Literal["magnetic"] = "magnetic",
+    image_division: int = 100,
+) -> AllocationInFrame:
     """
-    Calculate allocation of each words in several each static time
+    Calculate allocation of each words in each static time
 
-    :param TimelapseWordVector timelapse: The word vector
-    :return: Allocation data of each frame
-    :rtype: AllocationTimelapse
+    :param TimelapseWordVector timelapse: The timelapse word vector
+    :param int max_words: Maximum number of words shown
+    :param float max_font_size: Maximum font size of the word
+    :param float min_font_size: Minimum font size of the word
+    :param int image_width: Width of the image
+    :param int image_height: Height of the image
+    :param str font_path: Path to the font
+    :param str strategy: Strategy to allocate words.
+        There are "magnetic" only for now.
+    :param int image_division: The number of division of the image.
+        Used by magnetic strategy.
+    :return: Allocation data of the frame
+    :rtype: AllocationInFrame
     """
 
     times = len(timelapse)
 
     allocation_timelapse = AllocationTimelapse()
+
+    # first frame
+    random_allocator = RandomAllocation(image_width, image_height)
+    first_frame = random_allocator.allocate(timelapse[0].word_vector)
+    allocation_timelapse.add(
+        TRANSITION_SYMBOL + timelapse[0].time_name, first_frame
+    )
 
     # calculate allocation for each frame
     for cnt in range(times):
