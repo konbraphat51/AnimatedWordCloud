@@ -54,3 +54,23 @@ def is_point_hitting_rect(point: tuple[int, int], rect: Rect) -> bool:
         rect.left_top[0] <= point[0] <= rect.right_bottom[0]
         and rect.left_top[1] <= point[1] <= rect.right_bottom[1]
     )
+
+
+def is_rect_hitting_rect(rect0: Rect, rect1: Rect) -> bool:
+    """
+    Check if 2 rects hitting
+
+    Check the collision by AABB algorithm
+
+    :param Rect rect0: Rect to check
+    :param Rect rect1: Rect to check
+    :return: Whether 2 rects are hitting
+    :rtype: bool
+    """
+
+    return not (
+        rect0.right_bottom[0] < rect1.left_top[0]
+        or rect0.left_top[0] > rect1.right_bottom[0]
+        or rect0.right_bottom[1] < rect1.left_top[1]
+        or rect0.left_top[1] > rect1.right_bottom[1]
+    )
