@@ -271,6 +271,21 @@ class MagneticAllocation(StaticAllocationStrategy):
             magnet_outer_frontier.from_right,
             position_from,
         )
+        
+        # conclude the best position
+        best_position = None
+        best_score = None
+        for position, score in [
+            best_from_up,
+            best_from_down,
+            best_from_left,
+            best_from_right,
+        ]:
+            if best_score is None or score < best_score:
+                best_position = position
+                best_score = score
+                
+        return best_position
 
     def put_on_one_side(
         self,
