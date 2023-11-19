@@ -13,6 +13,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.
 )
 
 __all__ = [
+    "StaticAllocationStrategy",
     "allocate_magnetic",
     "Word",
     "Rect",
