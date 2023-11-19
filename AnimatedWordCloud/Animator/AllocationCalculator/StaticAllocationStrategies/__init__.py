@@ -7,7 +7,8 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.
 )
 
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.RandomAllocation import (
-    RandomAllocation,
+    allocate_randomly,
+    put_randomly,
 )
 
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.Word import (
@@ -22,14 +23,9 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.
     is_rect_hitting_rects,
 )
 
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.put_randomly import (
-    put_randomly,
-)
-
 __all__ = [
     "StaticAllocationStrategy",
-    "RandomAllocation",
-    "allocate_magnetic",
+    "allocate_randomly",
     "Word",
     "Rect",
     "is_point_hitting_rect",

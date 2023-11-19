@@ -8,7 +8,8 @@ testing RandomAllocation class
 """
 
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.RandomAllocation import (
-    RandomAllocation,
+    allocate_randomly,
+    put_randomly,
 )
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.Word import (
     Word,
@@ -22,5 +23,8 @@ def test_RandomAllocation():
         Word("test", 4, 40, (40, 40)),
     ]
 
-    instance = RandomAllocation(100, 100)
-    assert instance.allocate(words) is not None
+    assert allocate_randomly(words, 100, 100) is not None
+
+
+def test_put_randomly():
+    assert put_randomly(100, 100, (10, 10)) is not None

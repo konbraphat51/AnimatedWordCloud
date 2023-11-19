@@ -14,10 +14,10 @@ from AnimatedWordCloud import WordVector, TimelapseWordVector
 from AnimatedWordCloud.Animator import AllocationInFrame, AllocationTimelapse
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
     MagneticAllocation,
-    RandomAllocation,
 )
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
     Word,
+    allocate_randomly,
 )
 from AnimatedWordCloud.Utils import TRANSITION_SYMBOL
 
@@ -179,8 +179,9 @@ def allocate_all(
     allocation_timelapse = AllocationTimelapse()
 
     # first frame
-    random_allocator = RandomAllocation(image_width, image_height)
-    first_frame = random_allocator.allocate(timelapse[0].word_vector)
+    first_frame = allocate_randomly(
+        timelapse[0].word_vector, image_width, image_height
+    )
     allocation_timelapse.add(
         TRANSITION_SYMBOL + timelapse[0].time_name, first_frame
     )
