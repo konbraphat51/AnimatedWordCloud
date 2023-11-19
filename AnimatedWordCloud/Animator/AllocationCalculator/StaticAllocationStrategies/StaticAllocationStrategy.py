@@ -44,29 +44,48 @@ class StaticAllocationStrategy:
 
         raise NotImplementedError
 
-    def add_word_in_previous_frame(
-        self, frame_previous: AllocationInFrame, word: Word
+    def add_missing_word_to_previous_frame(
+        self, frame_previous: AllocationInFrame, words_current: Iterable[Word]
     ) -> None:
         """
         Add word in instance of the previous frame
 
-        Randomly put the word in the previous frame.
+        Find words going to be putted in current frame
+            but not in previous frame.
+        Add the missing words randomly put the word in the previous frame.
         The putting algorithm is the same as the one in `RandomAllocation`.
+        This is intended to let appearing words appear smoothly.
 
         :param AllocationInFrame frame_previous:
             The allocation data of the previous frame
+        :param Iterable[Word] words_current:
+            The words to be putted in the current frame
         :rtype: None
         """
 
-        # put
-        text_lefttop_position = put_randomly(
-            self.image_width, self.image_height, word
-        )
+        # find missing words
+        words_previous = set(frame_previous.words.keys())
+        words_current = []
+        words_size = {}
+        for word in words_current:
+            if word.text not in words_current:
+                words_current.append(word.text)
+                words_size[word.text] = word.text_size
+        missing_words = words_current - words_previous
 
-        # allocate in the output
-        frame_previous[word.text] = (word.font_size, text_lefttop_position)
+        # add missing words
+        for word in missing_words:
+            # put randomly
+            text_lefttop_position = put_randomly(
+                self.image_width, self.image_height, words_size[word]
+            )
 
-    def add_missing_word(
+            # allocate in the output
+            frame_previous.add(
+                word, (words_size[word][0], text_lefttop_position)
+            )
+
+    def add_missing_word_from_previous_frame(
         self,
         frame_previous: AllocationInFrame,
         frame_current: AllocationInFrame,
@@ -95,8 +114,12 @@ class StaticAllocationStrategy:
 
         # add missing words
         for word in words_missing:
+            estimated_size = (
+                len(word) * frame_previous[word][0],
+                frame_previous[word][0],
+            )
             lefttop_position = put_randomly(
-                self.image_width, self.image_height, word
+                self.image_width, self.image_height, estimated_size
             )
             frame_current.add(
                 word, (frame_previous[word][0], lefttop_position)
