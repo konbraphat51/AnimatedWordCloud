@@ -48,27 +48,49 @@ class RandomAllocation(StaticAllocationStrategy):
         output = AllocationInFrame()
 
         for word in words:
-            # calculate the radius of the circle
-            image_diagnal = (
-                self.image_width**2 + self.image_height**2
-            ) ** 0.5
-            text_diagnal = (
-                word.text_size[0] ** 2 + word.text_size[1] ** 2
-            ) ** 0.5
-            radius = (image_diagnal + text_diagnal) / 2
-
-            # randomly choose where on the circle to put
-            angle = random() * 2 * pi
-            image_center_x = self.image_width / 2
-            image_center_y = self.image_height / 2
-            x = image_center_x + radius * cos(angle)
-            y = image_center_y + radius * sin(angle)
-            text_lefttop_position = (
-                x - word.text_size[0] / 2,
-                y - word.text_size[1] / 2,
+            # put
+            text_lefttop_position = put_randomly(
+                self.image_width, self.image_height, word
             )
 
             # allocate in the output
             output[word.text] = (word.font_size, text_lefttop_position)
 
         return output
+
+
+def put_randomly(
+    image_width: int, image_height: int, word: Word
+) -> tuple[int, int]:
+    """
+    Randomly allocate words AROUND the image.
+
+    Words are put on randomly
+        on a circle, whose center is the center of the image,
+        and whose radius is
+        (the diagonal length of the image + the diagonal length of the word)/2
+        which don't let the word overlap with the image in this frame.
+
+    :param int image_width: Width of the image
+    :param int image_height: Height of the image
+    :param Word word: The word to allocate
+    :return: Left-top position of the word
+    :rtype: tuple[int, int]
+    """
+    # calculate the radius of the circle
+    image_diagnal = (image_width**2 + image_height**2) ** 0.5
+    text_diagnal = (word.text_size[0] ** 2 + word.text_size[1] ** 2) ** 0.5
+    radius = (image_diagnal + text_diagnal) / 2
+
+    # randomly choose where on the circle to put
+    angle = random() * 2 * pi
+    image_center_x = image_width / 2
+    image_center_y = image_height / 2
+    x = image_center_x + radius * cos(angle)
+    y = image_center_y + radius * sin(angle)
+    text_lefttop_position = (
+        x - word.text_size[0] / 2,
+        y - word.text_size[1] / 2,
+    )
+
+    return text_lefttop_position
