@@ -10,6 +10,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.
     Rect,
     is_point_hitting_rect,
     is_point_hitting_rects,
+    is_rect_hitting_rect
 )
 
 __all__ = [
@@ -19,4 +20,5 @@ __all__ = [
     "Rect",
     "is_point_hitting_rect",
     "is_point_hitting_rects",
+    "is_rect_hitting_rect"
 ]
