@@ -74,3 +74,19 @@ def is_rect_hitting_rect(rect0: Rect, rect1: Rect) -> bool:
         or rect0.right_bottom[1] < rect1.left_top[1]
         or rect0.left_top[1] > rect1.right_bottom[1]
     )
+
+
+def is_rect_hitting_rects(rect: Rect, rects: Iterable[Rect]) -> bool:
+    """
+    Check if the rect is hitting any of the rects given.
+
+    :param Rect rect: Rect to check
+    :param Iterable[Rect] rects: Rectangles to check
+    :return: Is hitting
+    :rtype: bool
+    """
+    for rect_to_check in rects:
+        if is_rect_hitting_rect(rect, rect_to_check):
+            return True
+
+    return False
