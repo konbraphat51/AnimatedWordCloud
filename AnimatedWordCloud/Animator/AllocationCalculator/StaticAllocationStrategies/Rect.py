@@ -24,7 +24,7 @@ class Rect:
 
 
 def is_point_hitting_rects(
-    self, point: Tuple[int, int], rects: Iterable[Rect]
+    point: Tuple[int, int], rects: Iterable[Rect]
 ) -> Tuple[bool, Rect]:
     """
     Check if the point is hitting any of the rects given.
@@ -41,7 +41,7 @@ def is_point_hitting_rects(
     return (False, None)
 
 
-def is_point_hitting_rect(self, point: Tuple[int, int], rect: Rect) -> bool:
+def is_point_hitting_rect(point: Tuple[int, int], rect: Rect) -> bool:
     """
     Check if the point is hitting the single rect given.
 
