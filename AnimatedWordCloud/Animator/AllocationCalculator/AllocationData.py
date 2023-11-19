@@ -7,7 +7,7 @@
 Classes that includes the data of size and position of each words
 """
 
-from typing import Dict, Tuple, List
+from __future__ import annotations
 
 
 class AllocationInFrame:
@@ -21,17 +21,17 @@ class AllocationInFrame:
         """
 
         # word -> (font size, left-top position)
-        self.words: Dict[str, Tuple[float, Tuple[float, float]]] = {}
+        self.words: dict[str, tuple[float, tuple[float, float]]] = {}
 
     def add(
-        self, word: str, font_size: float, left_top: Tuple[float, float]
+        self, word: str, font_size: float, left_top: tuple[float, float]
     ) -> None:
         """
         Add a word
 
         :param str word: Word to add
         :param float font_size: Font size of the word
-        :param Tuple[float, float] left_top: Left-top position of the word
+        :param tuple[float, float] left_top: Left-top position of the word
         :rtype: None
         """
 
@@ -49,7 +49,7 @@ class AllocationTimelapse:
         """
 
         # (time_name, AllocationInFrame)
-        self.timelapse: List[Tuple(str, AllocationInFrame)] = []
+        self.timelapse: list[tuple(str, AllocationInFrame)] = []
 
     def add(
         self, time_name: str, allocation_in_frame: AllocationInFrame
