@@ -37,4 +37,5 @@ __all__ = [
     "is_rect_hitting_rect",
     "is_rect_hitting_rects",
     "MagneticAllocation",
+    "put_randomly",
 ]
