@@ -9,20 +9,11 @@ testing MagneticAllocation module
 
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.MagneticAllocation import (
     MagneticAllocation,
-    MagnetOuterFrontier,
 )
 from AnimatedWordCloud.Animator import AllocationInFrame
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator import (
     Word,
 )
-
-
-def test_MagneticOuterFrontier():
-    instance = MagnetOuterFrontier()
-    assert instance.from_up == []
-    assert instance.from_down == []
-    assert instance.from_left == []
-    assert instance.from_right == []
 
 
 def test_MagneticAllocation():
