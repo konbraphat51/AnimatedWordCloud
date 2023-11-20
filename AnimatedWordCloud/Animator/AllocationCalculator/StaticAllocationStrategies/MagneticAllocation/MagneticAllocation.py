@@ -147,8 +147,8 @@ class MagneticAllocation(StaticAllocationStrategy):
             + (position_to[1] - self.center[1]) ** 2
         )
 
-        # the smaller, the better; This need manual adjustment
-        return distance_movement**2 + distance_center**2
+        # the larger, the better; This need manual adjustment
+        return -(distance_movement**2) - distance_center**2
 
     def find_best_position(
         self,
@@ -174,35 +174,35 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         x_half = word.text_size[0] / 2
         y_half = word.text_size[1] / 2
-        left_bottom_to_center = (x_half, -y_half)
-        right_bottom_to_center = (-x_half, -y_half)
-        left_top_to_center = (x_half, y_half)
-        right_top_to_center = (-x_half, y_half)
+        left_bottom_to_center = Vector(x_half, -y_half)
+        right_bottom_to_center = Vector(-x_half, -y_half)
+        left_top_to_center = Vector(x_half, y_half)
+        right_top_to_center = Vector(-x_half, y_half)
 
-        # find the best position among 4 sides
+        # Prepare for iteration
         pivots_to_center_list = [
             # from lower
             [
                 left_top_to_center,
-                (0, y_half),
+                Vector(0, y_half),
                 right_top_to_center,
             ],
             # from top
             [
                 left_bottom_to_center,
-                (0, -y_half),
+                Vector(0, -y_half),
                 right_bottom_to_center,
             ],
             # from left
             [
                 right_bottom_to_center,
-                (x_half, 0),
+                Vector(x_half, 0),
                 right_top_to_center,
             ],
             # from right
             [
                 left_bottom_to_center,
-                (-x_half, 0),
+                Vector(-x_half, 0),
                 left_top_to_center,
             ],
         ]
@@ -214,104 +214,84 @@ class MagneticAllocation(StaticAllocationStrategy):
             magnet_outer_frontier.from_right,
         ]
 
-        # conclusion
-        best_position = None
-        best_score = None
-
-        # for each side
+        # get center position candidates
+        center_position_candidates = []
         for cnt in range(4):
-            side_best_position, side_best_score = self.put_on_one_side(
-                pivots_to_center_list[cnt],
-                word.text_size,
-                frontier_sides[cnt],
-                position_from,
+            center_position_candidates.extend(
+                self._get_candidates_from_one_side(
+                    pivots_to_center_list[cnt], frontier_sides[cnt]
+                )
             )
 
-            if (best_score is None) or (side_best_score < best_score):
-                best_position = side_best_position
-                best_score = side_best_score
-
-        # to left-top
-        best_position = (
-            best_position[0] - x_half,
-            best_position[1] - y_half,
+        # find the best position
+        best_position = self._try_put_all_candidates(
+            center_position_candidates, word.text_size, position_from
         )
 
         return best_position
 
-    def put_on_one_side(
+    def _get_candidates_from_one_side(
         self,
-        pivots_to_center: Iterable[tuple[int, int]],
-        size: tuple[int, int],
+        pivots_to_center: Iterable[Vector],
         points_on_side: Iterable[tuple[int, int]],
-        position_from: tuple[int, int],
-    ) -> tuple[tuple[int, int], float]:
+    ) -> list[tuple[int, int]]:
         """
-        Try to put on one side of the magnet,
-            and find the best position on that side
+        Get all candidates of the center position from one side
 
-        Put all pivots on the each point on the side,
-            and find the best position by `evaluate_position()`.
+        Intended to be used in `find_best_position()`
 
-        :param Iterable[tuple[int,int]] pivots_to_center:
+        :param Iterable[Vector] pivots_to_center:
             Vector of  (center of the word) - (pivot)
-        :param tuple[int,int] size: Size of the word
         :param Iterable[tuple[int,int]] points_on_side:
             Points on the side
+        :return: Candidates of the center position
+        :rtype: list[tuple[int, int]]
+        """
+
+        # get all candidate center positions
+        candidates = []
+        for point_on_side in points_on_side:
+            for pivot_to_center in pivots_to_center:
+                candidates.append(Vector(point_on_side) + pivot_to_center)
+
+        return candidates
+
+    def _try_put_all_candidates(
+        self,
+        center_positions: Iterable[tuple[int, int]],
+        size: tuple[int, int],
+        position_from: tuple[int, int],
+    ) -> tuple[int, int]:
+        """
+        Try to put the word at the gived place and evaluate the score,
+            and return the best scored position
+
+        :param Iterable[tuple[int,int]] center_positions:
+            Candidate list of center points of the word
+        :param tuple[int,int] size: Size of the word
         :param tuple[int,int] position_from:
             Position of the center of the word comming from
-        :return: (Best center position, Best score)
-        :rtype: tuple[tuple[int,int], float]
+        :return: Best center position
+        :rtype: tuple[int, int]
         """
 
         best_position = None
-        best_score = float("inf")
+        best_score = -float("inf")
 
-        for point_on_side in points_on_side:
-            for pivot_to_center in pivots_to_center:
-                center_position = (
-                    Vector(point_on_side) + Vector(pivot_to_center)
-                ).convert_to_tuple()
+        for center_position in center_positions:
+            # if hitting with other word...
+            if self._is_hitting_other_words(center_position, size):
+                # ...skip this position
+                continue
 
-                available, score = self._try_put_once(
-                    center_position, size, position_from
-                )
+            score = self.evaluate_position(position_from, center_position)
 
-                if not available:
-                    continue
-                elif score < best_score:
-                    best_position = center_position
-                    best_score = score
+            if score > best_score:
+                # best score updated
+                best_position = center_position
+                best_score = score
 
-        return (best_position, best_score)
-
-    def _try_put_once(
-        self,
-        center_position: tuple[int, int],
-        size: tuple[int, int],
-        position_from: tuple[int, int],
-    ) -> tuple[bool, float]:
-        """
-        Try to put the word on one place and evaluate the score
-
-        Intended to be called by `put_on_one_side()`.
-
-        :param tuple[int,int] center_position: Center point of the word
-        :param tuple[int,int] size: Size of the word
-        :param tuple[int,int] position_from:
-            Position of the center of the word comming from
-        :return: (Whether the position is available, Score)
-        :rtype: tuple[bool,float]
-        """
-
-        # if hitting with other word...
-        if self._is_hitting_other_words(center_position, size):
-            # ...skip this position
-            return (False, None)
-
-        score = self.evaluate_position(position_from, center_position)
-
-        return (True, score)
+        return best_position
 
     def _is_hitting_other_words(
         self, center_position: tuple[int, int], size: [int, int]
