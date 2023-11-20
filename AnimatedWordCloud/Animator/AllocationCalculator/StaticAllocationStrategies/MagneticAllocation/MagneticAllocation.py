@@ -30,6 +30,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.
     MagnetOuterFrontier,
     get_magnet_outer_frontier,
 )
+from AnimatedWordCloud.Utils.Vector import Vector
 import math
 
 
@@ -259,33 +260,58 @@ class MagneticAllocation(StaticAllocationStrategy):
             Points on the side
         :param tuple[int,int] position_from:
             Position of the center of the word comming from
-        :return: (Best position, Best score)
+        :return: (Best center position, Best score)
         :rtype: tuple[tuple[int,int], float]
         """
 
         best_position = None
-        best_score = None
+        best_score = float("inf")
 
         for point_on_side in points_on_side:
             for pivot_to_center in pivots_to_center:
-                # try put the pivot on the point
                 center_position = (
-                    point_on_side[0] + pivot_to_center[0],
-                    point_on_side[1] + pivot_to_center[1],
+                    Vector(point_on_side) + Vector(pivot_to_center)
+                ).convert_to_tuple()
+
+                available, score = self._try_put_once(
+                    center_position, size, position_from
                 )
 
-                # if hitting with other word...
-                if self._is_hitting_other_words(center_position, size):
-                    # ...skip this position
+                if not available:
                     continue
-
-                score = self.evaluate_position(position_from, center_position)
-
-                if best_score is None or score < best_score:
+                elif score < best_score:
                     best_position = center_position
                     best_score = score
 
         return (best_position, best_score)
+
+    def _try_put_once(
+        self,
+        center_position: tuple[int, int],
+        size: tuple[int, int],
+        position_from: tuple[int, int],
+    ) -> tuple[bool, float]:
+        """
+        Try to put the word on one place and evaluate the score
+
+        Intended to be called by `put_on_one_side()`.
+
+        :param tuple[int,int] center_position: Center point of the word
+        :param tuple[int,int] size: Size of the word
+        :param tuple[int,int] position_from:
+            Position of the center of the word comming from
+        :return: (Whether the position is available, Score)
+        :rtype: tuple[bool,float]
+        """
+
+        # if hitting with other word...
+        if self._is_hitting_other_words(center_position, size):
+            # ...skip this position
+            return (False, None)
+
+        score = self.evaluate_position(position_from, center_position)
+
+        return (True, score)
 
     def _is_hitting_other_words(
         self, center_position: tuple[int, int], size: [int, int]
