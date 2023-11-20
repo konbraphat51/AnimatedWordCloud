@@ -9,6 +9,7 @@ Handling rect in static allocation strategies
 
 from __future__ import annotations
 from collections.abc import Iterable
+from AnimatedWordCloud.Utils import Vector
 
 
 class Rect:
@@ -24,12 +25,12 @@ class Rect:
 
 
 def is_point_hitting_rects(
-    point: tuple[int, int], rects: Iterable[Rect]
+    point: tuple[int, int] | Vector, rects: Iterable[Rect]
 ) -> tuple[bool, Rect]:
     """
     Check if the point is hitting any of the rects given.
 
-    :param Tuple[int,int] point: Point to check
+    :param Tuple[int,int]|Vector point: Point to check
     :param Iterable[Rect] rects: Rectangles to check
     :return: (Is hitting, Rect that is hitting)
     :rtype: Tuple[bool, Rect]
@@ -41,18 +42,22 @@ def is_point_hitting_rects(
     return (False, None)
 
 
-def is_point_hitting_rect(point: tuple[int, int], rect: Rect) -> bool:
+def is_point_hitting_rect(point: tuple[int, int] | Vector, rect: Rect) -> bool:
     """
     Check if the point is hitting the single rect given.
 
-    :param Tuple[int,int] point: Point to check
+    :param Tuple[int,int]|Vector point: Point to check
     :param Rect rect: Rectangle to check
     :return: Is hitting
     :rtype: bool
     """
+
+    if point.__class__ == tuple:
+        point = Vector(point)
+
     return (
-        rect.left_top[0] <= point[0] <= rect.right_bottom[0]
-        and rect.left_top[1] <= point[1] <= rect.right_bottom[1]
+        rect.left_top[0] <= point.x <= rect.right_bottom[0]
+        and rect.left_top[1] <= point.y <= rect.right_bottom[1]
     )
 
 
