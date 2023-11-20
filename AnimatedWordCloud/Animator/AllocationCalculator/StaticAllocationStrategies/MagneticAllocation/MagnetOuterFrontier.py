@@ -156,7 +156,7 @@ def _detect_frontier_linealy(
         while is_point_hitting_rect(image_size, detection_ray_position):
             # check hit
             flag_hitted, hitted_rect = is_point_hitting_rects(
-                detection_ray_position.convert_to_tuple(), rects_outermost
+                detection_ray_position, rects_outermost
             )
 
             if flag_hitted:
