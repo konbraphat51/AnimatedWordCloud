@@ -47,6 +47,17 @@ class Vector:
         """
         return Vector(self.x - other.x, self.y - other.y)
 
+    def clone(self) -> Vector:
+        """
+        Clone this vector.
+
+        So as modifying the output doesn't affect the original vector.
+
+        :return: Cloned vector
+        :rtype: Vector
+        """
+        return Vector(self.x, self.y)
+
     def convert_to_tuple(self) -> tuple[float, float]:
         """
         Convert to tuple
