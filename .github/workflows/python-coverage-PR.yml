@@ -33,7 +33,13 @@ jobs:
           set -o pipefail
           python -m pytest --junitxml=pytest.xml --cov=AnimatedWordCloud --cov-report=term-missing| tee pytest-coverage.txt
     - name: Pytest coverage comment
+      id: coverageComment
       uses: MishaKav/pytest-coverage-comment@v1.1.47
       with:
           pytest-coverage-path: ./pytest-coverage.txt
           junitxml-path: ./pytest.xml
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
