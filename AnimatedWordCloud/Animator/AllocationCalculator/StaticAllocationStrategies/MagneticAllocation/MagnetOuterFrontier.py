@@ -15,6 +15,7 @@ from collections.abc import Iterable
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
     Rect,
     is_point_hitting_rects,
+    is_point_hitting_rect,
 )
 from AnimatedWordCloud.Utils import Vector
 
@@ -143,20 +144,16 @@ def _detect_frontier_linealy(
     detected_points = []
     rects_outermost = set()
 
+    image_size = (image_width, image_height)
+
     launcher_position = launcher_point_start.clone()
-    while (
-        # lancher is inside the image
-        (0 <= launcher_position.x <= image_width)
-        and (0 <= launcher_position.y <= image_height)
-    ):
+    # whicle lancher is inside the image...
+    while is_point_hitting_rect(image_size, launcher_position):
         # launch the ray
         detection_ray_position = launcher_position.clone()
 
-        while (
-            # detection ray is inside the image
-            (0 <= detection_ray_position.x <= image_width)
-            and (0 <= detection_ray_position.y <= image_height)
-        ):
+        # while detection ray is inside the image...
+        while is_point_hitting_rect(image_size, detection_ray_position):
             # check hit
             flag_hitted, hitted_rect = is_point_hitting_rects(
                 detection_ray_position.convert_to_tuple(), rects_outermost
