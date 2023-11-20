@@ -16,6 +16,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies 
     Rect,
     is_point_hitting_rects,
 )
+from AnimatedWordCloud.Utils import Vector
 
 
 class MagnetOuterFrontier:
@@ -60,51 +61,119 @@ def get_magnet_outer_frontier(
 
     magnet_outer_frontier = MagnetOuterFrontier()
 
-    # from up
-    for x in range(1, image_width, X_INTERVAL):
-        for y in range(0, image_height + 1, Y_INTERVAL):
+    # prepare for iteration
+    launcher_start_positions = [
+        Vector(0, 0),  # from up
+        Vector(0, image_height),  # from down
+        Vector(0, 0),  # from left
+        Vector(image_width, 0),  # from right
+    ]
+    launcher_directions = [
+        Vector(X_INTERVAL, 0),  # from up
+        Vector(X_INTERVAL, 0),  # from down
+        Vector(0, Y_INTERVAL),  # from left
+        Vector(0, Y_INTERVAL),  # from right
+    ]
+    detection_ray_directions = [
+        Vector(0, Y_INTERVAL),  # from up
+        Vector(0, -Y_INTERVAL),  # from down
+        Vector(X_INTERVAL, 0),  # from left
+        Vector(-X_INTERVAL, 0),  # from right
+    ]
+    corresponding_frontiers = []
+
+    # detect from 4 sides
+    for cnt in range(4):
+        # detect
+        detected_points, new_hitted_rects_here = _detect_frontier_linealy(
+            launcher_start_positions[cnt],
+            launcher_directions[cnt],
+            detection_ray_directions[cnt],
+            rects_outermost,
+            image_width,
+            image_height,
+        )
+
+        # update
+        corresponding_frontiers.append(detected_points)
+        new_hitted_rects |= new_hitted_rects_here
+
+    # update magnet_outer_frontier
+    magnet_outer_frontier.from_up = corresponding_frontiers[0]
+    magnet_outer_frontier.from_down = corresponding_frontiers[1]
+    magnet_outer_frontier.from_left = corresponding_frontiers[2]
+    magnet_outer_frontier.from_right = corresponding_frontiers[3]
+
+    return (magnet_outer_frontier, new_hitted_rects)
+
+
+def _detect_frontier_linealy(
+    launcher_point_start: Vector,
+    launcher_direction: Vector,
+    detection_ray_direction: Vector,
+    rects_outermost: Iterable[Rect],
+    image_width: int,
+    image_height: int,
+) -> tuple[list[tuple[int, int]], set[Rect]]:
+    """
+    Detect the frontier from 1 line.
+
+    This first set a launcher at the starting point.
+    Then launch a detection ray from the launcher,
+        and move the detection ray until some rect hits.
+    Then move the launcher and the detection ray in the same direction,
+        again and again, until the launcher is out of the image.
+
+    :param Vector launcher_point_start:
+        Starting point of the detection ray launching position
+    :param Vector launcher_points_direction:
+        Direction vector of the launching position moves
+    :param Vector detection_ray_direction:
+        Direction vector of the detection ray moves
+    :param Iterable[Rect] rects_outermost:
+        Rectangles that are currently putted at the outermost of the magnet
+    :param int image_width: Width of the image
+    :param int image_height: Height of the image
+    :return: (List of points that are detected,
+        New list of rectangles that are
+        currently putted at the outermost of the magnet)
+    :rtype: tuple[list[tuple[int, int]], set[Rect]]
+    """
+
+    detected_points = []
+    rects_outermost = set()
+
+    launcher_position = launcher_point_start.clone()
+    while (
+        # lancher is inside the image
+        (0 <= launcher_position.x <= image_width)
+        and (0 <= launcher_position.y <= image_height)
+    ):
+        # launch the ray
+        detection_ray_position = launcher_position.clone()
+
+        while (
+            # detection ray is inside the image
+            (0 <= detection_ray_position.x <= image_width)
+            and (0 <= detection_ray_position.y <= image_height)
+        ):
+            # check hit
             flag_hitted, hitted_rect = is_point_hitting_rects(
-                (x, y), rects_outermost
+                detection_ray_position.convert_to_tuple(), rects_outermost
             )
+
             if flag_hitted:
-                new_hitted_rects.add(hitted_rect)
-                magnet_outer_frontier.from_up.append((x, y))
+                # register
+                rects_outermost.add(hitted_rect)
+                detected_points.append(
+                    detection_ray_position.convert_to_tuple()
+                )
                 break
+            else:
+                # move
+                detection_ray_position += detection_ray_direction
 
-    # from down
-    for x in range(1, image_width, X_INTERVAL):
-        for y in range(image_height, -1, -Y_INTERVAL):
-            flag_hitted, hitted_rect = is_point_hitting_rects(
-                (x, y), rects_outermost
-            )
-            if flag_hitted:
-                new_hitted_rects.add(hitted_rect)
-                magnet_outer_frontier.from_down.append((x, y))
-                break
+        # move launcher
+        launcher_position += launcher_direction
 
-    # from left
-    for y in range(1, image_height, Y_INTERVAL):
-        for x in range(0, image_width + 1, X_INTERVAL):
-            flag_hitted, hitted_rect = is_point_hitting_rects(
-                (x, y), rects_outermost
-            )
-            if flag_hitted:
-                new_hitted_rects.add(hitted_rect)
-                magnet_outer_frontier.from_left.append((x, y))
-                break
-
-    # from right
-    for y in range(1, image_height, Y_INTERVAL):
-        for x in range(image_width, -1, -X_INTERVAL):
-            flag_hitted, hitted_rect = is_point_hitting_rects(
-                (x, y), rects_outermost
-            )
-            if flag_hitted:
-                new_hitted_rects.add(hitted_rect)
-                magnet_outer_frontier.from_right.append((x, y))
-                break
-
-    # update rects_outermost
-    rects_outermost = new_hitted_rects
-
-    return magnet_outer_frontier
+    return detected_points, rects_outermost
