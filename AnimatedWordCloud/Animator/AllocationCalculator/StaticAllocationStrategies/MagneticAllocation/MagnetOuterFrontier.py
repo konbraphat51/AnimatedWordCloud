@@ -149,28 +149,63 @@ def _detect_frontier_linealy(
     launcher_position = launcher_point_start.clone()
     # whicle lancher is inside the image...
     while is_point_hitting_rect(image_size, launcher_position):
-        # launch the ray
-        detection_ray_position = launcher_position.clone()
+        # launch detection ray
+        result = _launch_ray(
+            launcher_position,
+            detection_ray_direction,
+            rects_outermost,
+            Rect((0, 0), image_size),
+        )
 
-        # while detection ray is inside the image...
-        while is_point_hitting_rect(image_size, detection_ray_position):
-            # check hit
-            flag_hitted, hitted_rect = is_point_hitting_rects(
-                detection_ray_position, rects_outermost
-            )
-
-            if flag_hitted:
-                # register
-                rects_outermost.add(hitted_rect)
-                detected_points.append(
-                    detection_ray_position.convert_to_tuple()
-                )
-                break
-
-            # move detection ray
-            detection_ray_position += detection_ray_direction
+        if result is not None:
+            # hitted
+            detected_point, hitted_rect = result
+            detected_points.append(detected_point)
+            rects_outermost.add(hitted_rect)
 
         # move launcher
         launcher_position += launcher_direction
 
     return detected_points, rects_outermost
+
+
+def _launch_ray(
+    launching_position: Vector,
+    detection_ray_direction: Vector,
+    rects_outermost: Iterable[Rect],
+    image_rect: Rect,
+) -> tuple[Vector, Rect] | None:
+    """
+    Launch a detection ray from the launching position,
+        and find the first point hits.
+
+    This finds the frontier on the ray line.
+    Intended to be used by `_detect_frontier_linealy()`
+
+    :param Vector launching_position: Starting position of the ray
+    :param Vector detection_ray_direction: Direction vector of the detection ray moves
+    :param Iterable[Rect] rects_outermost:
+        Rectangles that are currently putted at the outermost of the magnet
+    :param Rect image_rect: Rectangle of the image
+    :return: If hitted -> (Position of the first point hits, Rectangle that is hitting),
+        If not hitted -> None
+    :rtype: Tuple[Vector, Rect]|None
+    """
+    # starting position of the ray
+    # clone to avoid modifying the original vector
+    detection_ray_position = launching_position.clone()
+
+    # while detection ray is inside the image...
+    while is_point_hitting_rect(detection_ray_position, image_rect):
+        # check hit
+        flag_hitted, hitted_rect = is_point_hitting_rects(
+            detection_ray_position, rects_outermost
+        )
+
+        if flag_hitted:
+            return (detection_ray_position, hitted_rect)
+
+        # move detection ray
+        detection_ray_position += detection_ray_direction
+
+    return None
