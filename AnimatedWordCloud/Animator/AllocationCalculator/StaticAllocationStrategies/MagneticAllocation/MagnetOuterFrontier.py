@@ -166,9 +166,9 @@ def _detect_frontier_linealy(
                     detection_ray_position.convert_to_tuple()
                 )
                 break
-            else:
-                # move
-                detection_ray_position += detection_ray_direction
+
+            # move detection ray
+            detection_ray_position += detection_ray_direction
 
         # move launcher
         launcher_position += launcher_direction
