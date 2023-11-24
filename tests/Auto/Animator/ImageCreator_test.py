@@ -25,7 +25,7 @@ def test_imagecreator():
     # test create_images function
     position_in_frames = AllocationTimelapse()
     allocation_in_frame = AllocationInFrame()
-    allocation_in_frame.words = {"word", (30, (50, 50))}
+    allocation_in_frame.words = {"word": (30, (50, 50))} #dictionary
     position_in_frames.add("2023/04/01", allocation_in_frame)
     create_images(
         position_in_frames,
@@ -35,3 +35,5 @@ def test_imagecreator():
     test_path = os.path.join(TMP_OUTPUT_PATH, "*.png")
     assert len(glob.glob(test_path)) != 0
     subprocess.call(["rm", test_path])
+
+test_imagecreator()
