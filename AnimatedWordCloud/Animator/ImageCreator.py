@@ -6,9 +6,10 @@
 """
 Create images of each frame
 """
-from typing import List
-from collections.abc import Tuple
-from AnimatedWordCloud.Animator import AllocationTimelapse
+
+
+from typing import List, Tuple
+from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import AllocationTimelapse
 from PIL import Image, ImageDraw, ImageFont
 from random import Random
 import numpy as np
@@ -51,7 +52,7 @@ def create_images(
     font_path: str,
     background_color: str = "white",
     color_map: str = "magma",
-    color_func: function = None,
+    color_func = None,
 ) -> List[str]:
     """
     Create images of each frame
