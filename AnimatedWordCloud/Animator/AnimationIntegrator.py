@@ -8,12 +8,13 @@ Integrates the images into a single video (gif)
 """
 
 from typing import List
-import cv2
+from PIL import Image
 
 
 def integrate_images(
     image_paths: List[str],
     filename: str,
+    duration: int = 500,
 ) -> None:
     """
     Create images of each frame
@@ -21,22 +22,18 @@ def integrate_images(
     :param
     List[str] image_paths: List of image_paths created by AnimatedWordCloud.Animator.ImageCreator.create_images.
     str filename: output filename.
+    int duration: display time for each frame
     :return: None
     """
 
-    images = [cv2.imread(path) for path in image_paths]
-    height, width, layers = images[0].shape
+    gif_images = [Image.open(path) for path in image_paths]
 
-    gif = cv2.VideoWriter(
+    gif_images[0].save(
         filename,
-        cv2.VideoWriter_fourcc(*"GIF"),
-        1,
-        (width, height),
+        save_all=True,
+        append_images=gif_images[1:],
+        duration=duration,
+        loop=0,
     )
-
-    for image in images:
-        gif.write(image)
-    cv2.destroyAllWindows()
-    gif.release()
 
     return
