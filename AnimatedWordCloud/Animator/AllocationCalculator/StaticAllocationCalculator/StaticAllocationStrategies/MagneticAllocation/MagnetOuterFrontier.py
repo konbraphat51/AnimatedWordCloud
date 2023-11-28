@@ -12,12 +12,12 @@ Used by MagneticAllocation
 
 from __future__ import annotations
 from collections.abc import Iterable
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.Rect import (
+from AnimatedWordCloud.Utils import (
+    Vector,
     Rect,
     is_point_hitting_rects,
     is_point_hitting_rect,
 )
-from AnimatedWordCloud.Utils import Vector
 
 
 class MagnetOuterFrontier:

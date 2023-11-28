@@ -8,13 +8,10 @@ Base class for static allocation strategies
 """
 
 from collections.abc import Iterable
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.Word import (
-    Word,
-)
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.RandomAllocation import (
     put_randomly,
 )
-from AnimatedWordCloud.Animator.AllocationData import AllocationInFrame
+from AnimatedWordCloud.Utils import Word, AllocationInFrame
 
 
 class StaticAllocationStrategy:

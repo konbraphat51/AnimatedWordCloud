@@ -18,14 +18,12 @@ Repeating this process, all words will be allocated.
 from __future__ import annotations
 import math
 from collections.abc import Iterable
-from AnimatedWordCloud.Animator.AllocationData import AllocationInFrame
-from AnimatedWordCloud.Utils.Vector import Vector
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.Word import (
-    Word,
-)
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.Rect import (
-    Rect,
+from AnimatedWordCloud.Utils import (
     is_rect_hitting_rects,
+    AllocationInFrame,
+    Vector,
+    Rect,
+    Word,
 )
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.StaticAllocationStrategy import (
     StaticAllocationStrategy,

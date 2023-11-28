@@ -20,10 +20,7 @@ from __future__ import annotations
 from collections.abc import Iterable
 from random import random
 from math import pi, cos, sin
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.Word import (
-    Word,
-)
-from AnimatedWordCloud.Animator.AllocationData import AllocationInFrame
+from AnimatedWordCloud.Utils import Word, AllocationInFrame
 
 
 def allocate_randomly(
