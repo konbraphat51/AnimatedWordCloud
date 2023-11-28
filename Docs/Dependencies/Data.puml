@@ -32,6 +32,16 @@ folder Animator {
         WordVector *-- TimeFrame
         TimelapseWordVector *-- TimeFrame
     }
+
+    folder StaticAllocationStrategies {
+        object Rect {
+            A rectangle of a word
+        }
+
+        object Word {
+            Data class contains attributes of each words.
+        }
+    }
 }
 
 object Utils #LightBlue {
