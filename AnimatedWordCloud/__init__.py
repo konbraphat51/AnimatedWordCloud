@@ -1,7 +1,3 @@
-from AnimatedWordCloud.Animator.TimelapseWordVector import (
-    TimelapseWordVector,
-    TimeFrame,
-    WordVector,
-)
+from AnimatedWordCloud.Animator import animate
 
-__all__ = ["TimelapseWordVector", "TimeFrame", "WordVector"]
+__all__ = ["animate"]
