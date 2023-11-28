@@ -7,7 +7,7 @@
 Testing the Word module
 """
 
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.Word import (
+from AnimatedWordCloud.Utils import (
     Word,
 )
 

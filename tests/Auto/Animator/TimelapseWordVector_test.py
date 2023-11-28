@@ -8,7 +8,7 @@ Testing the TimelapsedWordVector classes
 """
 
 
-from AnimatedWordCloud.Animator.TimelapseWordVector import (
+from AnimatedWordCloud.Utils import (
     WordVector,
     TimeFrame,
     TimelapseWordVector,

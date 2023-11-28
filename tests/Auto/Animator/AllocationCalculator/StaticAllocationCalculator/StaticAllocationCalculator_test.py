@@ -13,9 +13,9 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
     estimate_text_size,
     allocate,
     allocate_all,
+    AllocationInFrame,
+    WordVector,
 )
-from AnimatedWordCloud.Animator.TimelapseWordVector import WordVector
-from AnimatedWordCloud.Animator.AllocationData import AllocationInFrame
 from AnimatedWordCloud.Utils import DEFAULT_ENG_FONT_PATH
 from tests.TestDataGetter import timelapses_test
 
