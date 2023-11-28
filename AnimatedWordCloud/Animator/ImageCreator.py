@@ -9,10 +9,10 @@ Create images of each frame
 
 from typing import List
 from collections.abc import Iterable
-from AnimatedWordCloud.Animator import PositionInFrame
+from AnimatedWordCloud.Animator.AllocationData import AllocationTimelapse
 
 
-def create_images(position_in_frames: Iterable[PositionInFrame]) -> List[str]:
+def create_images(position_in_frames: AllocationTimelapse) -> List[str]:
     """
     Create images of each frame
 

@@ -1,18 +1,3 @@
-from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
-    AllocationInFrame,
-    AllocationTimelapse,
-)
-from AnimatedWordCloud.Animator.TimelapseWordVector import (
-    TimelapseWordVector,
-    TimeFrame,
-    WordVector,
-)
+from Animator import animate
 
-
-__all__ = [
-    "AllocationInFrame",
-    "AllocationTimelapse",
-    "TimelapseWordVector",
-    "TimeFrame",
-    "WordVector",
-]
+__all__ = ['animate']

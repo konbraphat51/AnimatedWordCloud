@@ -12,7 +12,7 @@ from __future__ import annotations
 
 class AllocationInFrame:
     """
-    Positions and size of each words
+    Positions and size of each words in a frame
     """
 
     def __init__(self) -> None:
