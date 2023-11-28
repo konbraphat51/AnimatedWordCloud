@@ -1,3 +1,3 @@
 from Animator import animate
 
-__all__ = ['animate']
+__all__ = ["animate"]
