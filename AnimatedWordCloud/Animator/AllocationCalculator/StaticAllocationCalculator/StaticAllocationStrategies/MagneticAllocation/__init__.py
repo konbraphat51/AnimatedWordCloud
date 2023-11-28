@@ -1,4 +1,4 @@
-from .MagneticAllocation import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.MagneticAllocation.MagneticAllocation import (
     MagneticAllocation,
 )
 

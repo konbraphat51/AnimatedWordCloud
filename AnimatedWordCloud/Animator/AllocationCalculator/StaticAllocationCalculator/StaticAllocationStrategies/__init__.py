@@ -1,20 +1,20 @@
-from .StaticAllocationStrategy import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.StaticAllocationStrategy import (
     StaticAllocationStrategy,
 )
 
-from .MagneticAllocation import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.MagneticAllocation import (
     MagneticAllocation,
 )
 
-from .RandomAllocation import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.RandomAllocation import (
     allocate_randomly,
 )
 
-from .Word import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.Word import (
     Word,
 )
 
-from .Rect import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.Rect import (
     Rect,
     is_point_hitting_rect,
     is_point_hitting_rects,

@@ -12,7 +12,7 @@ import numpy as np
 from PIL import Image, ImageFont, ImageDraw
 from AnimatedWordCloud.Animator.TimelapseWordVector import WordVector, TimelapseWordVector
 from AnimatedWordCloud.Animator.AllocationData import AllocationInFrame, AllocationTimelapse
-from .StaticAllocationStrategies import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies import (
     MagneticAllocation,
     Word,
     allocate_randomly,

@@ -1,5 +1,5 @@
-from .StaticAllocationCalculator import StaticAllocationCalculator
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationCalculator import allocate
 
 __all__ = [
-    "StaticAllocationCalculator",
+    "allocate",
 ]
