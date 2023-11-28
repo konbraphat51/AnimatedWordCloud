@@ -28,7 +28,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pytest
           python -m pip install -e .
-          python -m pip install ${{ GITHUB_WORKSPACE }}/tests
+          python -m pip install ${{ github.workspace }}/tests
       - name: Test with pytest
         run: |
           pytest
