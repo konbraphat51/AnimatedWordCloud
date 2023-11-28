@@ -12,7 +12,7 @@ from typing import Dict, Tuple, List
 
 class AllocationInFrame:
     """
-    Positions and size of each words
+    Positions and size of each words in a frame
     """
 
     def __init__(self) -> None:
