@@ -8,8 +8,6 @@ Handling rect in static allocation strategies
 """
 
 from __future__ import annotations
-from collections.abc import Iterable
-from AnimatedWordCloud.Utils.Vector import Vector
 
 
 class Rect:
