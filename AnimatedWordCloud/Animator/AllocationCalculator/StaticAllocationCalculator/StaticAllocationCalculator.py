@@ -10,12 +10,10 @@ Calculate allocation of each words in each static time
 from typing import Literal
 import numpy as np
 from PIL import Image, ImageFont, ImageDraw
-from AnimatedWordCloud import WordVector, TimelapseWordVector
-from AnimatedWordCloud.Animator import AllocationInFrame, AllocationTimelapse
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
+from AnimatedWordCloud.Animator.TimelapseWordVector import WordVector, TimelapseWordVector
+from AnimatedWordCloud.Animator.AllocationData import AllocationInFrame, AllocationTimelapse
+from .StaticAllocationStrategies import (
     MagneticAllocation,
-)
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
     Word,
     allocate_randomly,
 )

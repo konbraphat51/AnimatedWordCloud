@@ -12,7 +12,7 @@ Used by MagneticAllocation
 
 from __future__ import annotations
 from collections.abc import Iterable
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
+from ..Rect import (
     Rect,
     is_point_hitting_rects,
     is_point_hitting_rect,

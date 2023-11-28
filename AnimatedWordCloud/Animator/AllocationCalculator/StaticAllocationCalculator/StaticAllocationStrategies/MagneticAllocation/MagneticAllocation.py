@@ -16,22 +16,24 @@ Repeating this process, all words will be allocated.
 """
 
 from __future__ import annotations
+import math
 from collections.abc import Iterable
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator import (
+from AnimatedWordCloud.Utils.Vector import Vector
+from ..Word import (
     Word,
 )
-from AnimatedWordCloud.Animator import AllocationInFrame
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
+from AnimatedWordCloud.Animator.AllocationData import AllocationInFrame
+from ..Rect import (
     Rect,
-    StaticAllocationStrategy,
     is_rect_hitting_rects,
 )
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.MagneticAllocation import (
+from ..StaticAllocationStrategy import (
+    StaticAllocationStrategy,
+)
+from .MagneticAllocation import (
     MagnetOuterFrontier,
     get_magnet_outer_frontier,
 )
-from AnimatedWordCloud.Utils.Vector import Vector
-import math
 
 
 class MagneticAllocation(StaticAllocationStrategy):
