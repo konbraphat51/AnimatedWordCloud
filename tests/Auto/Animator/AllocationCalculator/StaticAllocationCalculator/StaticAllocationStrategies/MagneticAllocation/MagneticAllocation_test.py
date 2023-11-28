@@ -7,11 +7,9 @@
 testing MagneticAllocation module
 """
 
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.MagneticAllocation import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.MagneticAllocation.MagneticAllocation import (
     MagneticAllocation,
-)
-from AnimatedWordCloud.Animator import AllocationInFrame
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator import (
+    AllocationInFrame,
     Word,
 )
 

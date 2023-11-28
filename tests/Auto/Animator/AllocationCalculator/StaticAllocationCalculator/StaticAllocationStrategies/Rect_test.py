@@ -7,7 +7,7 @@
 Testing the Rect module
 """
 
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.Rect import *
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.Rect import *
 
 
 def test_Rect():

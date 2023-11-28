@@ -8,14 +8,14 @@ Testing the StaticAllocationCalculator module
 """
 
 
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationCalculator import (
     calculate_font_size,
     estimate_text_size,
     allocate,
     allocate_all,
 )
-from AnimatedWordCloud import WordVector
-from AnimatedWordCloud.Animator import AllocationInFrame
+from AnimatedWordCloud.Animator.TimelapseWordVector import WordVector
+from AnimatedWordCloud.Animator.AllocationData import AllocationInFrame
 from AnimatedWordCloud.Utils import DEFAULT_ENG_FONT_PATH
 from tests.TestDataGetter import timelapses_test
 

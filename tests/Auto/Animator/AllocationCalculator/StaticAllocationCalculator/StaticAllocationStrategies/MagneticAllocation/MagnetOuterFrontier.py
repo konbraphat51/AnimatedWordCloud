@@ -7,11 +7,9 @@
 testing MagnetOuterFrontier module
 """
 
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.MagneticAllocation import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.MagneticAllocation.MagnetOuterFrontier import (
     MagnetOuterFrontier,
     get_magnet_outer_frontier,
-)
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies import (
     Rect,
     is_point_hitting_rect,
 )

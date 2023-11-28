@@ -8,13 +8,11 @@ testing StaticAllocationStrategy class
 """
 
 from pytest import raises
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.StaticAllocationStrategy import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.StaticAllocationStrategy import (
     StaticAllocationStrategy,
-)
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.Word import (
     Word,
+    AllocationInFrame,
 )
-from AnimatedWordCloud.Animator import AllocationInFrame
 
 
 def test_StaticAllocationStrategy():

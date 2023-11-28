@@ -7,7 +7,7 @@
 testing the AnimatedWordCloud module
 """
 
-from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
+from AnimatedWordCloud.Animator.AllocationData import (
     AllocationInFrame,
     AllocationTimelapse,
 )

@@ -7,11 +7,9 @@
 testing RandomAllocation class
 """
 
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.RandomAllocation import (
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.RandomAllocation import (
     allocate_randomly,
     put_randomly,
-)
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationStrategies.Word import (
     Word,
 )
 
