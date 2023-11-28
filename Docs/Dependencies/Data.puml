@@ -44,9 +44,4 @@ folder Animator {
     }
 }
 
-object Utils #LightBlue {
-    * Vector
-    * Consts
-}
-
 @enduml
