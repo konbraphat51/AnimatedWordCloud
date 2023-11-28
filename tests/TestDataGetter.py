@@ -10,8 +10,7 @@ Get data from test_data submodule
 from __future__ import annotations
 import json
 from pathlib import Path
-from AnimatedWordCloud.Animator.TimelapseWordVector import TimelapseWordVector
-from AnimatedWordCloud.Utils import LIBRARY_DIR
+from AnimatedWordCloud.Utils import LIBRARY_DIR, TimelapseWordVector
 
 
 def get_test_timelapses_raw() -> list[list[tuple[str, dict[str, float]]]]:
