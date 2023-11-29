@@ -26,7 +26,7 @@ def get_test_timelapses_raw() -> list[list[tuple[str, dict[str, float]]]]:
     # from Elon Musk's tweets
     with open(
         Path.joinpath(
-            LIBRARY_DIR, "tests/test_data/ElonMusk/wordvector_elon.json"
+            LIBRARY_DIR, "tests/test_data/ElonMusk/wordvector_timelapse_elon.json"
         ),
         "r",
     ) as f:
