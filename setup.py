@@ -30,7 +30,7 @@ setup(
     url="https://github.com/konbraphat51/AnimatedWordCloud/tree/main",
     packages=find_packages(exclude=["tests", "tests.*"]),
     test_suite="tests",
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     package_data={
         "AnimatedWordCloud/Assets": [
             "Fonts/NotoSansMono-VariableFont_wdth,wght.ttf"
