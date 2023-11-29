@@ -9,12 +9,11 @@ Get the input and returns the output,
     calling each modules
 """
 
-from typing import Dict, Tuple
-from collections.abc import Iterable
-
+from __future__ import annotations
+from typing import Iterable
 
 def animate(
-    word_vector_timelapse: Iterable[Tuple[str, Dict[str, float]]]
+    word_vector_timelapse: Iterable[tuple[str, dict[str, float]]]
 ) -> str:
     """
     Create an animation of word cloud,
@@ -23,7 +22,7 @@ def animate(
     This function will call each modules in the right order,
         and return the animation path
 
-    :param Iterable[Tuple[str, Dict[str, float]]] word_vector_timelapse:
+    :param Iterable[tuple[str, dict[str, float]]] word_vector_timelapse:
     Timelapse data of word vectors.
     The data structure is a list of tuples,
         which includes "name of the time(str)" and "word vector(Dict[str, float])"
