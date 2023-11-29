@@ -68,7 +68,7 @@ class StaticAllocationStrategy:
             if word.text not in words_current:
                 words_current.append(word.text)
                 words_size[word.text] = word.text_size
-        missing_words = words_current - words_previous
+        missing_words = set(words_current) - words_previous
 
         # add missing words
         for word in missing_words:
