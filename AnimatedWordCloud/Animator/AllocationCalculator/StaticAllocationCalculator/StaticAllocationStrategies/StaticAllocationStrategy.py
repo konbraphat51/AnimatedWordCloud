@@ -121,31 +121,3 @@ class StaticAllocationStrategy:
             frame_current.add(
                 word, (frame_previous[word][0], lefttop_position)
             )
-
-    def handle_missing_words(
-        self,
-        frame_previous: AllocationInFrame,
-        frame_current: AllocationInFrame,
-        words_current: Iterable[Word],
-    ) -> None:
-        """
-        Complehenstively handle missing words for previous and current frame.
-
-        Call `add_missing_word_to_previous_frame`
-            and `add_missing_word_from_previous_frame`
-        This is intended to let appearing and disappearing words
-            appear and disappear smoothly.
-
-        :param AllocationInFrame frame_previous:
-            The allocation data of the previous frame
-        :param AllocationInFrame frame_current:
-            The allocation data of the current frame
-        :param Iterable[Word] words_current:
-            The words to be putted in the current frame
-        :rtype: None
-        """
-
-        self.add_missing_word_from_previous_frame(
-            frame_previous, frame_current
-        )
-        self.add_missing_word_to_previous_frame(frame_previous, words_current)

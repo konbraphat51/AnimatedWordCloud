@@ -56,6 +56,9 @@ class MagneticAllocation(StaticAllocationStrategy):
         self.words = words
         self.allocations_before = allocation_before
 
+        # missing word for previous frame
+        self.add_missing_word_to_previous_frame(allocation_before, words)
+
         output = AllocationInFrame()
 
         # Word rectangles that are currenly putted
@@ -119,7 +122,8 @@ class MagneticAllocation(StaticAllocationStrategy):
             # register to output
             output.add(word.text, word.font_size, position)
 
-        self.handle_missing_words(self.allocations_before, output, self.words)
+        # add missing words for this frame
+        self.add_missing_word_from_previous_frame(allocation_before, output)
 
         return output
 
