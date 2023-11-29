@@ -32,5 +32,5 @@ def test_vector():
     assert vec1.y == 2
     
     #convert to tuple
-    tup = vec1.to_tuple()
+    tup = vec1.convert_to_tuple()
     assert tup == (1, 2)
