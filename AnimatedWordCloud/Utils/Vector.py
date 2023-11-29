@@ -29,7 +29,7 @@ class Vector:
             self.x = x_or_tuple
             self.y = y
 
-    def __add__(self, other) -> Vector:
+    def __add__(self, other: Vector) -> Vector:
         """
         Sum of two vectors.
 
@@ -38,7 +38,7 @@ class Vector:
         """
         return Vector(self.x + other.x, self.y + other.y)
 
-    def __sub__(self, other) -> Vector:
+    def __sub__(self, other: Vector) -> Vector:
         """
         Difference of two vectors.
 
