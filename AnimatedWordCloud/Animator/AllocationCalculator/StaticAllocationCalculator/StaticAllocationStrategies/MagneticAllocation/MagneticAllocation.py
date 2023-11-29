@@ -252,7 +252,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         candidates = []
         for point_on_side in points_on_side:
             for pivot_to_center in pivots_to_center:
-                candidates.append(Vector(point_on_side) + pivot_to_center)
+                candidates.append(point_on_side + pivot_to_center)
 
         return candidates
 
