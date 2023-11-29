@@ -142,7 +142,8 @@ def estimate_text_size(
     draw = ImageDraw.Draw(image)
 
     # get size
-    w, h = draw.textsize(word, font=font)
+    w = draw.textlength(word, font=font, font_size=font_size)
+    h = font_size
 
     return (w, h)
 
