@@ -12,6 +12,7 @@ Get the input and returns the output,
 from __future__ import annotations
 from typing import Iterable
 
+
 def animate(
     word_vector_timelapse: Iterable[tuple[str, dict[str, float]]]
 ) -> str:
