@@ -7,7 +7,7 @@
 Base class for static allocation strategies
 """
 
-from collections.abc import Iterable
+from typing import Iterable
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.RandomAllocation import (
     put_randomly,
 )

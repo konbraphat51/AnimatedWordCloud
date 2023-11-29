@@ -11,7 +11,7 @@ Used by MagneticAllocation
 
 
 from __future__ import annotations
-from collections.abc import Iterable
+from typing import Iterable
 from AnimatedWordCloud.Utils import (
     Vector,
     Rect,

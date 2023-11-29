@@ -8,7 +8,7 @@ Collision detection functions
 """
 
 from __future__ import annotations
-from collections.abc import Iterable
+from typing import Iterable
 from AnimatedWordCloud.Utils.Vector import Vector
 from AnimatedWordCloud.Utils.Data.Rect import Rect
 

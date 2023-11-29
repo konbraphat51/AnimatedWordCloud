@@ -17,7 +17,7 @@ Repeating this process, all words will be allocated.
 
 from __future__ import annotations
 import math
-from collections.abc import Iterable
+from typing import Iterable
 from AnimatedWordCloud.Utils import (
     is_rect_hitting_rects,
     AllocationInFrame,

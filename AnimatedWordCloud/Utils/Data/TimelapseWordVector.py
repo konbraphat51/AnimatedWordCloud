@@ -8,7 +8,7 @@ Handful class of containing timelapse data of word vectors.
 """
 
 from __future__ import annotations
-from collections.abc import Iterable
+from typing import Iterable
 import bisect
 
 

@@ -17,7 +17,7 @@ This is used for the very first frame, before the first timelapse.
 """
 
 from __future__ import annotations
-from collections.abc import Iterable
+from typing import Iterable
 from random import random
 from math import pi, cos, sin
 from AnimatedWordCloud.Utils import Word, AllocationInFrame
