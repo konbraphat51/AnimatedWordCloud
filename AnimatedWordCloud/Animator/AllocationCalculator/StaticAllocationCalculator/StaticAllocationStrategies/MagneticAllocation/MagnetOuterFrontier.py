@@ -142,13 +142,13 @@ def _detect_frontier_linealy(
     """
 
     detected_points = []
-    rects_outermost = set()
+    rects_outermost_new = set()
 
     image_size = (image_width, image_height)
 
     launcher_position = launcher_point_start.clone()
     # whicle lancher is inside the image...
-    while is_point_hitting_rect(launcher_position, image_size):
+    while is_point_hitting_rects(launcher_position, rects_outermost):
         # launch detection ray
         result = _launch_ray(
             launcher_position,
@@ -161,12 +161,12 @@ def _detect_frontier_linealy(
             # hitted
             detected_point, hitted_rect = result
             detected_points.append(detected_point)
-            rects_outermost.add(hitted_rect)
+            rects_outermost_new.add(hitted_rect)
 
         # move launcher
         launcher_position += launcher_direction
 
-    return detected_points, rects_outermost
+    return detected_points, rects_outermost_new
 
 
 def _launch_ray(
