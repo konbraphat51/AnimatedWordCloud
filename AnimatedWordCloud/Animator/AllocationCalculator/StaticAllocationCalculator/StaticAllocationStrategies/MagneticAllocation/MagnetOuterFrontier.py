@@ -148,7 +148,7 @@ def _detect_frontier_linealy(
 
     launcher_position = launcher_point_start.clone()
     # whicle lancher is inside the image...
-    while is_point_hitting_rect(image_size, launcher_position):
+    while is_point_hitting_rect(launcher_position, image_size):
         # launch detection ray
         result = _launch_ray(
             launcher_position,
