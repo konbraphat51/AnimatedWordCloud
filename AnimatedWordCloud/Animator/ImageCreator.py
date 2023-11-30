@@ -8,7 +8,7 @@ Create images of each frame
 """
 
 
-from typing import List, Tuple
+from __future__ import annotations
 from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
     AllocationTimelapse,
 )
@@ -16,8 +16,8 @@ from PIL import Image, ImageDraw, ImageFont
 from random import Random
 import numpy as np
 import os
-from ..Utils.Consts import TMP_OUTPUT_PATH
-
+from AnimatedWordCloud.Utils.Consts import OUTPUT_PATH
+import matplotlib.pyplot as plt
 
 class colormap_color_func(object):
     # https://github.com/amueller/word_cloud/blob/main/wordcloud/wordcloud.py#L91
@@ -35,7 +35,6 @@ class colormap_color_func(object):
     """
 
     def __init__(self, color_map="magma"):
-        import matplotlib.pyplot as plt
 
         self.color_map = plt.cm.get_cmap(color_map)
 
@@ -50,12 +49,12 @@ class colormap_color_func(object):
 
 def create_images(
     position_in_frames: AllocationTimelapse,
-    image_size: Tuple[float, float],
+    image_size: tuple[float, float],
     font_path: str,
     background_color: str = "white",
     color_map: str = "magma",
     color_func=None,
-) -> List[str]:
+) -> list[str]:
     """
     Create images of each frame
 
@@ -69,14 +68,24 @@ def create_images(
     :return: The path of the images. The order of the list is the same as the order of the input.
     :rtype: List[str]
     """
-    if not os.path.exists(TMP_OUTPUT_PATH):
-        os.makedirs(TMP_OUTPUT_PATH)
+
+
+    if not os.path.exists(OUTPUT_PATH):
+        os.makedirs(OUTPUT_PATH)
+    
     image_paths = []
-    color_func = color_func or colormap_color_func(color_map)
+
+    if color_func == None:
+        color_func = colormap_color_func(color_map)
+    
     for time_name, allocation_in_frame in position_in_frames.timelapse:
         image = Image.new("RGB", image_size, background_color)
         draw = ImageDraw.Draw(image)
-        for word, (font_size, (x, y)) in allocation_in_frame.words.items():
+        allocation_in_frame_word_dict = allocation_in_frame.words
+        
+        for word, position in allocation_in_frame_word_dict.items():
+            font_size = position[0]
+            (x, y) = position[1]
             font = ImageFont.truetype(font_path, font_size)
             draw.text(
                 (x, y),
@@ -87,7 +96,7 @@ def create_images(
                 font=font,
             )
         # save the image
-        save_path = os.path.join(TMP_OUTPUT_PATH, f"{time_name}.png")
+        save_path = os.path.join(OUTPUT_PATH, f"{time_name}.png")
         image.save(save_path)  # TODO: changing the file path
         image_paths.append(save_path)
     return image_paths
