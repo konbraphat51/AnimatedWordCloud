@@ -298,29 +298,31 @@ class MagneticAllocation(StaticAllocationStrategy):
         return best_position
 
     def _is_hitting_other_words(
-        self, center_position: tuple[int, int], size: [int, int]
+        self,
+        center_position: tuple[int, int] | Vector,
+        size: [int, int] | Vector,
     ) -> bool:
         """
         Check if the given rect is hitting with other words
 
-        :param tuple[int,int] center_position: Center point of the word
-        :param tuple[int,int] size: Size of the word
+        :param tuple[int,int] | Vector center_position: Center point of the word
+        :param tuple[int,int] | Vector size: Size of the word
         :return: True if the center point is hitting with other words
         :rtype: bool
         """
+        # ensure to Vector
+        if center_position.__class__ == tuple:
+            center_position = Vector(center_position)
+        if size.__class__ == tuple:
+            size = Vector(size)
+
+        left_top = center_position - size / 2
+        right_bottom = center_position + size / 2
 
         return is_rect_hitting_rects(
             Rect(
-                # left_top
-                (
-                    center_position[0] - size[0] / 2,
-                    center_position[1] - size[1] / 2,
-                ),
-                # right_bottom
-                (
-                    center_position[0] + size[0] / 2,
-                    center_position[1] + size[1] / 2,
-                ),
+                left_top.convert_to_tuple(),
+                right_bottom.convert_to_tuple(),
             ),
             self.rects_outermost,
         )
