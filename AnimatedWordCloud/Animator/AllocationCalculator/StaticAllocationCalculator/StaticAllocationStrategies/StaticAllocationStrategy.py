@@ -64,10 +64,12 @@ class StaticAllocationStrategy:
         words_previous = set(frame_previous.words.keys())
         word_texts_current = []
         words_size = {}
+        words_font_size = {}
         for word in words_current:
             if word.text not in words_current:
                 word_texts_current.append(word.text)
                 words_size[word.text] = word.text_size
+                words_font_size[word.text] = word.font_size
         missing_words = set(word_texts_current) - words_previous
 
         # add missing words
@@ -77,17 +79,13 @@ class StaticAllocationStrategy:
                 self.image_width, self.image_height, words_size[word]
             )
 
-            text_rightbottom_position = (
-                text_lefttop_position[0] + words_size[word][0],
-                text_lefttop_position[1] + words_size[word][1],
-            )
-
             # allocate in the output
             frame_previous.add(
                 word,
                 (
                     words_size[word][0],
-                    (text_lefttop_position, text_rightbottom_position),
+                    words_font_size[word],
+                    text_lefttop_position,
                 ),
             )
 
