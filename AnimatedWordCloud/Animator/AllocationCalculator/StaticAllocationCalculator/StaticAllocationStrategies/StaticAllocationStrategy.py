@@ -62,13 +62,13 @@ class StaticAllocationStrategy:
 
         # find missing words
         words_previous = set(frame_previous.words.keys())
-        words_current = []
+        word_texts_current = []
         words_size = {}
         for word in words_current:
             if word.text not in words_current:
-                words_current.append(word.text)
+                word_texts_current.append(word.text)
                 words_size[word.text] = word.text_size
-        missing_words = set(words_current) - words_previous
+        missing_words = set(word_texts_current) - words_previous
 
         # add missing words
         for word in missing_words:
