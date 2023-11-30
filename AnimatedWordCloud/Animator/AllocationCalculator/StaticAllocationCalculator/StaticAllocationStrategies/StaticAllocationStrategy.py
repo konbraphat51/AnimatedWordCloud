@@ -81,9 +81,7 @@ class StaticAllocationStrategy:
 
             # allocate in the output
             frame_previous.add(
-                word,            
-                words_font_size[word],
-                text_lefttop_position
+                word, words_font_size[word], text_lefttop_position
             )
 
     def add_missing_word_from_previous_frame(
