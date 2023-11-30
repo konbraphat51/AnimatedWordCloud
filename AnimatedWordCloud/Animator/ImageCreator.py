@@ -74,7 +74,7 @@ def create_images(
 
     image_paths = []
 
-    if color_func == None:
+    if color_func is None:
         color_func = colormap_color_func(color_map)
 
     for time_name, allocation_in_frame in position_in_frames.timelapse:
