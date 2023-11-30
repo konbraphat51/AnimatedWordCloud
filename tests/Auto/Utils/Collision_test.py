@@ -16,15 +16,17 @@ def test_collisions():
     rect2 = Rect((150, 150), (250, 250))
 
     point0 = (50, 50)
-    point1 = (150, 150)
+    point1_1 = (149, 149)
+    point1_2 = (150, 150)
     point2 = (300, 300)
 
     assert is_point_hitting_rect(point0, rect0)
-    assert is_point_hitting_rect(point1, rect1)
+    assert is_point_hitting_rect(point1_1, rect1)
+    assert not is_point_hitting_rect(point1_2, rect1)
     assert not is_point_hitting_rect(point2, rect2)
 
     assert is_point_hitting_rects(point0, [rect0, rect1])[0]
-    assert is_point_hitting_rects(point1, [rect0, rect1])[1].left_top == (
+    assert is_point_hitting_rects(point1_1, [rect0, rect1])[1].left_top == (
         75,
         75,
     )
