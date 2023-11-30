@@ -45,8 +45,8 @@ def is_point_hitting_rect(point: tuple[int, int] | Vector, rect: Rect) -> bool:
         point = Vector(point)
 
     return (
-        rect.left_top[0] <= point.x <= rect.right_bottom[0]
-        and rect.left_top[1] <= point.y <= rect.right_bottom[1]
+        rect.left_top[0] < point.x < rect.right_bottom[0]
+        and rect.left_top[1] < point.y < rect.right_bottom[1]
     )
 
 
