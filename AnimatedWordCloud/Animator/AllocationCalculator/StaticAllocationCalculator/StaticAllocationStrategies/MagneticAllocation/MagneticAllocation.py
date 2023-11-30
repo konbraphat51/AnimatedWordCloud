@@ -86,7 +86,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         output.add(first_word.text, first_word.font_size, first_word_position)
 
         # avoid index exceeded error
-        if len(words) == 1:
+        if len(self.words) == 1:
             return output
 
         # from second word
