@@ -34,6 +34,3 @@ def test_imagecreator():
     test_path = os.path.join(OUTPUT_PATH, "*.png")
     assert len(glob.glob(test_path)) != 0
     subprocess.call(["rm", test_path])
-
-
-test_imagecreator()
