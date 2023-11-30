@@ -6,7 +6,9 @@
 """
 Testing the ImageCreator classes
 """
-
+import os
+import glob
+import subprocess
 from AnimatedWordCloud.Animator.ImageCreator import create_images
 from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
     AllocationTimelapse,
@@ -16,9 +18,6 @@ from AnimatedWordCloud.Utils.Consts import (
     DEFAULT_ENG_FONT_PATH,
     OUTPUT_PATH,
 )
-import os
-import glob
-import subprocess
 
 
 def test_imagecreator():
