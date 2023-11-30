@@ -77,9 +77,18 @@ class StaticAllocationStrategy:
                 self.image_width, self.image_height, words_size[word]
             )
 
+            text_rightbottom_position = (
+                text_lefttop_position[0] + words_size[word][0],
+                text_lefttop_position[1] + words_size[word][1],
+            )
+
             # allocate in the output
             frame_previous.add(
-                word, (words_size[word][0], text_lefttop_position)
+                word,
+                (
+                    words_size[word][0],
+                    (text_lefttop_position, text_rightbottom_position),
+                ),
             )
 
     def add_missing_word_from_previous_frame(
