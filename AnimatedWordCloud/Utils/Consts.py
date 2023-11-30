@@ -23,3 +23,7 @@ DEFAULT_ENG_FONT_PATH = os.path.join(
     "Fonts",
     "NotoSansMono-VariableFont_wdth,wght.ttf",
 )
+
+OUTPUT_PATH = os.path.join(
+    LIBRARY_DIR, "Animator", "AllocationCalculator", "output"
+)
