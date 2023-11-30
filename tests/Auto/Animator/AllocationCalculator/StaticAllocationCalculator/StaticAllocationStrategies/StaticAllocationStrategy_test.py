@@ -16,7 +16,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
 
 
 def test_StaticAllocationStrategy():
-    instance = StaticAllocationStrategy(100, 100)
+    instance = StaticAllocationStrategy(1000, 1000)
 
     with raises(NotImplementedError):
         instance.allocate([], AllocationInFrame())
