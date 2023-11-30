@@ -19,6 +19,7 @@ import os
 from AnimatedWordCloud.Utils.Consts import OUTPUT_PATH
 import matplotlib.pyplot as plt
 
+
 class colormap_color_func(object):
     # https://github.com/amueller/word_cloud/blob/main/wordcloud/wordcloud.py#L91
     """Color func created from matplotlib colormap.
@@ -35,7 +36,6 @@ class colormap_color_func(object):
     """
 
     def __init__(self, color_map="magma"):
-
         self.color_map = plt.cm.get_cmap(color_map)
 
     def __call__(self, word, font_size, position, random_state=None, **kwargs):
@@ -69,20 +69,19 @@ def create_images(
     :rtype: List[str]
     """
 
-
     if not os.path.exists(OUTPUT_PATH):
         os.makedirs(OUTPUT_PATH)
-    
+
     image_paths = []
 
     if color_func == None:
         color_func = colormap_color_func(color_map)
-    
+
     for time_name, allocation_in_frame in position_in_frames.timelapse:
         image = Image.new("RGB", image_size, background_color)
         draw = ImageDraw.Draw(image)
         allocation_in_frame_word_dict = allocation_in_frame.words
-        
+
         for word, position in allocation_in_frame_word_dict.items():
             font_size = position[0]
             (x, y) = position[1]
