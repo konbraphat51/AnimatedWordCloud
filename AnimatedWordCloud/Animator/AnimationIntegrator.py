@@ -14,7 +14,7 @@ from PIL import Image
 def integrate_images(
     image_paths: list[str],
     filename: str,
-    duration: int = 500,
+    duration_per_frame: int = 500,
 ) -> None:
     """
     Create images of each frame
@@ -32,7 +32,7 @@ def integrate_images(
         filename,
         save_all=True,
         append_images=gif_images[1:],
-        duration=duration,
+        duration=duration_per_frame,
         loop=0,
     )
 
