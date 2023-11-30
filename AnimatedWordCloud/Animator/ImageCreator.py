@@ -9,15 +9,15 @@ Create images of each frame
 
 
 from __future__ import annotations
+import os
+from random import Random
+import numpy as np
+import matplotlib.pyplot as plt
+from PIL import Image, ImageDraw, ImageFont
 from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
     AllocationTimelapse,
 )
-from PIL import Image, ImageDraw, ImageFont
-from random import Random
-import numpy as np
-import os
 from AnimatedWordCloud.Utils.Consts import OUTPUT_PATH
-import matplotlib.pyplot as plt
 
 
 class colormap_color_func(object):
