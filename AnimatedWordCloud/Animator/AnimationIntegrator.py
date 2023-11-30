@@ -7,12 +7,12 @@
 Integrates the images into a single video (gif)
 """
 
-from typing import List
+from __future__ import annotations
 from PIL import Image
 
 
 def integrate_images(
-    image_paths: List[str],
+    image_paths: list[str],
     filename: str,
     duration: int = 500,
 ) -> None:
