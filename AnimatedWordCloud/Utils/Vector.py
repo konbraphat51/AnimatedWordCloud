@@ -65,6 +65,20 @@ class Vector:
         """
         return Vector(self.x / other, self.y / other)
 
+    def __getitem__(self, index: int) -> float:
+        """
+        Get item by index.
+
+        :return: x if index is 0, y if index is 1
+        :rtype: float
+        """
+        if index == 0:
+            return self.x
+        elif index == 1:
+            return self.y
+        else:
+            raise IndexError(f"Index {index} is out of range")
+
     def clone(self) -> Vector:
         """
         Clone this vector.

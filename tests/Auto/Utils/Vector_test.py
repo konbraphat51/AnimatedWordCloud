@@ -34,6 +34,10 @@ def test_vector():
     assert divide.x == 0.5
     assert divide.y == 1
 
+    # get item
+    assert vec1[0] == 1
+    assert vec1[1] == 2
+
     # clone
     clone = vec1.clone()
     clone += vec2
