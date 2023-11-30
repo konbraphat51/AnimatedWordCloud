@@ -47,6 +47,24 @@ class Vector:
         """
         return Vector(self.x - other.x, self.y - other.y)
 
+    def __mul__(self, other: float) -> Vector:
+        """
+        Product of vector and scalar.
+
+        :return: product of vector and scalar
+        :rtype: Vector
+        """
+        return Vector(self.x * other, self.y * other)
+
+    def __truediv__(self, other: float) -> Vector:
+        """
+        Division of vector and scalar.
+
+        :return: division of vector and scalar
+        :rtype: Vector
+        """
+        return Vector(self.x / other, self.y / other)
+
     def clone(self) -> Vector:
         """
         Clone this vector.

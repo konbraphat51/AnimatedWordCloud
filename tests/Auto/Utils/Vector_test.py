@@ -24,6 +24,16 @@ def test_vector():
     assert minus.x == -2
     assert minus.y == -2
 
+    # multiply
+    multiply = vec1 * 2
+    assert multiply.x == 2
+    assert multiply.y == 4
+
+    # divide
+    divide = vec1 / 2
+    assert divide.x == 0.5
+    assert divide.y == 1
+
     # clone
     clone = vec1.clone()
     clone += vec2
