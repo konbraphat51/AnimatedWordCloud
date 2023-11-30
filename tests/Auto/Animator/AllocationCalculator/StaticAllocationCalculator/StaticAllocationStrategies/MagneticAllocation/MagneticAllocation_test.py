@@ -19,6 +19,7 @@ def test_MagneticAllocation():
 
     allocation_previous = AllocationInFrame()
     allocation_previous.add("test", 10, (30, 10))
+    allocation_previous.add("test1", 30, (20, 30))
 
     words = [
         Word("test", 1, 10, (30, 10)),
