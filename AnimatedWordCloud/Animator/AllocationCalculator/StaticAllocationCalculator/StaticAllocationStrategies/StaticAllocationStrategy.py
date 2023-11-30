@@ -125,6 +125,4 @@ class StaticAllocationStrategy:
             lefttop_position = put_randomly(
                 self.image_width, self.image_height, estimated_size
             )
-            frame_current.add(
-                word, (frame_previous[word][0], lefttop_position)
-            )
+            frame_current.add(word, frame_previous[word][0], lefttop_position)
