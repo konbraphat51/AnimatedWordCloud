@@ -18,6 +18,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
     AllocationTimelapse,
 )
 from AnimatedWordCloud.Utils.Consts import OUTPUT_PATH
+from AnimatedWordCloud.Utils.FileManager import ensure_directory_exists
 
 
 class colormap_color_func(object):
@@ -69,8 +70,7 @@ def create_images(
     :rtype: List[str]
     """
 
-    if not os.path.exists(OUTPUT_PATH):
-        os.makedirs(OUTPUT_PATH)
+    ensure_directory_exists(OUTPUT_PATH)
 
     image_paths = []
 
