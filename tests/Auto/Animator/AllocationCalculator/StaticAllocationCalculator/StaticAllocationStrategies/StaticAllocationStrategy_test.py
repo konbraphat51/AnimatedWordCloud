@@ -29,9 +29,14 @@ def test_StaticAllocationStrategy():
 
     words_current = [Word("test2", 30, 30, (20, 30))]
 
-    assert (
-        instance.handle_missing_words(
-            allocation_previous, allocation_current, words_current
-        )
-        is None
+    # test add_missing_word_to_previous_frame()
+    instance.add_missing_word_to_previous_frame(
+        allocation_previous, words_current
     )
+    assert allocation_previous["test2"] is not None
+
+    # test add_missing_word_from_previous_frame()
+    instance.add_missing_word_from_previous_frame(
+        allocation_previous, allocation_current
+    )
+    assert allocation_current["test"] is not None
