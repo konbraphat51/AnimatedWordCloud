@@ -198,7 +198,9 @@ def allocate_all(
     for cnt in range(times):
         allocation = allocate(
             timelapse[cnt].word_vector,
-            allocation_timelapse.get_frame(cnt), # first added -> cnt; one before
+            allocation_timelapse.get_frame(
+                cnt
+            ),  # first added -> cnt; one before
             max_words,
             max_font_size,
             min_font_size,
