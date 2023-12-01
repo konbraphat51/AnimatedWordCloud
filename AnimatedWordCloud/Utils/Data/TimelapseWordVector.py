@@ -124,7 +124,7 @@ class TimeFrame:
         :param WordVector word_vector: Word vector
         """
 
-        self.time_name: str = str(time_name) # ensure time_name is string
+        self.time_name: str = str(time_name)  # ensure time_name is string
         self.word_vector: WordVector = word_vector
 
     def convert_from_dict(

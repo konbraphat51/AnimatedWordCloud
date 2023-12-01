@@ -42,7 +42,7 @@ def get_magnet_outer_frontier(
     image_width: int,
     image_height: int,
     interval_x: float,
-    interval_y: float
+    interval_y: float,
 ) -> tuple[MagnetOuterFrontier, set[Rect]]:
     """
     Find the outer frontier of the magnet at the center
@@ -65,9 +65,9 @@ def get_magnet_outer_frontier(
     # need to shift 1 for the collision detection
     launcher_start_positions = [
         Vector(1, 1),  # from up
-        Vector(1, image_height-1),  # from down
+        Vector(1, image_height - 1),  # from down
         Vector(1, 1),  # from left
-        Vector(image_width-1, 1),  # from right
+        Vector(image_width - 1, 1),  # from right
     ]
     launcher_directions = [
         Vector(interval_x, 0),  # from up

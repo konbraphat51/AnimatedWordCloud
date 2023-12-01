@@ -74,7 +74,7 @@ def test_allocate_all():
         allocate_all(
             timelapses_test[0],
             30,
-            100,
+            10,
             5,
             600,
             400,
