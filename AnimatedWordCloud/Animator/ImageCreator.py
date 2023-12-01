@@ -14,7 +14,7 @@ from random import Random
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
-from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
+from AnimatedWordCloud.Utils import (
     AllocationTimelapse,
 )
 from AnimatedWordCloud.Utils.Consts import OUTPUT_PATH
