@@ -71,16 +71,16 @@ def get_magnet_outer_frontier(
         Vector(image_width, 1),  # from right
     ]
     launcher_directions = [
-        Vector(X_INTERVAL - 1, 1),  # from up
-        Vector(X_INTERVAL - 1, 1),  # from down
-        Vector(1, Y_INTERVAL - 1),  # from left
-        Vector(1, Y_INTERVAL - 1),  # from right
+        Vector(X_INTERVAL, 0),  # from up
+        Vector(X_INTERVAL, 0),  # from down
+        Vector(0, Y_INTERVAL),  # from left
+        Vector(0, Y_INTERVAL),  # from right
     ]
     detection_ray_directions = [
-        Vector(1, Y_INTERVAL - 1),  # from up
-        Vector(1, -Y_INTERVAL - 1),  # from down
-        Vector(X_INTERVAL - 1, 1),  # from left
-        Vector(-X_INTERVAL - 1, 1),  # from right
+        Vector(0, Y_INTERVAL),  # from up
+        Vector(0, -Y_INTERVAL),  # from down
+        Vector(X_INTERVAL, 0),  # from left
+        Vector(-X_INTERVAL, 0),  # from right
     ]
     corresponding_frontiers = []
 
