@@ -195,10 +195,10 @@ def allocate_all(
     )
 
     # calculate allocation for each frame
-    for cnt in range(1, times + 1):
+    for cnt in range(times):
         allocation = allocate(
             timelapse[cnt].word_vector,
-            allocation_timelapse.get_frame(cnt - 1),
+            allocation_timelapse.get_frame(cnt), # first added -> cnt; one before
             max_words,
             max_font_size,
             min_font_size,
