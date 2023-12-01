@@ -182,8 +182,8 @@ def allocate_all(
     allocation_timelapse = AllocationTimelapse()
 
     # first frame
-    first_frame = allocate_randomly(
-        timelapse[0].word_vector, image_width, image_height
+    first_frame = _allocate_first_frame(
+        timelapse[0].word_vector, max_words, min_font_size, image_width, image_height, font_path
     )
     allocation_timelapse.add(
         TRANSITION_SYMBOL + timelapse[0].time_name, first_frame
@@ -206,3 +206,44 @@ def allocate_all(
         allocation_timelapse.add(timelapse[cnt].time_name, allocation)
 
     return allocation_timelapse
+
+
+def _allocate_first_frame(
+    word_vector: WordVector,
+    max_words: int,
+    min_font_size: float,
+    image_width: int,
+    image_height: int,
+    font_path: str,
+) -> AllocationInFrame:
+    """
+    Calculate allocation of the first frame
+    
+    :param WordVector word_vector: The word vector
+    :param int max_words: Maximum number of words shown
+    :param float min_font_size: Minimum font size of the word
+    :param int image_width: Width of the image
+    :param int image_height: Height of the image
+    :param str font_path: Path to the font
+    :return: Allocation data of the frame
+    :rtype: AllocationInFrame
+    """
+
+    words_tup = word_vector.get_ranking(0, max_words)
+    words = []  #Word instance
+
+    # get attributes for each words,
+    #   and save them as Word instances
+    for word_raw, weight in words_tup:
+        # minimum font size for the first frame
+        text_size = estimate_text_size(word_raw, min_font_size, font_path)
+
+        # make instance
+        word = Word(word_raw, weight, min_font_size, text_size)
+
+        # save instance
+        words.append(word)
+
+    # allocate randomly
+    allocate_randomly(words, image_width, image_height)
+    
