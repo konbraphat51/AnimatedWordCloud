@@ -190,7 +190,7 @@ def allocate_all(
     )
 
     # calculate allocation for each frame
-    for cnt in range(times):
+    for cnt in range(1, times+1):
         allocation = allocate(
             timelapse[cnt].word_vector,
             allocation_timelapse.get_frame(cnt - 1),
