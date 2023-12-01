@@ -245,5 +245,5 @@ def _allocate_first_frame(
         words.append(word)
 
     # allocate randomly
-    allocate_randomly(words, image_width, image_height)
+    return allocate_randomly(words, image_width, image_height)
     
