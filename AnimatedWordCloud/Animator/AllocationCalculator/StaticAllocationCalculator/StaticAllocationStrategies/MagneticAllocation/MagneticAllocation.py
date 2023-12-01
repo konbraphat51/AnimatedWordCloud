@@ -106,7 +106,8 @@ class MagneticAllocation(StaticAllocationStrategy):
                 self.rects_outermost,
                 self.image_width,
                 self.image_height,
-                self.image_division,
+                self.interval_x,
+                self.interval_y
             )
 
             # find the best left-top position
@@ -184,8 +185,11 @@ class MagneticAllocation(StaticAllocationStrategy):
         :rtype: tuple[int,int]
         """
 
-        x_half = word.text_size[0] / 2
-        y_half = word.text_size[1] / 2
+        # + interval for a buffer for the collision detection
+        # if not, this might get into the word's rects
+        x_half = word.text_size[0] / 2 + self.interval_x
+        y_half = word.text_size[1] / 2 + self.interval_y
+
         left_bottom_to_center = Vector(x_half, -y_half)
         right_bottom_to_center = Vector(-x_half, -y_half)
         left_top_to_center = Vector(x_half, y_half)
