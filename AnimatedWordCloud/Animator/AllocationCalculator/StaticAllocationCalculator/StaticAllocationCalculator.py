@@ -65,8 +65,8 @@ def allocate(
         # get size
         font_size = calculate_font_size(
             weight,
-            word_weights[0][1],     # max weight
-            word_weights[-1][1],    # min weight
+            word_weights[0][1],  # max weight
+            word_weights[-1][1],  # min weight
             max_font_size,
             min_font_size,
         )
