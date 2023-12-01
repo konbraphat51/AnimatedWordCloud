@@ -73,7 +73,9 @@ class AllocationTimelapse:
         :rtype: None
         """
 
-        self.timelapse.append((time_name, allocation_in_frame))
+        # add
+        # ensure time_name is string
+        self.timelapse.append((str(time_name), allocation_in_frame))
 
     def get_frame(self, index: int) -> AllocationInFrame:
         """
