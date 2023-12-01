@@ -93,10 +93,6 @@ class MagneticAllocation(StaticAllocationStrategy):
         )
         output.add(first_word.text, first_word.font_size, first_word_position)
 
-        # avoid index exceeded error
-        if len(self.words) == 1:
-            return output
-
         # from second word
         for word in self.words[1:]:
             (
@@ -173,8 +169,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         Find the best position to put the word
 
         Find the best position to put the word in the `magnet_outer_frontier`.
-        The positions will be evaluated by `evaluate_position()`,
-            and the best scored position will be returned.
+        The positions will be evaluated by `evaluate_position()`, and the best scored position will be returned.
 
         :param Word word: Word to put
         :param MagnetOuterFrontier magnet_outer_frontier:
@@ -279,8 +274,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         position_from: tuple[int, int],
     ) -> tuple[int, int]:
         """
-        Try to put the word at the gived place and evaluate the score,
-            and return the best scored position
+        Try to put the word at the gived place and evaluate the score, and return the best scored position
 
         :param Iterable[tuple[int,int]] center_positions:
             Candidate list of center points of the word
