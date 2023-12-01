@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw, ImageFont
 from AnimatedWordCloud.Utils import (
     AllocationTimelapse,
 )
-from AnimatedWordCloud.Utils.Consts import OUTPUT_PATH
+from AnimatedWordCloud.Utils.Consts import DEFAULT_OUTPUT_PATH
 from AnimatedWordCloud.Utils.FileManager import ensure_directory_exists
 
 
@@ -70,7 +70,7 @@ def create_images(
     :rtype: List[str]
     """
 
-    ensure_directory_exists(OUTPUT_PATH)
+    ensure_directory_exists(DEFAULT_OUTPUT_PATH)
 
     image_paths = []
 
@@ -95,7 +95,7 @@ def create_images(
                 font=font,
             )
         # save the image
-        save_path = os.path.join(OUTPUT_PATH, f"{time_name}.png")
+        save_path = os.path.join(DEFAULT_OUTPUT_PATH, f"{time_name}.png")
         image.save(save_path)  # TODO: changing the file path
         image_paths.append(save_path)
     return image_paths
