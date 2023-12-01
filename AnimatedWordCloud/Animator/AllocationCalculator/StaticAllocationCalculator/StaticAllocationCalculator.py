@@ -62,11 +62,11 @@ def allocate(
     # get attributes for each words,
     #   and save them as Word instances
     for word_raw, weight in word_weights:
-        # get attributes
+        # get size
         font_size = calculate_font_size(
             weight,
-            word_weights[0][1],
-            word_weights[-1][1],
+            word_weights[0][1],     # max weight
+            word_weights[-1][1],    # min weight
             max_font_size,
             min_font_size,
         )
@@ -237,7 +237,7 @@ def _allocate_first_frame(
     """
 
     words_tup = word_vector.get_ranking(0, max_words)
-    words = []  # Word instance
+    words = []  # Word instances
 
     # get attributes for each words,
     #   and save them as Word instances
