@@ -14,7 +14,7 @@ class Rect:
     """
     Data of rectangle in static allocation strategies
     """
-    
+
     def __init__(
         self, left_top: tuple[int, int], right_bottom: tuple[int, int]
     ) -> None:
