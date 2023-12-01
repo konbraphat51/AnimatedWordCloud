@@ -43,7 +43,7 @@ def allocate_randomly(
         )
 
         # allocate in the output
-        output[word.text] = (word.font_size, text_lefttop_position)
+        output.add(word.text, word.font_size, text_lefttop_position)
 
     return output
 
