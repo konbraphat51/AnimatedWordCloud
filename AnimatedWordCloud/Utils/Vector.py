@@ -79,6 +79,15 @@ class Vector:
         else:
             raise IndexError(f"Index {index} is out of range")
 
+    def __str__(self) -> str:
+        """
+        Convert to string.
+
+        :return: string representation of the vector
+        :rtype: str
+        """
+        return f"({self.x}, {self.y})"
+
     def clone(self) -> Vector:
         """
         Clone this vector.
