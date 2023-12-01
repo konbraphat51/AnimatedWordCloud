@@ -31,6 +31,10 @@ class MagnetOuterFrontier:
     """
 
     def __init__(self) -> None:
+        """
+        Make empty data
+        """
+        
         self.from_up: list[tuple[int, int]] = []
         self.from_down: list[tuple[int, int]] = []
         self.from_left: list[tuple[int, int]] = []

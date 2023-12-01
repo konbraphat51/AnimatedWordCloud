@@ -103,7 +103,7 @@ class MagneticAllocation(StaticAllocationStrategy):
             )
 
             # find the best left-top position
-            position = self.find_best_position(
+            position = self._find_best_position(
                 word,
                 magnet_outer_frontier,
                 self.allocations_before[word.text][1],
@@ -128,7 +128,7 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         return output
 
-    def evaluate_position(
+    def _evaluate_position(
         self, position_from: tuple[int, int], position_to: tuple[int, int]
     ) -> float:
         """
@@ -155,7 +155,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         # the larger, the better; This need manual adjustment
         return -(distance_movement**2) - distance_center**2
 
-    def find_best_position(
+    def _find_best_position(
         self,
         word: Word,
         magnet_outer_frontier: MagnetOuterFrontier,
@@ -290,7 +290,7 @@ class MagneticAllocation(StaticAllocationStrategy):
                 # ...skip this position
                 continue
 
-            score = self.evaluate_position(position_from, center_position)
+            score = self._evaluate_position(position_from, center_position)
 
             if score > best_score:
                 # best score updated
