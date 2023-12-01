@@ -63,23 +63,24 @@ def get_magnet_outer_frontier(
     magnet_outer_frontier = MagnetOuterFrontier()
 
     # prepare for iteration
+    # need to shift 1 for the collision detection
     launcher_start_positions = [
-        Vector(0, 0),  # from up
-        Vector(0, image_height),  # from down
-        Vector(0, 0),  # from left
-        Vector(image_width, 0),  # from right
+        Vector(1, 1),  # from up
+        Vector(1, image_height),  # from down
+        Vector(1, 1),  # from left
+        Vector(image_width, 1),  # from right
     ]
     launcher_directions = [
-        Vector(X_INTERVAL, 0),  # from up
-        Vector(X_INTERVAL, 0),  # from down
-        Vector(0, Y_INTERVAL),  # from left
-        Vector(0, Y_INTERVAL),  # from right
+        Vector(X_INTERVAL-1, 1),  # from up
+        Vector(X_INTERVAL-1, 1),  # from down
+        Vector(1, Y_INTERVAL-1),  # from left
+        Vector(1, Y_INTERVAL-1),  # from right
     ]
     detection_ray_directions = [
-        Vector(0, Y_INTERVAL),  # from up
-        Vector(0, -Y_INTERVAL),  # from down
-        Vector(X_INTERVAL, 0),  # from left
-        Vector(-X_INTERVAL, 0),  # from right
+        Vector(1, Y_INTERVAL-1),  # from up
+        Vector(1, -Y_INTERVAL-1),  # from down
+        Vector(X_INTERVAL-1, 1),  # from left
+        Vector(-X_INTERVAL-1, 1),  # from right
     ]
     corresponding_frontiers = []
 
