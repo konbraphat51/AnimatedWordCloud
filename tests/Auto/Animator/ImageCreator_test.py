@@ -10,7 +10,7 @@ import os
 import glob
 import subprocess
 from AnimatedWordCloud.Animator.ImageCreator import create_images
-from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
+from AnimatedWordCloud.Utils import (
     AllocationTimelapse,
     AllocationInFrame,
 )
