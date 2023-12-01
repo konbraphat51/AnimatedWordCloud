@@ -41,7 +41,8 @@ def get_magnet_outer_frontier(
     rects_outermost: Iterable[Rect],
     image_width: int,
     image_height: int,
-    image_division: int,
+    interval_x: float,
+    interval_y: float
 ) -> tuple[MagnetOuterFrontier, set[Rect]]:
     """
     Find the outer frontier of the magnet at the center
@@ -49,14 +50,12 @@ def get_magnet_outer_frontier(
     :param Iterable[Rect] rects_outermost: Rectangles that are currently putted at the outermost of the magnet
     :param int image_width: Width of the image
     :param int image_height: Height of the image
-    :param int image_division: Number of division of the image
+    :param int interval_x: interval of the precision; x
+    :param int interval_y: interval of the precision; y
     :return: (Outer frontier of the magnet at the center,
         New list of rectangles that are currently putted at the outermost of the magnet)
     :rtype: tuple[MagnetOuterFrontier, set[Rect]]
     """
-
-    X_INTERVAL = image_width / image_division
-    Y_INTERVAL = image_height / image_division
 
     new_hitted_rects = set()
 
@@ -71,16 +70,16 @@ def get_magnet_outer_frontier(
         Vector(image_width-1, 1),  # from right
     ]
     launcher_directions = [
-        Vector(X_INTERVAL, 0),  # from up
-        Vector(X_INTERVAL, 0),  # from down
-        Vector(0, Y_INTERVAL),  # from left
-        Vector(0, Y_INTERVAL),  # from right
+        Vector(interval_x, 0),  # from up
+        Vector(interval_x, 0),  # from down
+        Vector(0, interval_y),  # from left
+        Vector(0, interval_y),  # from right
     ]
     detection_ray_directions = [
-        Vector(0, Y_INTERVAL),  # from up
-        Vector(0, -Y_INTERVAL),  # from down
-        Vector(X_INTERVAL, 0),  # from left
-        Vector(-X_INTERVAL, 0),  # from right
+        Vector(0, interval_y),  # from up
+        Vector(0, -interval_y),  # from down
+        Vector(interval_x, 0),  # from left
+        Vector(-interval_x, 0),  # from right
     ]
     corresponding_frontiers = []
 

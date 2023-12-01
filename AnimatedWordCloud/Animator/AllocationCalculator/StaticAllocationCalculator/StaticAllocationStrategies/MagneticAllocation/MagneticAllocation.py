@@ -42,7 +42,12 @@ class MagneticAllocation(StaticAllocationStrategy):
         Initialize allocation settings
         """
         super().__init__(image_width, image_height)
+        
         self.image_division = image_division
+        
+        # intervals calculated from the image division
+        self.interval_x = self.image_width / self.image_division
+        self.interval_y = self.image_height / self.image_division
 
     def allocate(
         self, words: Iterable[Word], allocation_before: AllocationInFrame
