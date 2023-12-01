@@ -34,3 +34,7 @@ Symbol showed in image that indicates the transition of the time.
 
 ex. shown as "2021/01/01 -> 2021/01/02"
 """
+
+OUTPUT_PATH = os.path.join(
+    LIBRARY_DIR, "Animator", "AllocationCalculator", "output"
+)
