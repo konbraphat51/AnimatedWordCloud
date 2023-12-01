@@ -8,10 +8,8 @@ One strategy to allocate words in static time.
 
 First, put the largest word in the center.
 Regard this word as a magnet.
-Then, put the next largest word at empty point, 
-    contacting with the magnet at the center.
-The point will be evaluated by evaluate_position(),
-    and the most best point will be selected.
+Then, put the next largest word at empty point, contacting with the magnet at the center.
+The point will be evaluated by evaluate_position(), and the most best point will be selected.
 Repeating this process, all words will be allocated.
 """
 
