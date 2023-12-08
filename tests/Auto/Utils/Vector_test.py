@@ -8,6 +8,7 @@ Testing the Vector classes
 """
 
 from AnimatedWordCloud.Utils import Vector
+from pytest import raises
 
 
 def test_vector():
@@ -49,3 +50,13 @@ def test_vector():
     # convert to tuple
     tup = vec1.convert_to_tuple()
     assert tup == (1, 2)
+
+    # convert to str
+    assert str(vec1) is str
+
+    # invalid constructing
+    with raises(ValueError):
+        Vector(1, 2, 3)
+
+    with raises(ValueError):
+        Vector((1, 2, 3))
