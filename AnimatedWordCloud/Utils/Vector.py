@@ -15,7 +15,7 @@ class Vector:
     Class for 2D vector calculation
     """
 
-    def __init__(self, **args: float | tuple[float, float]) -> None:
+    def __init__(self, *args: float | tuple[float, float]) -> None:
         """
         Initialize Vector class.
 
