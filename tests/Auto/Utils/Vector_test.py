@@ -52,7 +52,7 @@ def test_vector():
     assert tup == (1, 2)
 
     # convert to str
-    assert str(vec1) is str
+    assert str(vec1).__class__ == str
 
     # invalid constructing
     with raises(ValueError):
