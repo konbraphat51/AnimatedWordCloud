@@ -15,19 +15,20 @@ class Vector:
     Class for 2D vector calculation
     """
 
-    def __init__(
-        self, x_or_tuple: float | tuple[float, float], y: float = 0
-    ) -> None:
+    def __init__(self, **args: float | tuple[float, float]) -> None:
         """
         Initialize Vector class.
+
+        :param args: x and y or tuple of x and y
+        input as Vector(x, y) or Vector((x, y))
         """
-        if x_or_tuple.__class__ == tuple:
-            self.x = x_or_tuple[0]
-            self.y = x_or_tuple[1]
-        else:
+        if args[0].__class__ == tuple:
+            self.x = args[0][0]
+            self.y = args[0][1]
+        elif len(args) == 2:
             # x_or_tuple is float
-            self.x = x_or_tuple
-            self.y = y
+            self.x = args[0]
+            self.y = args[1]
 
     def __add__(self, other: Vector) -> Vector:
         """
