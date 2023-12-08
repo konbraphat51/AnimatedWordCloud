@@ -22,13 +22,24 @@ class Vector:
         :param args: x and y or tuple of x and y
         input as Vector(x, y) or Vector((x, y))
         """
+        
+        # if the input is tuple...
         if args[0].__class__ == tuple:
-            self.x = args[0][0]
-            self.y = args[0][1]
+            # ...ensuring (float, float)
+            if len(args[0]) != 2:
+                raise ValueError("Tuple must have 2 elements")
+               
+            # if the value was not a number, this intends to raise an error
+            self.x = float(args[0][0])
+            self.y = float(args[0][1])
         elif len(args) == 2:
-            # x_or_tuple is float
-            self.x = args[0]
-            self.y = args[1]
+            # ...x, y are seperatedly input
+            
+            # if the value was not a number, this intends to raise an error
+            self.x = float(args[0])
+            self.y = float(args[1])
+        else:
+            raise ValueError("Invalid Vector input")
 
     def __add__(self, other: Vector) -> Vector:
         """
