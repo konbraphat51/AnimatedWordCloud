@@ -10,13 +10,13 @@ import os
 import glob
 import subprocess
 from AnimatedWordCloud.Animator.ImageCreator import create_images
-from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
+from AnimatedWordCloud.Utils import (
     AllocationTimelapse,
     AllocationInFrame,
 )
 from AnimatedWordCloud.Utils.Consts import (
     DEFAULT_ENG_FONT_PATH,
-    OUTPUT_PATH,
+    DEFAULT_OUTPUT_PATH,
 )
 
 
@@ -31,6 +31,6 @@ def test_imagecreator():
         image_size=(100, 100),
         font_path=DEFAULT_ENG_FONT_PATH,
     )
-    test_path = os.path.join(OUTPUT_PATH, "*.png")
+    test_path = os.path.join(DEFAULT_OUTPUT_PATH, "*.png")
     assert len(glob.glob(test_path)) != 0
     subprocess.call(["rm", test_path])

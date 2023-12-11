@@ -1,0 +1,24 @@
+@startuml Dependency_Utils
+' Image can be obtained from
+' https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000
+
+' Write all modules here
+object Data {
+    * all data classes
+}
+
+object Vector {
+    * Vector
+    * Consts
+}
+
+object Collisition {
+    * Collisition
+}
+
+' Write all dependencies here
+' X --> Y means X depends on Y
+Vector <-- Data
+Collisition --> Data
+
+@enduml

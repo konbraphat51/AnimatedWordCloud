@@ -8,7 +8,7 @@ Handful class of containing timelapse data of word vectors.
 """
 
 from __future__ import annotations
-from collections.abc import Iterable
+from typing import Iterable
 import bisect
 
 
@@ -69,7 +69,7 @@ class WordVector:
 
         :param int start: Start of the ranking.
         :param int end: End of the ranking. This index will not included. (such as list slice)
-        If -1, to the last.
+        If -1, to the last. If exceeds the length, to the last.
         :return: The ranking of the words
         :rtype: List[Tuple(str, float)]
         """
@@ -79,6 +79,7 @@ class WordVector:
         if end == -1:
             return [(tup[1], -tup[0]) for tup in self._word_bisect[start:]]
         else:
+            end = min(end, len(self._word_bisect))
             return [(tup[1], -tup[0]) for tup in self._word_bisect[start:end]]
 
     def get_weight(self, word: str) -> float:
@@ -123,7 +124,7 @@ class TimeFrame:
         :param WordVector word_vector: Word vector
         """
 
-        self.time_name: str = time_name
+        self.time_name: str = str(time_name)  # ensure time_name is string
         self.word_vector: WordVector = word_vector
 
     def convert_from_dict(
