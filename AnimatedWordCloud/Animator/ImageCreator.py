@@ -86,6 +86,7 @@ def create_image(
     save_path = os.path.join(DEFAULT_OUTPUT_PATH, f"{time_name}.png")
     image.save(save_path)
 
+    return save_path
 
 def create_images(
     position_in_frames: AllocationTimelapse,
