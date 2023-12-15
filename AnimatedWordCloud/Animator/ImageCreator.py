@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
 from AnimatedWordCloud.Utils import (
     AllocationTimelapse,
+    AllocationInFrame
 )
 from AnimatedWordCloud.Utils.Consts import DEFAULT_OUTPUT_PATH
 from AnimatedWordCloud.Utils.FileManager import ensure_directory_exists
@@ -47,6 +48,47 @@ class colormap_color_func(object):
         )
         return "rgb({:.0f}, {:.0f}, {:.0f})".format(r, g, b)
 
+def create_image(
+    allocation_in_frame: AllocationInFrame,
+    time_name: str,
+    image_size: tuple[float, float],
+    font_path: str,
+    background_color: str = "white",
+    color_map: str = "magma",
+    color_func=None,
+) -> str:
+    """
+    Create image of a frame
+
+    :param AllocationInFrame allocation_in_frame: Position/size data of a video frame.
+    :param str time_name: Name of the frame
+    :param Tuple[float, float] image_size: Tuple of float values (width, height) representing the size of the image.
+    :param str font_path: Path to the font file.
+    :param str background_color:  Background color of the image, default is "white".
+    :param str color_map:  Colormap to be used for the image, default is "magma".
+    :param str color_func:  Custom function for color mapping, default is None.
+    :return: The path of the image.
+    :rtype: str
+    """
+    image = Image.new("RGB", image_size, background_color)
+    draw = ImageDraw.Draw(image)
+    allocation_in_frame_word_dict = allocation_in_frame.words
+
+    for word, position in allocation_in_frame_word_dict.items():
+        font_size = position[0]
+        (x, y) = position[1]
+        font = ImageFont.truetype(font_path, font_size)
+        draw.text(
+            (x, y),
+            word,
+            fill=color_func(
+                word=word, font_size=font_size, position=(x, y)
+            ),
+            font=font,
+        )
+    # save the image
+    save_path = os.path.join(DEFAULT_OUTPUT_PATH, f"{time_name}.png")
+    image.save(save_path)
 
 def create_images(
     position_in_frames: AllocationTimelapse,
@@ -78,24 +120,15 @@ def create_images(
         color_func = colormap_color_func(color_map)
 
     for time_name, allocation_in_frame in position_in_frames.timelapse:
-        image = Image.new("RGB", image_size, background_color)
-        draw = ImageDraw.Draw(image)
-        allocation_in_frame_word_dict = allocation_in_frame.words
-
-        for word, position in allocation_in_frame_word_dict.items():
-            font_size = position[0]
-            (x, y) = position[1]
-            font = ImageFont.truetype(font_path, font_size)
-            draw.text(
-                (x, y),
-                word,
-                fill=color_func(
-                    word=word, font_size=font_size, position=(x, y)
-                ),
-                font=font,
-            )
-        # save the image
-        save_path = os.path.join(DEFAULT_OUTPUT_PATH, f"{time_name}.png")
-        image.save(save_path)  # TODO: changing the file path
+        save_path = create_image(
+            allocation_in_frame,
+            time_name,
+            image_size,
+            font_path,
+            background_color,
+            color_map,
+            color_func,
+        )
+        
         image_paths.append(save_path)
     return image_paths

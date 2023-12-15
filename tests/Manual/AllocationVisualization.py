@@ -1,0 +1,4 @@
+"""
+Observes how Allocation words
+"""
+
