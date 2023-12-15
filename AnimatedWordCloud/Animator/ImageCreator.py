@@ -10,7 +10,6 @@ Create images of each frame
 
 from __future__ import annotations
 import os
-import pathlib
 from random import Random
 import numpy as np
 import matplotlib.pyplot as plt
@@ -45,7 +44,7 @@ class colormap_color_func(object):
 def create_images(
     position_in_frames: AllocationTimelapse,
     image_size: tuple[float, float],
-    font_path: pathlib.Path,
+    font_path: str,
     background_color: str = "white",
     color_map: str = "magma",
     color_func=None,
@@ -55,7 +54,7 @@ def create_images(
 
     :param AllocationTimelapse position_in_frames: List of position/size data of each video frame.
     :param Tuple[float, float] image_size: Tuple of float values (width, height) representing the size of the image.
-    :param pathlib.Path font_path: Path to the font file.
+    :param str font_path: Path to the font file.
     :param str background_color:  Background color of the image, default is "white".
     :param str color_map:  Colormap to be used for the image, default is "magma".
     :param object color_func:  Custom function for color mapping, default is None.
