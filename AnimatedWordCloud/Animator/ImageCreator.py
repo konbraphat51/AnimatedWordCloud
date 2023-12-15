@@ -56,11 +56,11 @@ def create_images(
     :param AllocationTimelapse position_in_frames: List of position/size data of each video frame.
     :param Tuple[float, float] image_size: Tuple of float values (width, height) representing the size of the image.
     :param pathlib.Path font_path: Path to the font file.
-    :param background_color:  Background color of the image, default is "white".
-    :param color_map:  Colormap to be used for the image, default is "magma".
-    :param color_func:  Custom function for color mapping, default is None.
+    :param str background_color:  Background color of the image, default is "white".
+    :param str color_map:  Colormap to be used for the image, default is "magma".
+    :param object color_func:  Custom function for color mapping, default is None.
     :return: The path of the images. The order of the list is the same as the order of the input.
-    :rtype: List[str]
+    :rtype: list[str]
     """
 
     ensure_directory_exists(DEFAULT_OUTPUT_PATH)
