@@ -88,6 +88,7 @@ def create_image(
 
     return save_path
 
+
 def create_images(
     position_in_frames: AllocationTimelapse,
     image_size: tuple[float, float],
