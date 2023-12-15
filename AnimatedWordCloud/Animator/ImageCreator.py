@@ -25,15 +25,8 @@ class colormap_color_func(object):
     # https://github.com/amueller/word_cloud/blob/main/wordcloud/wordcloud.py#L91
     """Color func created from matplotlib colormap.
 
-    Parameters
-    ----------
-    colormap : string or matplotlib colormap
+    :param colormap : string or matplotlib colormap
         Colormap to sample from
-
-    Example
-    -------
-    >>> WordCloud(color_func=colormap_color_func("magma"))
-
     """
 
     def __init__(self, color_map="magma"):
@@ -59,13 +52,12 @@ def create_images(
     """
     Create images of each frame
 
-    :param
-    - AllocationTimelapse position_in_frames: List of position/size data of each video frame.
-    - Tuple[float, float] image_size: Tuple of float values (width, height) representing the size of the image.
-    - str font_path: Path to the font file.
-    - str background_color:  Background color of the image, default is "white".
-    - str color_map:  Colormap to be used for the image, default is "magma".
-    - str color_func:  Custom function for color mapping, default is None.
+    :param AllocationTimelapse position_in_frames: List of position/size data of each video frame.
+    :param Tuple[float, float] image_size: Tuple of float values (width, height) representing the size of the image.
+    :param font_path: Path to the font file.
+    :param background_color:  Background color of the image, default is "white".
+    :param color_map:  Colormap to be used for the image, default is "magma".
+    :param color_func:  Custom function for color mapping, default is None.
     :return: The path of the images. The order of the list is the same as the order of the input.
     :rtype: List[str]
     """
