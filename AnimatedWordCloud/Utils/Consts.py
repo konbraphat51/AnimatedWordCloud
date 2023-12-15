@@ -28,7 +28,7 @@ DEFAULT_ENG_FONT_PATH = os.path.join(
 path of default Eng font file exists
 """
 
-TRANSITION_SYMBOL = "->"
+TRANSITION_SYMBOL = "_to_"
 """
 Symbol showed in image that indicates the transition of the time.
 
