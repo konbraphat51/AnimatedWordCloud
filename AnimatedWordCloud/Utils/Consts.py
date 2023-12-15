@@ -36,7 +36,7 @@ ex. shown as "2021/01/01 -> 2021/01/02"
 """
 
 DEFAULT_OUTPUT_PATH = os.path.join(
-    LIBRARY_DIR, "Animator", "AllocationCalculator", "output"
+    LIBRARY_DIR, "output"
 )
 """
 Default output path of the generated images when none is specified.
