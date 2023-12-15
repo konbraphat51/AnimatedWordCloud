@@ -14,10 +14,7 @@ from random import Random
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
-from AnimatedWordCloud.Utils import (
-    AllocationTimelapse,
-    AllocationInFrame
-)
+from AnimatedWordCloud.Utils import AllocationTimelapse, AllocationInFrame
 from AnimatedWordCloud.Utils.Consts import DEFAULT_OUTPUT_PATH
 from AnimatedWordCloud.Utils.FileManager import ensure_directory_exists
 
@@ -47,6 +44,7 @@ class colormap_color_func(object):
             0, 255 * np.array(self.color_map(random_state.uniform(0, 1)))
         )
         return "rgb({:.0f}, {:.0f}, {:.0f})".format(r, g, b)
+
 
 def create_image(
     allocation_in_frame: AllocationInFrame,
@@ -81,14 +79,13 @@ def create_image(
         draw.text(
             (x, y),
             word,
-            fill=color_func(
-                word=word, font_size=font_size, position=(x, y)
-            ),
+            fill=color_func(word=word, font_size=font_size, position=(x, y)),
             font=font,
         )
     # save the image
     save_path = os.path.join(DEFAULT_OUTPUT_PATH, f"{time_name}.png")
     image.save(save_path)
+
 
 def create_images(
     position_in_frames: AllocationTimelapse,
@@ -129,6 +126,6 @@ def create_images(
             color_map,
             color_func,
         )
-        
+
         image_paths.append(save_path)
     return image_paths
