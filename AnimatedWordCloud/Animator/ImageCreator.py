@@ -32,7 +32,7 @@ class colormap_color_func(object):
     """
 
     def __init__(self, color_map="magma"):
-        self.color_map = plt.cm.get_cmap(color_map)
+        self.color_map = plt.get_cmap(name=color_map)
 
     def __call__(self, word, font_size, position, random_state=None, **kwargs):
         if random_state is None:
