@@ -1,0 +1,36 @@
+@startuml flow
+
+title Animate() modules flow
+
+start
+note right: Animate()
+
+partition "Animator" {
+    :data conversion: Convert dictionary data to TimelapseWordVector (inner) class;
+    partition "AllocationCalculator" {
+        partition "StaticAllocationCalculator" {
+            :static allocation
+            Allocate size & position of each words at the time of each of the timeframe given;
+        }
+        partition "AnimatedAllocationCalculator" {
+            :dynamic allocation
+            Allocate size & position of each words between the static allocations
+            This makes the image animating;
+        }
+    }
+
+    partition "ImageCreator" {
+        :create image
+        Create each frame's image from the allocated data;
+    }
+
+    partition "AnimationCreator" {
+        :create animation
+        Create animation from the images;
+    }
+}
+
+end
+note right: gif path
+
+@enduml
