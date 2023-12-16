@@ -1,8 +1,9 @@
 from AnimatedWordCloud.Utils.Consts import (
     LIBRARY_DIR,
     DEFAULT_ENG_FONT_PATH,
-    TRANSITION_SYMBOL,
 )
+
+from AnimatedWordCloud.Utils.Config import Config
 
 from AnimatedWordCloud.Utils.Vector import Vector
 
@@ -39,4 +40,5 @@ __all__ = [
     "is_point_hitting_rect",
     "is_rect_hitting_rect",
     "is_rect_hitting_rects",
+    "Config"
 ]
