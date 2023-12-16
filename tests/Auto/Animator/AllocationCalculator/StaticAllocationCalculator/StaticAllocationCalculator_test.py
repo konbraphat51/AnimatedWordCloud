@@ -57,6 +57,7 @@ def test_allocate():
 
 
 def test_allocate_all():
+    # make test lighter
     config = Config()
     config.max_words = 5
     assert allocate_all(timelapses_test[0], config) is not None
