@@ -1,7 +1,7 @@
 from AnimatedWordCloud.Utils.Consts import (
     LIBRARY_DIR,
     DEFAULT_ENG_FONT_PATH,
-    DEFAULT_OUTPUT_PATH
+    DEFAULT_OUTPUT_PATH,
 )
 
 from AnimatedWordCloud.Utils.Config import Config
