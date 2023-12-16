@@ -28,9 +28,7 @@ DEFAULT_ENG_FONT_PATH = os.path.join(
 path of default Eng font file exists
 """
 
-DEFAULT_OUTPUT_PATH = os.path.join(
-    LIBRARY_DIR, "Animator", "AllocationCalculator", "output"
-)
+DEFAULT_OUTPUT_PATH = os.path.join(LIBRARY_DIR, "output")
 """
 Default output path of the generated images when none is specified.
 """
