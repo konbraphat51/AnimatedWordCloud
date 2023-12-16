@@ -1,6 +1,7 @@
 from AnimatedWordCloud.Utils.Consts import (
     LIBRARY_DIR,
     DEFAULT_ENG_FONT_PATH,
+    DEFAULT_OUTPUT_PATH
 )
 
 from AnimatedWordCloud.Utils.Config import Config
@@ -31,7 +32,7 @@ from AnimatedWordCloud.Utils.FileManager import (
 __all__ = [
     "LIBRARY_DIR",
     "DEFAULT_ENG_FONT_PATH",
-    "TRANSITION_SYMBOL",
+    "DEFAULT_OUTPUT_PATH",
     "Vector",
     "AllocationInFrame",
     "AllocationTimelapse",
