@@ -170,14 +170,7 @@ def allocate_all(
             allocation_timelapse.get_frame(
                 cnt
             ),  # first added -> cnt; one before
-            config.max_words,
-            config.max_font_size,
-            config.min_font_size,
-            config.image_width,
-            config.image_height,
-            config.font_path,
-            config.allocation_strategy,
-            config.image_division,
+            config
         )
         allocation_timelapse.add(timelapse[cnt].time_name, allocation)
 
