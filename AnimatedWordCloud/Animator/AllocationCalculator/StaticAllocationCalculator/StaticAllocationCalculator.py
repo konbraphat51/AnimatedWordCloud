@@ -170,7 +170,7 @@ def allocate_all(
             allocation_timelapse.get_frame(
                 cnt
             ),  # first added -> cnt; one before
-            config
+            config,
         )
         allocation_timelapse.add(timelapse[cnt].time_name, allocation)
 
