@@ -17,9 +17,10 @@ from PIL import Image, ImageDraw, ImageFont
 from AnimatedWordCloud.Utils import (
     AllocationTimelapse,
 )
-from AnimatedWordCloud.Utils.Consts import DEFAULT_OUTPUT_PATH
-from AnimatedWordCloud.Utils.FileManager import ensure_directory_exists
-
+from AnimatedWordCloud.Utils import (
+    ensure_directory_exists,
+    Config,
+)
 
 class colormap_color_func(object):
     # https://github.com/amueller/word_cloud/blob/main/wordcloud/wordcloud.py#L91
@@ -43,41 +44,35 @@ class colormap_color_func(object):
 
 def create_images(
     position_in_frames: AllocationTimelapse,
-    image_size: tuple[float, float],
-    font_path: str,
-    background_color: str = "white",
-    color_map: str = "magma",
+    config: Config,
     color_func=None,
 ) -> list[str]:
     """
     Create images of each frame
 
     :param AllocationTimelapse position_in_frames: List of position/size data of each video frame.
-    :param Tuple[float, float] image_size: Tuple of float values (width, height) representing the size of the image.
-    :param str font_path: Path to the font file.
-    :param str background_color:  Background color of the image, default is "white".
-    :param str color_map:  Colormap to be used for the image, default is "magma".
+    :param Config config: Config instance
     :param object color_func:  Custom function for color mapping, default is None.
     :return: The path of the images. The order of the list is the same as the order of the input.
     :rtype: list[str]
     """
 
-    ensure_directory_exists(DEFAULT_OUTPUT_PATH)
+    ensure_directory_exists(config.output_path)
 
     image_paths = []
 
     if color_func is None:
-        color_func = colormap_color_func(color_map)
+        color_func = colormap_color_func(config.color_map)
 
     for time_name, allocation_in_frame in position_in_frames.timelapse:
-        image = Image.new("RGB", image_size, background_color)
+        image = Image.new("RGB", (config.image_width, config.image_height), config.background_color)
         draw = ImageDraw.Draw(image)
         allocation_in_frame_word_dict = allocation_in_frame.words
 
         for word, position in allocation_in_frame_word_dict.items():
             font_size = position[0]
             (x, y) = position[1]
-            font = ImageFont.truetype(font_path, font_size)
+            font = ImageFont.truetype(config.font_path, font_size)
             draw.text(
                 (x, y),
                 word,
@@ -87,7 +82,7 @@ def create_images(
                 font=font,
             )
         # save the image
-        save_path = os.path.join(DEFAULT_OUTPUT_PATH, f"{time_name}.png")
+        save_path = os.path.join(config.output_path, f"{time_name}.png")
         image.save(save_path)  # TODO: changing the file path
         image_paths.append(save_path)
     return image_paths
