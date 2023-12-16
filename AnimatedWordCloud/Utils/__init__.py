@@ -24,6 +24,10 @@ from AnimatedWordCloud.Utils.Collisions import (
     is_rect_hitting_rects,
 )
 
+from AnimatedWordCloud.Utils.FileManager import (
+    ensure_directory_exists,
+)
+
 __all__ = [
     "LIBRARY_DIR",
     "DEFAULT_ENG_FONT_PATH",
@@ -40,5 +44,6 @@ __all__ = [
     "is_point_hitting_rect",
     "is_rect_hitting_rect",
     "is_rect_hitting_rects",
-    "Config"
+    "Config",
+    "ensure_directory_exists"
 ]
