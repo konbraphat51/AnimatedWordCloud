@@ -50,7 +50,7 @@ class Config:
         image_height=600,
         background_color: str = "white",
         color_map: str = "magma",
-        allocation_stategy: Literal["magnetic"] = "magnetic",
+        allocation_strategy: Literal["magnetic"] = "magnetic",
         image_division: int = 300,
         verbosity: Literal["silent", "minor", "debug"] = "silent",
         transition_symbol: str = "_to_",
@@ -72,7 +72,7 @@ class Config:
         self.image_height = image_height
         self.background_color = background_color
         self.color_map = color_map
-        self.allocation_stategy = allocation_stategy
+        self.allocation_strategy = allocation_strategy
         self.image_division = image_division
         self.verbosity = verbosity
         self.transition_symbol = transition_symbol
