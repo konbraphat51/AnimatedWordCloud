@@ -20,14 +20,14 @@ from AnimatedWordCloud.Utils import (
     AllocationInFrame,
     AllocationTimelapse,
     Word,
-    Config
+    Config,
 )
 
 
 def allocate(
     word_vector: WordVector,
     allocation_before: AllocationInFrame,
-    config: Config
+    config: Config,
 ) -> AllocationInFrame:
     """
     Calculate allocation of each words in each static time
@@ -69,7 +69,9 @@ def allocate(
         )
         return allocator.allocate(words, allocation_before)
     else:
-        raise ValueError("Unknown strategy: {}".format(config.allocation_strategy))
+        raise ValueError(
+            "Unknown strategy: {}".format(config.allocation_strategy)
+        )
 
 
 def calculate_font_size(
@@ -133,8 +135,7 @@ def estimate_text_size(
 
 
 def allocate_all(
-    timelapse: TimelapseWordVector,
-    config: Config
+    timelapse: TimelapseWordVector, config: Config
 ) -> AllocationInFrame:
     """
     Calculate allocation of each words in each static time
@@ -184,8 +185,7 @@ def allocate_all(
 
 
 def _allocate_first_frame(
-    word_vector: WordVector,
-    config: Config
+    word_vector: WordVector, config: Config
 ) -> AllocationInFrame:
     """
     Calculate allocation of the first frame
@@ -203,7 +203,9 @@ def _allocate_first_frame(
     #   and save them as Word instances
     for word_raw, weight in words_tup:
         # minimum font size for the first frame
-        text_size = estimate_text_size(word_raw, config.min_font_size, config.font_path)
+        text_size = estimate_text_size(
+            word_raw, config.min_font_size, config.font_path
+        )
 
         # make instance
         word = Word(word_raw, weight, config.min_font_size, text_size)

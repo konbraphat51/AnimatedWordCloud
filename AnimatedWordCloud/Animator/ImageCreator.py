@@ -22,6 +22,7 @@ from AnimatedWordCloud.Utils import (
     Config,
 )
 
+
 class colormap_color_func(object):
     # https://github.com/amueller/word_cloud/blob/main/wordcloud/wordcloud.py#L91
     """Color func created from matplotlib colormap.
@@ -65,7 +66,11 @@ def create_images(
         color_func = colormap_color_func(config.color_map)
 
     for time_name, allocation_in_frame in position_in_frames.timelapse:
-        image = Image.new("RGB", (config.image_width, config.image_height), config.background_color)
+        image = Image.new(
+            "RGB",
+            (config.image_width, config.image_height),
+            config.background_color,
+        )
         draw = ImageDraw.Draw(image)
         allocation_in_frame_word_dict = allocation_in_frame.words
 

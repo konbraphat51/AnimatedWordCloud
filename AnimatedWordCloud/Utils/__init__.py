@@ -45,5 +45,5 @@ __all__ = [
     "is_rect_hitting_rect",
     "is_rect_hitting_rects",
     "Config",
-    "ensure_directory_exists"
+    "ensure_directory_exists",
 ]
