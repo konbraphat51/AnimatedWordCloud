@@ -8,7 +8,6 @@ Testing the ImageCreator classes
 """
 import os
 import glob
-import subprocess
 from AnimatedWordCloud.Animator.ImageCreator import create_images
 from AnimatedWordCloud.Utils import (
     AllocationTimelapse,
