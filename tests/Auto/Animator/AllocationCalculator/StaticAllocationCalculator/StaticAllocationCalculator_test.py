@@ -15,6 +15,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
     allocate_all,
     AllocationInFrame,
     WordVector,
+    Config
 )
 from AnimatedWordCloud.Utils import DEFAULT_ENG_FONT_PATH
 from tests.TestDataGetter import timelapses_test
@@ -56,14 +57,7 @@ def test_allocate():
         allocate(
             word_vector,
             allocation_before,
-            30,
-            100,
-            5,
-            600,
-            400,
-            DEFAULT_ENG_FONT_PATH,
-            "magnetic",
-            100,
+            Config()
         )
         is not None
     )
@@ -73,14 +67,7 @@ def test_allocate_all():
     assert (
         allocate_all(
             timelapses_test[0],
-            30,
-            10,
-            5,
-            600,
-            400,
-            DEFAULT_ENG_FONT_PATH,
-            "magnetic",
-            100,
+            Config()
         )
         is not None
     )
