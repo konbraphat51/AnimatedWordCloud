@@ -18,7 +18,7 @@ from AnimatedWordCloud.Utils import (
     ensure_directory_exists,
     Config,
     AllocationTimelapse,
-    AllocationInFrame
+    AllocationInFrame,
 )
 
 
@@ -45,10 +45,7 @@ class colormap_color_func(object):
 def create_image(
     allocation_in_frame: AllocationInFrame,
     time_name: str,
-    image_size: tuple[float, float],
-    font_path: str,
-    background_color: str = "white",
-    color_map: str = "magma",
+    config: Config,
     color_func=None,
 ) -> str:
     """
@@ -64,14 +61,18 @@ def create_image(
     :return: The path of the image.
     :rtype: str
     """
-    image = Image.new("RGB", image_size, background_color)
+    image = Image.new(
+        "RGB",
+        (config.image_width, config.image_height),
+        config.background_color,
+    )
     draw = ImageDraw.Draw(image)
     allocation_in_frame_word_dict = allocation_in_frame.words
 
     for word, position in allocation_in_frame_word_dict.items():
         font_size = position[0]
         (x, y) = position[1]
-        font = ImageFont.truetype(font_path, font_size)
+        font = ImageFont.truetype(config.font_path, font_size)
         draw.text(
             (x, y),
             word,
@@ -79,8 +80,8 @@ def create_image(
             font=font,
         )
     # save the image
-    save_path = os.path.join(DEFAULT_OUTPUT_PATH, f"{time_name}.png")
-    image.save(save_path)
+    save_path = os.path.join(config.output_path, f"{time_name}.png")
+    image.save(save_path)  # TODO: changing the file path
 
     return save_path
 
@@ -108,24 +109,13 @@ def create_images(
         color_func = colormap_color_func(config.color_map)
 
     for time_name, allocation_in_frame in position_in_frames.timelapse:
-        image = Image.new("RGB", image_size, background_color)
-        draw = ImageDraw.Draw(image)
-        allocation_in_frame_word_dict = allocation_in_frame.words
+        save_path = create_image(
+            allocation_in_frame=allocation_in_frame,
+            time_name=time_name,
+            config=config,
+            color_func=color_func,
+        )
 
-        for word, position in allocation_in_frame_word_dict.items():
-            font_size = position[0]
-            (x, y) = position[1]
-            font = ImageFont.truetype(font_path, font_size)
-            draw.text(
-                (x, y),
-                word,
-                fill=color_func(
-                    word=word, font_size=font_size, position=(x, y)
-                ),
-                font=font,
-            )
-        # save the image
-        save_path = os.path.join(DEFAULT_OUTPUT_PATH, f"{time_name}.png")
-        image.save(save_path)  # TODO: changing the file path
         image_paths.append(save_path)
+
     return image_paths
