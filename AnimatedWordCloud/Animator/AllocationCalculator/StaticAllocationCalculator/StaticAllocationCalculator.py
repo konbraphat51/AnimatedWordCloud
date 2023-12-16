@@ -151,14 +151,7 @@ def allocate_all(
     allocation_timelapse = AllocationTimelapse()
 
     # first frame
-    first_frame = _allocate_first_frame(
-        timelapse[0].word_vector,
-        config.max_words,
-        config.min_font_size,
-        config.image_width,
-        config.image_height,
-        config.font_path,
-    )
+    first_frame = _allocate_first_frame(timelapse[0].word_vector, config)
     allocation_timelapse.add(
         config.transition_symbol + timelapse[0].time_name, first_frame
     )
