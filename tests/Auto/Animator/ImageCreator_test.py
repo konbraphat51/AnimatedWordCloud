@@ -29,4 +29,4 @@ def test_imagecreator():
     create_images(position_in_frames, Config())
     test_path = os.path.join(DEFAULT_OUTPUT_PATH, "*.png")
     assert len(glob.glob(test_path)) != 0
-    subprocess.call(["rm", test_path])
+    os.remove(os.path.join(DEFAULT_OUTPUT_PATH, "2023_04_01.png"))
