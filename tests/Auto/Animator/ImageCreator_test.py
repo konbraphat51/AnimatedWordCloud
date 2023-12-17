@@ -26,6 +26,6 @@ def test_imagecreator():
     allocation_in_frame.words = {"word": (30, (50, 50))}  # dictionary
     position_in_frames.add("2023_04_01", allocation_in_frame)
     create_images(position_in_frames, Config())
-    test_path = os.path.join(DEFAULT_OUTPUT_PATH, "*.png")
+    test_path = os.path.join(DEFAULT_OUTPUT_PATH, "2023_04_01.png")
     assert len(glob.glob(test_path)) != 0
     os.remove(os.path.join(DEFAULT_OUTPUT_PATH, "2023_04_01.png"))
