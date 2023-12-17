@@ -27,5 +27,5 @@ def test_imagecreator():
     position_in_frames.add("2023_04_01", allocation_in_frame)
     create_images(position_in_frames, Config())
     test_path = os.path.join(DEFAULT_OUTPUT_PATH, "2023_04_01.png")
-    assert len(glob.glob(test_path)) != 0
+    assert os.path.isfile(test_path)
     os.remove(os.path.join(DEFAULT_OUTPUT_PATH, "2023_04_01.png"))
