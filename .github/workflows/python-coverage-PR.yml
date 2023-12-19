@@ -2,17 +2,10 @@
 
 name: coveragePR
 
-on:
-  pull_request:
-    branches: ["dev", "main"]
-  push:
-    branches: ["dev", "main"]
+on: [push, pull_request]
 
 jobs:
   build:
-    permissions:
-      pull-requests: write
-
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -39,8 +32,7 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          set -o pipefail
-          python -m pytest --junitxml=pytest.xml --cov=AnimatedWordCloud --cov-report=term-missing| tee pytest-coverage.txt
+          pytest --cov AnimatedWordCloud
 
       - name: Pytest coverage comment
         id: coverageComment

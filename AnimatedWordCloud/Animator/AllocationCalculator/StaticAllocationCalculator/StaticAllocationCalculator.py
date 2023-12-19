@@ -15,47 +15,31 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
     allocate_randomly,
 )
 from AnimatedWordCloud.Utils import (
-    TRANSITION_SYMBOL,
     WordVector,
     TimelapseWordVector,
     AllocationInFrame,
     AllocationTimelapse,
     Word,
+    Config,
 )
 
 
 def allocate(
     word_vector: WordVector,
     allocation_before: AllocationInFrame,
-    max_words: int,
-    max_font_size: float,
-    min_font_size: float,
-    image_width: int,
-    image_height: int,
-    font_path: str,
-    strategy: Literal["magnetic"] = "magnetic",
-    image_division: int = 100,
+    config: Config,
 ) -> AllocationInFrame:
     """
     Calculate allocation of each words in each static time
 
     :param WordVector word_vector: The word vector
     :param AllocationInFrame allocation_before: Allocation data of the previous frame
-    :param int max_words: Maximum number of words shown
-    :param float max_font_size: Maximum font size of the word
-    :param float min_font_size: Minimum font size of the word
-    :param int image_width: Width of the image
-    :param int image_height: Height of the image
-    :param str font_path: Path to the font
-    :param str strategy: Strategy to allocate words.
-        There are "magnetic" only for now.
-    :param int image_division: The number of division of the image.
-        Used by magnetic strategy.
+    :param Config config: Config instance
     :return: Allocation data of the frame
     :rtype: AllocationInFrame
     """
 
-    word_weights = word_vector.get_ranking(0, max_words)
+    word_weights = word_vector.get_ranking(0, config.max_words)
 
     words: list[Word] = []
 
@@ -67,10 +51,10 @@ def allocate(
             weight,
             word_weights[0][1],  # max weight
             word_weights[-1][1],  # min weight
-            max_font_size,
-            min_font_size,
+            config.max_font_size,
+            config.min_font_size,
         )
-        text_size = estimate_text_size(word_raw, font_size, font_path)
+        text_size = estimate_text_size(word_raw, font_size, config.font_path)
 
         # make instance
         word = Word(word_raw, weight, font_size, text_size)
@@ -79,13 +63,15 @@ def allocate(
         words.append(word)
 
     # calculate allocation by selected strategy
-    if strategy == "magnetic":
+    if config.allocation_strategy == "magnetic":
         allocator = MagneticAllocation(
-            image_width, image_height, image_division
+            config.image_width, config.image_height, config.image_division
         )
         return allocator.allocate(words, allocation_before)
     else:
-        raise ValueError("Unknown strategy: {}".format(strategy))
+        raise ValueError(
+            "Unknown strategy: {}".format(config.allocation_strategy)
+        )
 
 
 def calculate_font_size(
@@ -149,30 +135,13 @@ def estimate_text_size(
 
 
 def allocate_all(
-    timelapse: TimelapseWordVector,
-    max_words: int,
-    max_font_size: float,
-    min_font_size: float,
-    image_width: int,
-    image_height: int,
-    font_path: str,
-    strategy: Literal["magnetic"] = "magnetic",
-    image_division: int = 100,
+    timelapse: TimelapseWordVector, config: Config
 ) -> AllocationInFrame:
     """
     Calculate allocation of each words in each static time
 
     :param TimelapseWordVector timelapse: The timelapse word vector
-    :param int max_words: Maximum number of words shown
-    :param float max_font_size: Maximum font size of the word
-    :param float min_font_size: Minimum font size of the word
-    :param int image_width: Width of the image
-    :param int image_height: Height of the image
-    :param str font_path: Path to the font
-    :param str strategy: Strategy to allocate words.
-        There are "magnetic" only for now.
-    :param int image_division: The number of division of the image.
-        Used by magnetic strategy.
+    :param Config config: Config instance
     :return: Allocation data of the frame
     :rtype: AllocationInFrame
     """
@@ -182,16 +151,9 @@ def allocate_all(
     allocation_timelapse = AllocationTimelapse()
 
     # first frame
-    first_frame = _allocate_first_frame(
-        timelapse[0].word_vector,
-        max_words,
-        min_font_size,
-        image_width,
-        image_height,
-        font_path,
-    )
+    first_frame = _allocate_first_frame(timelapse[0].word_vector, config)
     allocation_timelapse.add(
-        TRANSITION_SYMBOL + timelapse[0].time_name, first_frame
+        config.transition_symbol + timelapse[0].time_name, first_frame
     )
 
     # calculate allocation for each frame
@@ -201,14 +163,7 @@ def allocate_all(
             allocation_timelapse.get_frame(
                 cnt
             ),  # first added -> cnt; one before
-            max_words,
-            max_font_size,
-            min_font_size,
-            image_width,
-            image_height,
-            font_path,
-            strategy,
-            image_division,
+            config,
         )
         allocation_timelapse.add(timelapse[cnt].time_name, allocation)
 
@@ -216,40 +171,33 @@ def allocate_all(
 
 
 def _allocate_first_frame(
-    word_vector: WordVector,
-    max_words: int,
-    min_font_size: float,
-    image_width: int,
-    image_height: int,
-    font_path: str,
+    word_vector: WordVector, config: Config
 ) -> AllocationInFrame:
     """
     Calculate allocation of the first frame
 
     :param WordVector word_vector: The word vector
-    :param int max_words: Maximum number of words shown
-    :param float min_font_size: Minimum font size of the word
-    :param int image_width: Width of the image
-    :param int image_height: Height of the image
-    :param str font_path: Path to the font
+    :param Config config: Config instance
     :return: Allocation data of the frame
     :rtype: AllocationInFrame
     """
 
-    words_tup = word_vector.get_ranking(0, max_words)
+    words_tup = word_vector.get_ranking(0, config.max_words)
     words = []  # Word instances
 
     # get attributes for each words,
     #   and save them as Word instances
     for word_raw, weight in words_tup:
         # minimum font size for the first frame
-        text_size = estimate_text_size(word_raw, min_font_size, font_path)
+        text_size = estimate_text_size(
+            word_raw, config.min_font_size, config.font_path
+        )
 
         # make instance
-        word = Word(word_raw, weight, min_font_size, text_size)
+        word = Word(word_raw, weight, config.min_font_size, text_size)
 
         # save instance
         words.append(word)
 
     # allocate randomly
-    return allocate_randomly(words, image_width, image_height)
+    return allocate_randomly(words, config.image_width, config.image_height)

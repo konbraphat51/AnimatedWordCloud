@@ -1,8 +1,10 @@
 from AnimatedWordCloud.Utils.Consts import (
     LIBRARY_DIR,
     DEFAULT_ENG_FONT_PATH,
-    TRANSITION_SYMBOL,
+    DEFAULT_OUTPUT_PATH,
 )
+
+from AnimatedWordCloud.Utils.Config import Config
 
 from AnimatedWordCloud.Utils.Vector import Vector
 
@@ -23,10 +25,14 @@ from AnimatedWordCloud.Utils.Collisions import (
     is_rect_hitting_rects,
 )
 
+from AnimatedWordCloud.Utils.FileManager import (
+    ensure_directory_exists,
+)
+
 __all__ = [
     "LIBRARY_DIR",
     "DEFAULT_ENG_FONT_PATH",
-    "TRANSITION_SYMBOL",
+    "DEFAULT_OUTPUT_PATH",
     "Vector",
     "AllocationInFrame",
     "AllocationTimelapse",
@@ -39,4 +45,6 @@ __all__ = [
     "is_point_hitting_rect",
     "is_rect_hitting_rect",
     "is_rect_hitting_rects",
+    "Config",
+    "ensure_directory_exists",
 ]
