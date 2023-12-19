@@ -28,16 +28,14 @@ DEFAULT_ENG_FONT_PATH = os.path.join(
 path of default Eng font file exists
 """
 
-TRANSITION_SYMBOL = "->"
+TRANSITION_SYMBOL = "_to_"
 """
 Symbol showed in image that indicates the transition of the time.
 
 ex. shown as "2021/01/01 -> 2021/01/02"
 """
 
-DEFAULT_OUTPUT_PATH = os.path.join(
-    LIBRARY_DIR, "Animator", "AllocationCalculator", "output"
-)
+DEFAULT_OUTPUT_PATH = os.path.join(LIBRARY_DIR, "output")
 """
 Default output path of the generated images when none is specified.
 """
