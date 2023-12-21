@@ -8,7 +8,7 @@ Testing the TimelapsedWordVector classes
 """
 
 
-from AnimatedWordCloud.Animator.TimelapseWordVector import (
+from AnimatedWordCloud.Utils import (
     WordVector,
     TimeFrame,
     TimelapseWordVector,
@@ -61,6 +61,11 @@ def test_wordvector():
     assert instance.get_ranking(0, 2) == [("test2", 4), ("test3", 3)]
     assert instance.get_ranking(1, 3) == [("test3", 3), ("test4", 2)]
     assert instance.get_ranking(1, -1) == [
+        ("test3", 3),
+        ("test4", 2),
+        ("test", 1),
+    ]
+    assert instance.get_ranking(1, 100) == [
         ("test3", 3),
         ("test4", 2),
         ("test", 1),

@@ -11,19 +11,26 @@ Consts for AnimatedWordCloud functions
 from pathlib import Path
 import os
 
-# DEFAULT_ENG_FONT_PATH = "AnimatedWordCloud/Assets/Fonts/NotoSansMono-VariableFont_wdth,wght.ttf"
 
-# directory of the library currently exists. Shows "AnimatedWordCloud" directory.
 LIBRARY_DIR = Path(__file__).parent.parent
+"""
+Directory of the library currently exists.
+Shows "AnimatedWordCloud" directory.
+"""
 
-# path of Eng font file exists
 DEFAULT_ENG_FONT_PATH = os.path.join(
     LIBRARY_DIR,
     "Assets",
     "Fonts",
     "NotoSansMono-VariableFont_wdth,wght.ttf",
 )
+"""
+path of default Eng font file exists
+"""
 
-OUTPUT_PATH = os.path.join(
+DEFAULT_OUTPUT_PATH = os.path.join(
     LIBRARY_DIR, "Animator", "AllocationCalculator", "output"
 )
+"""
+Default output path of the generated images when none is specified.
+"""

@@ -1,0 +1,24 @@
+@startuml Dependency_StaticAllocationStrategies
+' Image can be obtained from
+' https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000
+
+' Write all modules here
+object StaticAllocationStrategy {
+    base class
+}
+
+object RandomAllocation {
+    allocate_randomly()
+}
+
+object MagneticAllocation {
+    class
+}
+
+
+' Write all dependencies here
+' X --> Y means X depends on Y
+StaticAllocationStrategy --> RandomAllocation : use allocate_randomly()
+StaticAllocationStrategy --|> MagneticAllocation : extends
+
+@enduml

@@ -8,8 +8,7 @@ Calculate positions and size of words during each frame
 """
 
 from typing import List
-from AnimatedWordCloud import TimelapseWordVector
-from AnimatedWordCloud.Animator import AllocationInFrame
+from AnimatedWordCloud.Utils import AllocationInFrame, TimelapseWordVector
 
 
 def calculate(
@@ -23,4 +22,4 @@ def calculate(
     :rtype: List[PositionInFrame]
     """
 
-    return word_vector_timelapse
+    raise NotImplementedError()
