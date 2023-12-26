@@ -9,6 +9,7 @@ Calculate allocation of each words in each static time
 
 from typing import Literal
 import numpy as np
+from tqdm import tqdm
 from PIL import Image, ImageFont, ImageDraw
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies import (
     MagneticAllocation,
@@ -65,7 +66,7 @@ def allocate(
     # calculate allocation by selected strategy
     if config.allocation_strategy == "magnetic":
         allocator = MagneticAllocation(
-            config.image_width, config.image_height, config.image_division
+            config.image_width, config.image_height, config.image_division, config.verbosity
         )
         return allocator.allocate(words, allocation_before)
     else:
@@ -155,9 +156,16 @@ def allocate_all(
     allocation_timelapse.add(
         config.transition_symbol + timelapse[0].time_name, first_frame
     )
-
+    
+    # verbose for iteration
+    if config.verbosity in ["debug", "minor"]:
+        print("Start static-allocation iteration...")
+        iterator = tqdm(range(times))
+    else:
+        iterator = range(times)
+    
     # calculate allocation for each frame
-    for cnt in range(times):
+    for cnt in iterator:
         allocation = allocate(
             timelapse[cnt].word_vector,
             allocation_timelapse.get_frame(

@@ -16,6 +16,7 @@ Repeating this process, all words will be allocated.
 from __future__ import annotations
 import math
 from typing import Iterable
+from tqdm import tqdm
 from AnimatedWordCloud.Utils import (
     is_rect_hitting_rects,
     AllocationInFrame,
@@ -34,7 +35,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
 
 class MagneticAllocation(StaticAllocationStrategy):
     def __init__(
-        self, image_width: int, image_height: int, image_division: int = 100
+        self, image_width: int, image_height: int, image_division: int = 100, verbosity: str = "none"
     ):
         """
         Initialize allocation settings
@@ -45,6 +46,8 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         self.interval_x = self.image_width / self.image_division
         self.interval_y = self.image_height / self.image_division
+        
+        self.verbosity = verbosity
 
     def allocate(
         self, words: Iterable[Word], allocation_before: AllocationInFrame
@@ -89,8 +92,15 @@ class MagneticAllocation(StaticAllocationStrategy):
         )
         output.add(first_word.text, first_word.font_size, first_word_position)
 
+        #verbose for iteration
+        if self.verbosity == "debug":
+            print("MagneticAllocation: Start iteration...")
+            iterator = tqdm(self.words[1:])
+        else:
+            iterator = self.words[1:]
+
         # from second word
-        for word in self.words[1:]:
+        for word in iterator:
             (
                 magnet_outer_frontier,
                 self.rects_outermost,
