@@ -85,8 +85,8 @@ class MagneticAllocation(StaticAllocationStrategy):
             Rect(
                 first_word_position,
                 (
-                    first_word_position[0] + first_word.text_size[0],
-                    first_word_position[1] + first_word.text_size[1],
+                    first_word_position[0],
+                    first_word_position[1],
                 ),
             )
         )
