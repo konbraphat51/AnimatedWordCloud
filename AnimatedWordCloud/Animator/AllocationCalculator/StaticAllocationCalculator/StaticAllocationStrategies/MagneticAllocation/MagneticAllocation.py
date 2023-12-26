@@ -133,11 +133,6 @@ class MagneticAllocation(StaticAllocationStrategy):
             # register to output
             output.add(word.text, word.font_size, position)
 
-            #debug code
-            from AnimatedWordCloud.Animator.ImageCreator import create_image
-            from AnimatedWordCloud.Utils import Config
-            create_image(output, "debug", Config(max_words=50, max_font_size=20, min_font_size=10, verbosity="debug"))
-
         # add missing words for this frame
         self.add_missing_word_from_previous_frame(allocation_before, output)
 
