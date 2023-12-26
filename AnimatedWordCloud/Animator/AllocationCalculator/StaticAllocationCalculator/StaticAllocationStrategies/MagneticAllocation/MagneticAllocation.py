@@ -238,7 +238,7 @@ class MagneticAllocation(StaticAllocationStrategy):
     def _get_candidates_from_one_side(
         self,
         pivots_to_center: Iterable[Vector],
-        points_on_side: Iterable[tuple[int, int]],
+        points_on_side: Iterable[Vector],
     ) -> list[tuple[int, int]]:
         """
         Get all candidates of the center position from one side
@@ -247,7 +247,7 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         :param Iterable[Vector] pivots_to_center:
             Vector of  (center of the word) - (pivot)
-        :param Iterable[tuple[int,int]] points_on_side:
+        :param Iterable[Vector] points_on_side:
             Points on the side
         :return: Candidates of the center position
         :rtype: list[tuple[int, int]]
