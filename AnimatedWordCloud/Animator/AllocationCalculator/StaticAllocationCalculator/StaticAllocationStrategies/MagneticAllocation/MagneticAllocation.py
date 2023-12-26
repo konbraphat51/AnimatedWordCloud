@@ -295,6 +295,10 @@ class MagneticAllocation(StaticAllocationStrategy):
                 best_position = center_position
                 best_score = score
                 
+        # guard
+        if best_position is None:
+            raise Exception("No position found")
+                
         return best_position
 
     def _is_hitting_other_words(
