@@ -133,6 +133,11 @@ class MagneticAllocation(StaticAllocationStrategy):
             # register to output
             output.add(word.text, word.font_size, position)
 
+            #debug code
+            from AnimatedWordCloud.Animator.ImageCreator import create_image
+            from AnimatedWordCloud.Utils import Config
+            create_image(output, "debug", Config(max_words=50, max_font_size=20, min_font_size=10, verbosity="debug"))
+
         # add missing words for this frame
         self.add_missing_word_from_previous_frame(allocation_before, output)
 
@@ -192,36 +197,23 @@ class MagneticAllocation(StaticAllocationStrategy):
         x_half = word.text_size[0] / 2 + self.interval_x
         y_half = word.text_size[1] / 2 + self.interval_y
 
-        left_bottom_to_center = Vector(x_half, -y_half)
-        right_bottom_to_center = Vector(-x_half, -y_half)
-        left_top_to_center = Vector(x_half, y_half)
-        right_top_to_center = Vector(-x_half, y_half)
-
         # Prepare for iteration
         pivots_to_center_list = [
             # from lower
             [
-                left_top_to_center,
                 Vector(0, y_half),
-                right_top_to_center,
             ],
             # from top
             [
-                left_bottom_to_center,
                 Vector(0, -y_half),
-                right_bottom_to_center,
             ],
             # from left
             [
-                right_bottom_to_center,
                 Vector(x_half, 0),
-                right_top_to_center,
             ],
             # from right
             [
-                left_bottom_to_center,
                 Vector(-x_half, 0),
-                left_top_to_center,
             ],
         ]
 
@@ -307,7 +299,7 @@ class MagneticAllocation(StaticAllocationStrategy):
                 # best score updated
                 best_position = center_position
                 best_score = score
-
+                
         return best_position
 
     def _is_hitting_other_words(
