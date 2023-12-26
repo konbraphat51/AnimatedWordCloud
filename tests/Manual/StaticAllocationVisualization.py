@@ -7,9 +7,13 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator 
 )
 from AnimatedWordCloud.Animator.ImageCreator import create_images
 from AnimatedWordCloud.Utils import Config
-from tests.TestDataGetter import timelapses_test
+from tests.TestDataGetter import (timelapses_test, TimelapseWordVector)
 
 timelapse = timelapses_test[0]
+
+#prepare less data
+timelapse_less = TimelapseWordVector()
+timelapse_less.timeframes = timelapse.timeframes[:2]
 
 config = Config(max_words=50, max_font_size=20, min_font_size=10, verbosity="debug")
 
