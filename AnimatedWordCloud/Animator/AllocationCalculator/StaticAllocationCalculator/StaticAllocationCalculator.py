@@ -66,7 +66,10 @@ def allocate(
     # calculate allocation by selected strategy
     if config.allocation_strategy == "magnetic":
         allocator = MagneticAllocation(
-            config.image_width, config.image_height, config.image_division, config.verbosity
+            config.image_width,
+            config.image_height,
+            config.image_division,
+            config.verbosity,
         )
         return allocator.allocate(words, allocation_before)
     else:
@@ -156,14 +159,14 @@ def allocate_all(
     allocation_timelapse.add(
         config.transition_symbol + timelapse[0].time_name, first_frame
     )
-    
+
     # verbose for iteration
     if config.verbosity in ["debug", "minor"]:
         print("Start static-allocation iteration...")
         iterator = tqdm(range(times))
     else:
         iterator = range(times)
-    
+
     # calculate allocation for each frame
     for cnt in iterator:
         allocation = allocate(

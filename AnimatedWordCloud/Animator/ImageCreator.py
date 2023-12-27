@@ -63,7 +63,7 @@ def create_image(
     """
     if color_func is None:
         color_func = colormap_color_func(config.color_map)
-    
+
     image = Image.new(
         "RGB",
         (config.image_width, config.image_height),

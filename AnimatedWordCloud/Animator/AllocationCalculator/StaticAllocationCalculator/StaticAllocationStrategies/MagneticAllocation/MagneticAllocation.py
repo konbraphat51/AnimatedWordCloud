@@ -35,7 +35,11 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
 
 class MagneticAllocation(StaticAllocationStrategy):
     def __init__(
-        self, image_width: int, image_height: int, image_division: int = 100, verbosity: str = "none"
+        self,
+        image_width: int,
+        image_height: int,
+        image_division: int = 100,
+        verbosity: str = "none",
     ):
         """
         Initialize allocation settings
@@ -46,7 +50,7 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         self.interval_x = self.image_width / self.image_division
         self.interval_y = self.image_height / self.image_division
-        
+
         self.verbosity = verbosity
 
     def allocate(
@@ -92,7 +96,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         )
         output.add(first_word.text, first_word.font_size, first_word_position)
 
-        #verbose for iteration
+        # verbose for iteration
         if self.verbosity == "debug":
             print("MagneticAllocation: Start iteration...")
             iterator = tqdm(self.words[1:])
@@ -164,9 +168,12 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # the larger, the better; This need manual adjustment
         # adjust the coefficient mannually by visual testing
-        
+
         # log(distance_movement): more important when near, not when fat
-        return -math.log(0.05 * distance_movement + 0.1) - 1.0 * distance_center**2
+        return (
+            -math.log(0.05 * distance_movement + 0.1)
+            - 1.0 * distance_center**2
+        )
 
     def _find_best_position(
         self,
@@ -234,7 +241,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         best_position = self._try_put_all_candidates(
             center_position_candidates, word.text_size, position_from
         )
-        
+
         # to left-top position
         best_position_left_top = (
             best_position[0] - word.text_size[0] / 2,
@@ -302,11 +309,11 @@ class MagneticAllocation(StaticAllocationStrategy):
                 # best score updated
                 best_position = center_position
                 best_score = score
-                
+
         # guard
         if best_position is None:
             raise Exception("No position found")
-                
+
         return best_position
 
     def _is_hitting_other_words(
