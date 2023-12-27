@@ -232,8 +232,14 @@ class MagneticAllocation(StaticAllocationStrategy):
         best_position = self._try_put_all_candidates(
             center_position_candidates, word.text_size, position_from
         )
+        
+        # to left-top position
+        best_position_left_top = (
+            best_position[0] - word.text_size[0] / 2,
+            best_position[1] - word.text_size[1] / 2,
+        )
 
-        return best_position
+        return best_position_left_top
 
     def _get_candidates_from_one_side(
         self,
