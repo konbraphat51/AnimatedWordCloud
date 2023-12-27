@@ -308,10 +308,9 @@ class MagneticAllocation(StaticAllocationStrategy):
         best_position = None
         best_score = -float("inf")
         for cnt, result_evaluation in enumerate(results_evaluation):
-            if result_evaluation is None:
-                continue
-
-            if result_evaluation > best_score:
+            if (result_evaluation is not None) and (
+                result_evaluation > best_score
+            ):
                 best_score = result_evaluation
                 best_position = center_positions[cnt]
 
