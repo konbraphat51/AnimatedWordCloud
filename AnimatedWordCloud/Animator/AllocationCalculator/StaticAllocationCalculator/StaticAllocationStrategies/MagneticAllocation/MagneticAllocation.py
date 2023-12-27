@@ -298,7 +298,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         """
 
         results_evaluation = joblib.Parallel(n_jobs=-1, verbose=0)(
-            joblib.delayed(self._evaluate_position)(
+            joblib.delayed(self._try_put_position)(
                 center_position, size, position_from
             )
             for center_position in center_positions
@@ -350,7 +350,7 @@ class MagneticAllocation(StaticAllocationStrategy):
             self.rects_outermost,
         )
 
-    def _evaluate_position(
+    def _try_put_position(
         self,
         center_position: tuple[float, float],
         size: tuple[float, float],
