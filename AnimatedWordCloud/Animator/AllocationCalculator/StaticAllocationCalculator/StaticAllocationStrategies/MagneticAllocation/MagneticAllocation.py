@@ -164,7 +164,9 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # the larger, the better; This need manual adjustment
         # adjust the coefficient mannually by visual testing
-        return -0.2 * distance_movement**2 - 1.0 * distance_center**2
+        
+        # log(distance_movement): more important when near, not when fat
+        return -math.log(0.05 * distance_movement + 0.1) - 1.0 * distance_center**2
 
     def _find_best_position(
         self,
