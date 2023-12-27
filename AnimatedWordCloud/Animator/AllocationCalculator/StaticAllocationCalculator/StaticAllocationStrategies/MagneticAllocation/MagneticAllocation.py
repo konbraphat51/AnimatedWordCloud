@@ -297,19 +297,8 @@ class MagneticAllocation(StaticAllocationStrategy):
         :rtype: tuple[int, int]
         """
 
-        # function for parallel processing
-        def _evaluate_position(center_position, size, position_from):
-            # if hitting with other word...
-            if self._is_hitting_other_words(center_position, size):
-                # ...skip this position
-                return None
-
-            score = self._evaluate_position(position_from, center_position)
-
-            return score
-
         results_evaluation = joblib.Parallel(n_jobs=-1, verbose=0)(
-            joblib.delayed(_evaluate_position)(
+            joblib.delayed(self._evaluate_position)(
                 center_position, size, position_from
             )
             for center_position in center_positions
@@ -361,3 +350,28 @@ class MagneticAllocation(StaticAllocationStrategy):
             ),
             self.rects_outermost,
         )
+
+    def _evaluate_position(
+        self,
+        center_position: tuple[float, float],
+        size: tuple[float, float],
+        position_from: tuple[float, float],
+    ) -> float:
+        """
+        Evaluate the position the word if putted
+
+        :param tuple[float,float] center_position: Position of the center of the word
+        :param tuple[float,float] size: Size of the word
+        :param tuple[float,float] position_from: Position of the center of the word comming from
+        :return: Evaluation score. Smaller is the better
+        :rtype: float
+        """
+
+        # if hitting with other word...
+        if self._is_hitting_other_words(center_position, size):
+            # ...skip this position
+            return None
+
+        score = self._evaluate_position(position_from, center_position)
+
+        return score
