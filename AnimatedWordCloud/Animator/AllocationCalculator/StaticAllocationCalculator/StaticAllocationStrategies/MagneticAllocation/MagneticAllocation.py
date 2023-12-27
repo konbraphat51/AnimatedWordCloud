@@ -296,21 +296,33 @@ class MagneticAllocation(StaticAllocationStrategy):
         :rtype: tuple[int, int]
         """
 
-        best_position = None
-        best_score = -float("inf")
-
-        for center_position in center_positions:
+        # function for parallel processing
+        def _evaluate_position(center_position, size, position_from):
             # if hitting with other word...
             if self._is_hitting_other_words(center_position, size):
                 # ...skip this position
-                continue
+                return None
 
             score = self._evaluate_position(position_from, center_position)
 
-            if score > best_score:
-                # best score updated
-                best_position = center_position
-                best_score = score
+            return score
+        
+        results_evaluation = joblib.Parallel(n_jobs=-1, verbose=0)(
+            joblib.delayed(_evaluate_position)(
+                center_position, size, position_from
+            ) for center_position in center_positions
+        )            
+
+        # find best score
+        best_position = None
+        best_score = -float("inf")
+        for cnt, result_evaluation in enumerate(results_evaluation):
+            if result_evaluation is None:
+                continue
+
+            if result_evaluation > best_score:
+                best_score = result_evaluation
+                best_position = center_positions[cnt]
 
         # guard
         if best_position is None:
