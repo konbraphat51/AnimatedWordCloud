@@ -233,7 +233,8 @@ class MagneticAllocation(StaticAllocationStrategy):
         results_by_sides = joblib.Parallel(n_jobs=-1, verbose=0)(
             joblib.delayed(self._get_candidates_from_one_side)(
                 pivots_to_center_list[cnt], frontier_sides[cnt]
-            ) for cnt in range(4)
+            )
+            for cnt in range(4)
         )
         center_position_candidates = []
         for results_by_side in results_by_sides:
@@ -306,12 +307,13 @@ class MagneticAllocation(StaticAllocationStrategy):
             score = self._evaluate_position(position_from, center_position)
 
             return score
-        
+
         results_evaluation = joblib.Parallel(n_jobs=-1, verbose=0)(
             joblib.delayed(_evaluate_position)(
                 center_position, size, position_from
-            ) for center_position in center_positions
-        )            
+            )
+            for center_position in center_positions
+        )
 
         # find best score
         best_position = None
