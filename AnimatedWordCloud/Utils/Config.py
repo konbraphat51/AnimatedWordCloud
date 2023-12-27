@@ -54,6 +54,7 @@ class Config:
         image_division: int = 300,
         verbosity: Literal["silent", "minor", "debug"] = "silent",
         transition_symbol: str = "_to_",
+        duration_per_frame: int = 500,
     ) -> None:
         # explanation written above
 
@@ -76,3 +77,4 @@ class Config:
         self.image_division = image_division
         self.verbosity = verbosity
         self.transition_symbol = transition_symbol
+        self.duration_per_frame = duration_per_frame
