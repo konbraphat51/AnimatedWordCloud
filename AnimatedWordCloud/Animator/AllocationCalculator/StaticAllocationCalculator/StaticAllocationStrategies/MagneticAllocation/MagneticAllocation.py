@@ -17,6 +17,7 @@ from __future__ import annotations
 import math
 from typing import Iterable
 from tqdm import tqdm
+import joblib
 from AnimatedWordCloud.Utils import (
     is_rect_hitting_rects,
     AllocationInFrame,
@@ -229,13 +230,14 @@ class MagneticAllocation(StaticAllocationStrategy):
         ]
 
         # get center position candidates
+        results_by_sides = joblib.Parallel(n_jobs=-1, verbose=0)(
+            joblib.delayed(self._get_candidates_from_one_side)(
+                pivots_to_center_list[cnt], frontier_sides[cnt]
+            ) for cnt in range(4)
+        )
         center_position_candidates = []
-        for cnt in range(4):
-            center_position_candidates.extend(
-                self._get_candidates_from_one_side(
-                    pivots_to_center_list[cnt], frontier_sides[cnt]
-                )
-            )
+        for results_by_side in results_by_sides:
+            center_position_candidates.extend(results_by_side)
 
         # find the best position
         best_position = self._try_put_all_candidates(
