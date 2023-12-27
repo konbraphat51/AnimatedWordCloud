@@ -9,30 +9,26 @@ Integrates the images into a single video (gif)
 
 from __future__ import annotations
 from PIL import Image
+from AnimatedWordCloud.Utils import Config
 
 
-def integrate_images(
-    image_paths: list[str],
-    filename: str,
-    duration_per_frame: int = 500,
-) -> None:
+def integrate_images(image_paths: list[str], config: Config) -> None:
     """
     Create images of each frame
 
     :param
-    List[str] image_paths: List of image_paths created by AnimatedWordCloud.Animator.ImageCreator.create_images.
-    str filename: output filename.
-    int duration: display time for each frame
+    List[str] image_paths: List of image_paths created by AnimatedWordCloud.Animator.ImageCreator.create_images
+    :param Config config: Config instance
     :return: None
     """
 
     gif_images = [Image.open(path) for path in image_paths]
 
     gif_images[0].save(
-        filename,
+        config.output_path,
         save_all=True,
         append_images=gif_images[1:],
-        duration=duration_per_frame,
+        duration=config.duration_per_frame,
         loop=0,
     )
 
