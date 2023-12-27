@@ -204,11 +204,11 @@ class MagneticAllocation(StaticAllocationStrategy):
             ],
             # from left
             [
-                Vector(x_half, 0),
+                Vector(-x_half, 0),
             ],
             # from right
             [
-                Vector(-x_half, 0),
+                Vector(x_half, 0),
             ],
         ]
 
