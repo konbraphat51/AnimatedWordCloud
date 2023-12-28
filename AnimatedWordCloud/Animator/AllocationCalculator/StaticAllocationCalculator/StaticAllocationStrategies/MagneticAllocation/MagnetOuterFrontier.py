@@ -342,7 +342,7 @@ def _add_newly_found_point(
         index = bisect(components, point_found[1])
         
         # if there was a proceeding point...
-        if frontier_points[index][1] == point_found[1]:
+        if (index < len(components)) and (frontier_points[index][1] == point_found[1]):
             #... overwrite
             frontier_points[index] = point_found
             
@@ -360,7 +360,7 @@ def _add_newly_found_point(
         index = bisect(components, point_found[0])
         
         # if there was a proceeding point...
-        if frontier_points[index][0] == point_found[0]:
+        if (index < len(components)) and (frontier_points[index][0] == point_found[0]):
             #... overwrite
             frontier_points[index] = point_found
             
