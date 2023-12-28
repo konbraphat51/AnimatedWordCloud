@@ -12,6 +12,7 @@ Used by MagneticAllocation
 
 from __future__ import annotations
 from typing import Iterable
+from bisect import bisect
 from AnimatedWordCloud.Utils import (
     Vector,
     Rect,
@@ -19,6 +20,10 @@ from AnimatedWordCloud.Utils import (
     is_point_hitting_rect,
 )
 
+TO_RIGHT = Vector(0, 0)
+TO_LEFT = Vector(0, 0)
+TO_UP = Vector(0, 0)
+TO_DOWN = Vector(0, 0)
 
 class MagnetOuterFrontier:
     """
@@ -35,7 +40,7 @@ class MagnetOuterFrontier:
         Make empty data
         """
 
-        self.from_up: list[tuple[int, int]] = []
+        self.from_up: list[tuple[int, int]] = []        
         self.from_down: list[tuple[int, int]] = []
         self.from_left: list[tuple[int, int]] = []
         self.from_right: list[tuple[int, int]] = []
@@ -47,6 +52,8 @@ def get_magnet_outer_frontier(
     image_height: int,
     interval_x: float,
     interval_y: float,
+    rect_added: Rect | None = None,
+    frontier_former: MagnetOuterFrontier | None = None,
 ) -> tuple[MagnetOuterFrontier, set[Rect]]:
     """
     Find the outer frontier of the magnet at the center
@@ -56,13 +63,16 @@ def get_magnet_outer_frontier(
     :param int image_height: Height of the image
     :param int interval_x: interval of the precision; x
     :param int interval_y: interval of the precision; y
+    :param Rect rect_added: Rectangle that is added at the last step. If specified with frontier_former, the calculation is faster.
+    :param MagnetOuterFrontier frontier_former: Former frontier. If specified with rect_added, the calculation is faster.
     :return: (Outer frontier of the magnet at the center,
         New list of rectangles that are currently putted at the outermost of the magnet)
     :rtype: tuple[MagnetOuterFrontier, set[Rect]]
     """
 
+    _initialize_directions(interval_x, interval_y)
+    
     new_hitted_rects = set()
-
     magnet_outer_frontier = MagnetOuterFrontier()
 
     # prepare for iteration
@@ -74,16 +84,16 @@ def get_magnet_outer_frontier(
         Vector(image_width - 1, 1),  # from right
     ]
     launcher_directions = [
-        Vector(interval_x, 0),  # from up
-        Vector(interval_x, 0),  # from down
-        Vector(0, interval_y),  # from left
-        Vector(0, interval_y),  # from right
+        TO_RIGHT,  # from up
+        TO_RIGHT,  # from down
+        TO_DOWN,  # from left
+        TO_DOWN,  # from right
     ]
     detection_ray_directions = [
-        Vector(0, interval_y),  # from up
-        Vector(0, -interval_y),  # from down
-        Vector(interval_x, 0),  # from left
-        Vector(-interval_x, 0),  # from right
+        TO_DOWN,  # from up
+        TO_UP,  # from down
+        TO_RIGHT,  # from left
+        TO_LEFT,  # from right
     ]
     corresponding_frontiers = []
 
@@ -119,6 +129,8 @@ def _detect_frontier_linealy(
     rects_outermost: Iterable[Rect],
     image_width: int,
     image_height: int,
+    rect_added: Rect,
+    frontier_former_side: list[tuple[int, int]],
 ) -> tuple[list[tuple[int, int]], set[Rect]]:
     """
     Detect the frontier from 1 line.
@@ -139,39 +151,55 @@ def _detect_frontier_linealy(
         Rectangles that are currently putted at the outermost of the magnet
     :param int image_width: Width of the image
     :param int image_height: Height of the image
+    :param Rect rect_added: Rectangle that is added at the last step. 
+    :param list[tuple[int, int]] frontier_former_side: List of points of a side if former frontier.
     :return: (List of points that are detected,
         New list of rectangles that are
         currently putted at the outermost of the magnet)
     :rtype: tuple[list[tuple[int, int]], set[Rect]]
     """
+    
+    frontier_former_side, frontier_components = _sort_by_direction(frontier_former_side, detection_ray_direction)
 
     detected_points = []
     rects_outermost_new = set()
-
     image_size = (image_width, image_height)
-
     launcher_position = launcher_point_start.clone()
-    # whicle lancher is inside the image...
+    hitting = False
+    # while lancher is inside the image...
     while is_point_hitting_rect(launcher_position, Rect((0, 0), image_size)):
-        # ...launch detection ray
-        result = _launch_ray(
-            launcher_position,
-            detection_ray_direction,
-            rects_outermost,
-            Rect((0, 0), image_size),
-        )
-
-        # if hitted...
-        if result is not None:
-            # ...register
-            detected_point, hitted_rect = result
-            detected_points.append(detected_point)
-            rects_outermost_new.add(hitted_rect)
-
+        # if ray will hit the new rect...
+        if _will_hit_rect_added(launcher_position, launcher_direction, rect_added):
+            # handle flag
+            hitting = True
+            
+            # launch a ray
+            result_ray_launched = _launch_ray(
+                launcher_position,
+                detection_ray_direction,
+                rects_outermost,
+                Rect((0, 0), image_size),
+            )
+            
+            # if the ray hits...
+            if result_ray_launched is not None:
+                # get the result
+                detection_ray_position, hitted_rect = result_ray_launched
+                
+                # overwrite the old list
+                _add_newly_found_point(detection_ray_position, detected_points, launcher_direction)
+        else:
+            # ...if the ray launcher escapes from the new rect hitting area... 
+            if hitting:
+                # ...stop
+                break
+        
         # move launcher
         launcher_position += launcher_direction
 
-    return detected_points, rects_outermost_new
+    #TODO: cancel rects_outermost
+
+    return detected_points, rects_outermost
 
 
 def _launch_ray(
@@ -214,3 +242,131 @@ def _launch_ray(
         detection_ray_position += detection_ray_direction
 
     return None
+
+def _sort_by_direction(
+    points: list[tuple[int, int]],
+    direction: Vector,
+) -> list[tuple[int, int]]:
+    """
+    Sort the points by the direction.
+    
+    if direction is x-axis, sort by x.
+    if direction is y-axis, sort by y.
+    
+    :param list[tuple[int, int]] points: List of points
+    :param Vector direction: Direction vector. Must be either TO_RIGHT, TO_LEFT, TO_UP, or TO_DOWN.
+    :return: Sorted list of points
+    :rtype: list[tuple[int, int]]
+    """
+    # also get components of the target direction for using bisect.bisect
+    
+    points = points.copy()
+    
+    # if direction is x-axis...
+    if direction.x == 0:
+        # sort by x in ascending order
+        points.sort(key=lambda x: x[0])
+        
+    else:
+        # sort by y in ascending order
+        points.sort(key=lambda x: x[1])
+        
+    return points
+
+def _initialize_directions(interval_x: float, interval_y: float) -> None:
+    """
+    Initialize the direction vectors.
+    
+    :param float interval_x: interval of the precision; x
+    :param float interval_y: interval of the precision; y
+    """
+    
+    global TO_RIGHT, TO_LEFT, TO_UP, TO_DOWN
+    
+    TO_RIGHT = Vector(interval_x, 0)
+    TO_LEFT = Vector(-interval_x, 0)
+    TO_UP = Vector(0, interval_y)
+    TO_DOWN = Vector(0, -interval_y)
+
+def _will_hit_rect_added(
+    launcher_position: Vector,
+    launcher_direction: Vector,
+    rect_added: Rect,
+) -> bool:
+    """
+    Check if the launcher will hit the rect_added.
+    
+    :param Vector launcher_position: Position of the launcher
+    :param Vector launcher_direction: Direction vector of the launcher
+    :param Rect rect_added: Rectangle that is added at the last step.
+    :return: If the launcher will hit the rect_added -> True, else -> False
+    :rtype: bool
+    """
+    
+    # if the launcher moving vertically...
+    if launcher_direction.x == 0:
+        # ...check y axis
+        if rect_added.left_top[1] <= launcher_position.y <= rect_added.right_bottom[1]:
+            # ... is hitting
+            return True
+        else:
+            # ... is not hitting
+            return False
+    # if the launcher moving horizontally...
+    else:
+        # check x axis
+        if rect_added.left_top[0] <= launcher_position.x <= rect_added.right_bottom[0]:
+            # ... is hitting
+            return True
+        else:
+            # ... is not hitting
+            return False
+    
+def _add_newly_found_point(
+    point_found: tuple[int, int],
+    frontier_points: list[tuple[int, int]],
+    launcher_direction: Vector,
+) -> None:
+    """
+    Add the newly found point to the frontier.
+    
+    :param tuple[int, int] point_found: Point found
+    :param list[tuple[int, int]] frontier_points: List of points of the frontier. This will be modified.
+    :param Vector launcher_direction: Direction vector of the launcher
+    """
+    
+    # if the launcher moving vertically...
+    if launcher_direction.x == 0:
+        #find by y axis
+        components = [point[1] for point in frontier_points]
+        index = bisect(components, point_found[1])
+        
+        # if there was a proceeding point...
+        if frontier_points[index][1] == point_found[1]:
+            #... overwrite
+            frontier_points[index] = point_found
+            
+        # if there was no proceeding point...
+        else:
+            # ... newly insert
+            
+            # bisect.bisect returns the index of the point that is bigger than the target point
+            frontier_points.insert(index, point_found)
+            
+    # if the launcher moving horizontally...
+    else:
+        #find by x axis
+        components = [point[0] for point in frontier_points]
+        index = bisect(components, point_found[0])
+        
+        # if there was a proceeding point...
+        if frontier_points[index][0] == point_found[0]:
+            #... overwrite
+            frontier_points[index] = point_found
+            
+        # if there was no proceeding point...
+        else:
+            # ... newly insert
+            
+            # bisect.bisect returns the index of the point that is bigger than the target point
+            frontier_points.insert(index, point_found)
