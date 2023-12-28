@@ -75,7 +75,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         output = AllocationInFrame()
 
         # Word rectangles that are currenly putted at the outermost of the magnet
-        self.rects_outermost = set()
+        self.rects = set()
 
         # put the first word at the center
         self.center = (self.image_width / 2, self.image_height / 2)
@@ -86,7 +86,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         )
 
         # register
-        self.rects_outermost.add(
+        self.rects.add(
             Rect(
                 first_word_position,
                 (
@@ -106,11 +106,8 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # from second word
         for word in iterator:
-            (
-                magnet_outer_frontier,
-                self.rects_outermost,
-            ) = get_magnet_outer_frontier(
-                self.rects_outermost,
+            magnet_outer_frontier = get_magnet_outer_frontier(
+                self.rects,
                 self.image_width,
                 self.image_height,
                 self.interval_x,
@@ -125,7 +122,7 @@ class MagneticAllocation(StaticAllocationStrategy):
             )
 
             # register rect
-            self.rects_outermost.add(
+            self.rects.add(
                 Rect(
                     position,
                     (
@@ -347,7 +344,7 @@ class MagneticAllocation(StaticAllocationStrategy):
                 left_top.convert_to_tuple(),
                 right_bottom.convert_to_tuple(),
             ),
-            self.rects_outermost,
+            self.rects,
         )
 
     def _try_put_position(

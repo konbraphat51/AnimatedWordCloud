@@ -47,32 +47,30 @@ class MagnetOuterFrontier:
 
 
 def get_magnet_outer_frontier(
-    rects_outermost: Iterable[Rect],
+    rects: Iterable[Rect],
     image_width: int,
     image_height: int,
     interval_x: float,
     interval_y: float,
-    rect_added: Rect | None = None,
-    frontier_former: MagnetOuterFrontier | None = None,
-) -> tuple[MagnetOuterFrontier, set[Rect]]:
+    rect_added: Rect,
+    frontier_former: MagnetOuterFrontier,
+) -> MagnetOuterFrontier:
     """
     Find the outer frontier of the magnet at the center
 
-    :param Iterable[Rect] rects_outermost: Rectangles that are currently putted at the outermost of the magnet
+    :param Iterable[Rect] rects: Rectangles that are currently putted in the magnet
     :param int image_width: Width of the image
     :param int image_height: Height of the image
     :param int interval_x: interval of the precision; x
     :param int interval_y: interval of the precision; y
     :param Rect rect_added: Rectangle that is added at the last step. If specified with frontier_former, the calculation is faster.
     :param MagnetOuterFrontier frontier_former: Former frontier. If specified with rect_added, the calculation is faster.
-    :return: (Outer frontier of the magnet at the center,
-        New list of rectangles that are currently putted at the outermost of the magnet)
-    :rtype: tuple[MagnetOuterFrontier, set[Rect]]
+    :return: Outer frontier of the magnet at the center
+    :rtype: MagnetOuterFrontier
     """
 
     _initialize_directions(interval_x, interval_y)
-    
-    new_hitted_rects = set()
+
     magnet_outer_frontier = MagnetOuterFrontier()
 
     # prepare for iteration
@@ -90,28 +88,35 @@ def get_magnet_outer_frontier(
         TO_DOWN,  # from right
     ]
     detection_ray_directions = [
-        TO_DOWN,  # from up
-        TO_UP,  # from down
-        TO_RIGHT,  # from left
-        TO_LEFT,  # from right
+        TO_DOWN,    # from up
+        TO_UP,      # from down
+        TO_RIGHT,   # from left
+        TO_LEFT,    # from right
     ]
-    corresponding_frontiers = []
+    former_frontiers_by_side = [
+        frontier_former.from_up,    # from up
+        frontier_former.from_down,  # from down
+        frontier_former.from_left,  # from left
+        frontier_former.from_right, # from right
+    ]
 
     # detect from 4 sides
+    corresponding_frontiers = []
     for cnt in range(4):
         # detect
-        detected_points, new_hitted_rects_here = _detect_frontier_linealy(
+        detected_points = _detect_frontier_linealy(
             launcher_start_positions[cnt],
             launcher_directions[cnt],
             detection_ray_directions[cnt],
-            rects_outermost,
+            rects,
             image_width,
             image_height,
+            rect_added,
+            former_frontiers_by_side[cnt],
         )
 
         # update
         corresponding_frontiers.append(detected_points)
-        new_hitted_rects |= new_hitted_rects_here
 
     # update magnet_outer_frontier
     magnet_outer_frontier.from_up = corresponding_frontiers[0]
@@ -119,19 +124,19 @@ def get_magnet_outer_frontier(
     magnet_outer_frontier.from_left = corresponding_frontiers[2]
     magnet_outer_frontier.from_right = corresponding_frontiers[3]
 
-    return (magnet_outer_frontier, new_hitted_rects)
+    return magnet_outer_frontier
 
 
 def _detect_frontier_linealy(
     launcher_point_start: Vector,
     launcher_direction: Vector,
     detection_ray_direction: Vector,
-    rects_outermost: Iterable[Rect],
+    rects: Iterable[Rect],
     image_width: int,
     image_height: int,
     rect_added: Rect,
     frontier_former_side: list[tuple[int, int]],
-) -> tuple[list[tuple[int, int]], set[Rect]]:
+) -> list[tuple[int, int]]:
     """
     Detect the frontier from 1 line.
 
@@ -147,25 +152,22 @@ def _detect_frontier_linealy(
         Direction vector of the launching position moves
     :param Vector detection_ray_direction:
         Direction vector of the detection ray moves
-    :param Iterable[Rect] rects_outermost:
-        Rectangles that are currently putted at the outermost of the magnet
+    :param Iterable[Rect] rects:
+        Word's Rectangles that are currently putted in the magnet
     :param int image_width: Width of the image
     :param int image_height: Height of the image
     :param Rect rect_added: Rectangle that is added at the last step. 
     :param list[tuple[int, int]] frontier_former_side: List of points of a side if former frontier.
-    :return: (List of points that are detected,
-        New list of rectangles that are
-        currently putted at the outermost of the magnet)
-    :rtype: tuple[list[tuple[int, int]], set[Rect]]
+    :return: List of points that are detected
+    :rtype: list[tuple[int, int]]
     """
-    
-    frontier_former_side, frontier_components = _sort_by_direction(frontier_former_side, detection_ray_direction)
+    # a clone made
+    frontier_former_side = _sort_by_direction(frontier_former_side, detection_ray_direction)
 
     detected_points = []
-    rects_outermost_new = set()
     image_size = (image_width, image_height)
     launcher_position = launcher_point_start.clone()
-    hitting = False
+    hitting = False     # true while the launcher is in the area hitting the rect_added
     # while lancher is inside the image...
     while is_point_hitting_rect(launcher_position, Rect((0, 0), image_size)):
         # if ray will hit the new rect...
@@ -177,7 +179,7 @@ def _detect_frontier_linealy(
             result_ray_launched = _launch_ray(
                 launcher_position,
                 detection_ray_direction,
-                rects_outermost,
+                rects,
                 Rect((0, 0), image_size),
             )
             
@@ -197,15 +199,13 @@ def _detect_frontier_linealy(
         # move launcher
         launcher_position += launcher_direction
 
-    #TODO: cancel rects_outermost
-
-    return detected_points, rects_outermost
+    return detected_points
 
 
 def _launch_ray(
     launching_position: Vector,
     detection_ray_direction: Vector,
-    rects_outermost: Iterable[Rect],
+    rects: Iterable[Rect],
     image_rect: Rect,
 ) -> tuple[Vector, Rect] | None:
     """
@@ -217,8 +217,7 @@ def _launch_ray(
 
     :param Vector launching_position: Starting position of the ray
     :param Vector detection_ray_direction: Direction vector of the detection ray moves
-    :param Iterable[Rect] rects_outermost:
-        Rectangles that are currently putted at the outermost of the magnet
+    :param Iterable[Rect] rects: Rectangles that are currently putted in the magnet
     :param Rect image_rect: Rectangle of the image
     :return: If hitted -> (Position of the first point hits, Rectangle that is hitting),
         If not hitted -> None
@@ -232,7 +231,7 @@ def _launch_ray(
     while is_point_hitting_rect(detection_ray_position, image_rect):
         # check hit
         flag_hitted, hitted_rect = is_point_hitting_rects(
-            detection_ray_position, rects_outermost
+            detection_ray_position, rects
         )
 
         if flag_hitted:
@@ -253,7 +252,7 @@ def _sort_by_direction(
     if direction is x-axis, sort by x.
     if direction is y-axis, sort by y.
     
-    :param list[tuple[int, int]] points: List of points
+    :param list[tuple[int, int]] points: List of points. This won't be modified.
     :param Vector direction: Direction vector. Must be either TO_RIGHT, TO_LEFT, TO_UP, or TO_DOWN.
     :return: Sorted list of points
     :rtype: list[tuple[int, int]]
