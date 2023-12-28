@@ -3,7 +3,7 @@ import glob
 import subprocess
 from pathlib import Path
 from AnimatedWordCloud.Animator.ImageCreator import create_images
-from AnimatedWordCloud.Animator.AllocationCalculator.AllocationData import (
+from AnimatedWordCloud.Utils.Data import (
     AllocationTimelapse,
     AllocationInFrame,
 )
