@@ -8,6 +8,7 @@ Integrates the images into a single video (gif)
 """
 
 from __future__ import annotations
+import os
 from PIL import Image
 from AnimatedWordCloud.Utils import Config
 
@@ -23,9 +24,9 @@ def integrate_images(image_paths: list[str], config: Config) -> None:
     """
 
     gif_images = [Image.open(path) for path in image_paths]
-
+    filepath = os.path.join(config.output_path, config.output_filename)
     gif_images[0].save(
-        config.output_path,
+        filepath,
         save_all=True,
         append_images=gif_images[1:],
         duration=config.duration_per_frame,
