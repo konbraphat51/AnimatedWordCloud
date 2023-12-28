@@ -73,6 +73,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         self.add_missing_word_to_previous_frame(allocation_before, words)
 
         output = AllocationInFrame()
+        magnet_outer_frontier = MagnetOuterFrontier()
 
         # Word rectangles that are currenly putted at the outermost of the magnet
         self.rects = set()
@@ -85,15 +86,16 @@ class MagneticAllocation(StaticAllocationStrategy):
             self.center[1] - first_word.text_size[1] / 2,
         )
 
-        # register
-        self.rects.add(
-            Rect(
+        # register the first word
+        rect_adding = Rect(
                 first_word_position,
                 (
                     first_word_position[0] + first_word.text_size[0],
                     first_word_position[1] + first_word.text_size[1],
                 ),
             )
+        self.rects.add(
+            rect_adding
         )
         output.add(first_word.text, first_word.font_size, first_word_position)
 
@@ -112,6 +114,8 @@ class MagneticAllocation(StaticAllocationStrategy):
                 self.image_height,
                 self.interval_x,
                 self.interval_y,
+                rect_adding,
+                magnet_outer_frontier
             )
 
             # find the best left-top position
@@ -121,15 +125,18 @@ class MagneticAllocation(StaticAllocationStrategy):
                 self.allocations_before[word.text][1],
             )
 
+            # update for next iteration
+            rect_adding = Rect(
+                position,
+                (
+                    position[0] + word.text_size[0],
+                    position[1] + word.text_size[1],
+                ),
+            )
+
             # register rect
             self.rects.add(
-                Rect(
-                    position,
-                    (
-                        position[0] + word.text_size[0],
-                        position[1] + word.text_size[1],
-                    ),
-                )
+                rect_adding
             )
 
             # register to output
