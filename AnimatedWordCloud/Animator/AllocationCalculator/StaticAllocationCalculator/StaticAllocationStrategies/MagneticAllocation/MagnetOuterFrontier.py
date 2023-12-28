@@ -314,32 +314,30 @@ def _will_hit_rect_added(
     :rtype: bool
     """
 
-    # if the launcher moving vertically...
-    if launcher_direction.x == 0:
+    
+    if (
+        # if the launcher moving vertically...
+        (launcher_direction.x == 0) and
         # ...check y axis
-        if (
+        (
             rect_added.left_top[1]
             <= launcher_position.y
             <= rect_added.right_bottom[1]
-        ):
+        )):
             # ... is hitting
             return True
-        else:
-            # ... is not hitting
-            return False
     # if the launcher moving horizontally...
-    else:
-        # check x axis
-        if (
+    # ...check x axis
+    elif (
             rect_added.left_top[0]
             <= launcher_position.x
             <= rect_added.right_bottom[0]
         ):
             # ... is hitting
             return True
-        else:
-            # ... is not hitting
-            return False
+    else:
+        # ... is not hitting
+        return False
 
 
 def _add_newly_found_point(
