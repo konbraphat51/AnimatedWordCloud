@@ -202,8 +202,8 @@ def _detect_frontier_linealy(
 
         # if the ray launcher escapes from the new rect hitting area...
         elif hitting:
-                # ...stop
-                break
+            # ...stop
+            break
 
         # move launcher
         launcher_position += launcher_direction
