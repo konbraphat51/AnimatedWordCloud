@@ -64,7 +64,7 @@ class Config:
             font_path = DEFAULT_ENG_FONT_PATH
         if output_path is None:
             output_path = DEFAULT_OUTPUT_PATH
-        self.output_filename = output_path
+        self.output_filename = output_filename
         self.font_path = font_path
         self.output_path = output_path
         self.max_words = max_words
