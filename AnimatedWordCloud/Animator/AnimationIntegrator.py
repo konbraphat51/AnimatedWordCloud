@@ -13,7 +13,7 @@ from PIL import Image
 from AnimatedWordCloud.Utils import Config
 
 
-def integrate_images(image_paths: list[str], config: Config) -> None:
+def integrate_images(image_paths: list[str], config: Config, filename: str = "output.gif") -> None:
     """
     Create images of each frame
 
@@ -24,7 +24,7 @@ def integrate_images(image_paths: list[str], config: Config) -> None:
     """
 
     gif_images = [Image.open(path) for path in image_paths]
-    filepath = os.path.join(config.output_path, config.output_filename)
+    filepath = os.path.join(config.output_path, filename)
     gif_images[0].save(
         filepath,
         save_all=True,
