@@ -225,7 +225,7 @@ def _process_ray_result(
         return
 
     # get the result
-    detection_ray_position, hitted_rect = result_ray_launched
+    detection_ray_position, _ = result_ray_launched
 
     # overwrite the old list
     _add_newly_found_point(
