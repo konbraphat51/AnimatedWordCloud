@@ -30,7 +30,7 @@ class colormap_color_func(object):
         Colormap to sample from
     """
 
-    def __init__(self, color_map="magma"):
+    def __init__(self, color_map="dark2"):
         self.color_map = plt.get_cmap(name=color_map)
 
     def __call__(self, word, font_size, position, random_state=None, **kwargs):
