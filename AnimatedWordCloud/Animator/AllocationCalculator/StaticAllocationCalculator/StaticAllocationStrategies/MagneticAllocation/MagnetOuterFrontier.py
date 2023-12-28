@@ -190,6 +190,7 @@ def _detect_frontier_linealy(
                 
                 # overwrite the old list
                 _add_newly_found_point(detection_ray_position, detected_points, launcher_direction)
+
         else:
             # ...if the ray launcher escapes from the new rect hitting area... 
             if hitting:
@@ -284,8 +285,8 @@ def _initialize_directions(interval_x: float, interval_y: float) -> None:
     
     TO_RIGHT = Vector(interval_x, 0)
     TO_LEFT = Vector(-interval_x, 0)
-    TO_UP = Vector(0, interval_y)
-    TO_DOWN = Vector(0, -interval_y)
+    TO_UP = Vector(0, -interval_y)
+    TO_DOWN = Vector(0, interval_y)
 
 def _will_hit_rect_added(
     launcher_position: Vector,

@@ -243,7 +243,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         center_position_candidates = []
         for results_by_side in results_by_sides:
             center_position_candidates.extend(results_by_side)
-
+            
         # find the best position
         best_position = self._try_put_all_candidates(
             center_position_candidates, word.text_size, position_from
