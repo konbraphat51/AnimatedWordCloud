@@ -25,6 +25,7 @@ TO_LEFT = Vector(0, 0)
 TO_UP = Vector(0, 0)
 TO_DOWN = Vector(0, 0)
 
+
 class MagnetOuterFrontier:
     """
     Outer frontier of the magnet at the center.
@@ -40,7 +41,7 @@ class MagnetOuterFrontier:
         Make empty data
         """
 
-        self.from_up: list[tuple[int, int]] = []        
+        self.from_up: list[tuple[int, int]] = []
         self.from_down: list[tuple[int, int]] = []
         self.from_left: list[tuple[int, int]] = []
         self.from_right: list[tuple[int, int]] = []
@@ -88,16 +89,16 @@ def get_magnet_outer_frontier(
         TO_DOWN,  # from right
     ]
     detection_ray_directions = [
-        TO_DOWN,    # from up
-        TO_UP,      # from down
-        TO_RIGHT,   # from left
-        TO_LEFT,    # from right
+        TO_DOWN,  # from up
+        TO_UP,  # from down
+        TO_RIGHT,  # from left
+        TO_LEFT,  # from right
     ]
     former_frontiers_by_side = [
-        frontier_former.from_up,    # from up
+        frontier_former.from_up,  # from up
         frontier_former.from_down,  # from down
         frontier_former.from_left,  # from left
-        frontier_former.from_right, # from right
+        frontier_former.from_right,  # from right
     ]
 
     # detect from 4 sides
@@ -156,25 +157,31 @@ def _detect_frontier_linealy(
         Word's Rectangles that are currently putted in the magnet
     :param int image_width: Width of the image
     :param int image_height: Height of the image
-    :param Rect rect_added: Rectangle that is added at the last step. 
+    :param Rect rect_added: Rectangle that is added at the last step.
     :param list[tuple[int, int]] frontier_former_side: List of points of a side if former frontier.
     :return: List of points that are detected
     :rtype: list[tuple[int, int]]
     """
     # a clone made
-    frontier_former_side = _sort_by_direction(frontier_former_side, detection_ray_direction)
+    frontier_former_side = _sort_by_direction(
+        frontier_former_side, detection_ray_direction
+    )
 
     detected_points = []
     image_size = (image_width, image_height)
     launcher_position = launcher_point_start.clone()
-    hitting = False     # true while the launcher is in the area hitting the rect_added
+    hitting = (
+        False  # true while the launcher is in the area hitting the rect_added
+    )
     # while lancher is inside the image...
     while is_point_hitting_rect(launcher_position, Rect((0, 0), image_size)):
         # if ray will hit the new rect...
-        if _will_hit_rect_added(launcher_position, launcher_direction, rect_added):
+        if _will_hit_rect_added(
+            launcher_position, launcher_direction, rect_added
+        ):
             # handle flag
             hitting = True
-            
+
             # launch a ray
             result_ray_launched = _launch_ray(
                 launcher_position,
@@ -182,21 +189,23 @@ def _detect_frontier_linealy(
                 rects,
                 Rect((0, 0), image_size),
             )
-            
+
             # if the ray hits...
             if result_ray_launched is not None:
                 # get the result
                 detection_ray_position, hitted_rect = result_ray_launched
-                
+
                 # overwrite the old list
-                _add_newly_found_point(detection_ray_position, detected_points, launcher_direction)
+                _add_newly_found_point(
+                    detection_ray_position, detected_points, launcher_direction
+                )
 
         else:
-            # ...if the ray launcher escapes from the new rect hitting area... 
+            # ...if the ray launcher escapes from the new rect hitting area...
             if hitting:
                 # ...stop
                 break
-        
+
         # move launcher
         launcher_position += launcher_direction
 
@@ -243,50 +252,53 @@ def _launch_ray(
 
     return None
 
+
 def _sort_by_direction(
     points: list[tuple[int, int]],
     direction: Vector,
 ) -> list[tuple[int, int]]:
     """
     Sort the points by the direction.
-    
+
     if direction is x-axis, sort by x.
     if direction is y-axis, sort by y.
-    
+
     :param list[tuple[int, int]] points: List of points. This won't be modified.
     :param Vector direction: Direction vector. Must be either TO_RIGHT, TO_LEFT, TO_UP, or TO_DOWN.
     :return: Sorted list of points
     :rtype: list[tuple[int, int]]
     """
     # also get components of the target direction for using bisect.bisect
-    
+
     points = points.copy()
-    
+
     # if direction is x-axis...
     if direction.x == 0:
         # sort by x in ascending order
         points.sort(key=lambda x: x[0])
-        
+
     else:
         # sort by y in ascending order
         points.sort(key=lambda x: x[1])
-        
+
     return points
+
 
 def _initialize_directions(interval_x: float, interval_y: float) -> None:
     """
     Initialize the direction vectors.
-    
+
     :param float interval_x: interval of the precision; x
     :param float interval_y: interval of the precision; y
     """
-    
+
     global TO_RIGHT, TO_LEFT, TO_UP, TO_DOWN
-    
+
     TO_RIGHT = Vector(interval_x, 0)
     TO_LEFT = Vector(-interval_x, 0)
     TO_UP = Vector(0, -interval_y)
     TO_DOWN = Vector(0, interval_y)
+
 
 def _will_hit_rect_added(
     launcher_position: Vector,
@@ -295,18 +307,22 @@ def _will_hit_rect_added(
 ) -> bool:
     """
     Check if the launcher will hit the rect_added.
-    
+
     :param Vector launcher_position: Position of the launcher
     :param Vector launcher_direction: Direction vector of the launcher
     :param Rect rect_added: Rectangle that is added at the last step.
     :return: If the launcher will hit the rect_added -> True, else -> False
     :rtype: bool
     """
-    
+
     # if the launcher moving vertically...
     if launcher_direction.x == 0:
         # ...check y axis
-        if rect_added.left_top[1] <= launcher_position.y <= rect_added.right_bottom[1]:
+        if (
+            rect_added.left_top[1]
+            <= launcher_position.y
+            <= rect_added.right_bottom[1]
+        ):
             # ... is hitting
             return True
         else:
@@ -315,13 +331,18 @@ def _will_hit_rect_added(
     # if the launcher moving horizontally...
     else:
         # check x axis
-        if rect_added.left_top[0] <= launcher_position.x <= rect_added.right_bottom[0]:
+        if (
+            rect_added.left_top[0]
+            <= launcher_position.x
+            <= rect_added.right_bottom[0]
+        ):
             # ... is hitting
             return True
         else:
             # ... is not hitting
             return False
-    
+
+
 def _add_newly_found_point(
     point_found: tuple[int, int],
     frontier_points: list[tuple[int, int]],
@@ -329,44 +350,48 @@ def _add_newly_found_point(
 ) -> None:
     """
     Add the newly found point to the frontier.
-    
+
     :param tuple[int, int] point_found: Point found
     :param list[tuple[int, int]] frontier_points: List of points of the frontier. This will be modified.
     :param Vector launcher_direction: Direction vector of the launcher
     """
-    
+
     # if the launcher moving vertically...
     if launcher_direction.x == 0:
-        #find by y axis
+        # find by y axis
         components = [point[1] for point in frontier_points]
         index = bisect(components, point_found[1])
-        
+
         # if there was a proceeding point...
-        if (index < len(components)) and (frontier_points[index][1] == point_found[1]):
-            #... overwrite
+        if (index < len(components)) and (
+            frontier_points[index][1] == point_found[1]
+        ):
+            # ... overwrite
             frontier_points[index] = point_found
-            
+
         # if there was no proceeding point...
         else:
             # ... newly insert
-            
+
             # bisect.bisect returns the index of the point that is bigger than the target point
             frontier_points.insert(index, point_found)
-            
+
     # if the launcher moving horizontally...
     else:
-        #find by x axis
+        # find by x axis
         components = [point[0] for point in frontier_points]
         index = bisect(components, point_found[0])
-        
+
         # if there was a proceeding point...
-        if (index < len(components)) and (frontier_points[index][0] == point_found[0]):
-            #... overwrite
+        if (index < len(components)) and (
+            frontier_points[index][0] == point_found[0]
+        ):
+            # ... overwrite
             frontier_points[index] = point_found
-            
+
         # if there was no proceeding point...
         else:
             # ... newly insert
-            
+
             # bisect.bisect returns the index of the point that is bigger than the target point
             frontier_points.insert(index, point_found)

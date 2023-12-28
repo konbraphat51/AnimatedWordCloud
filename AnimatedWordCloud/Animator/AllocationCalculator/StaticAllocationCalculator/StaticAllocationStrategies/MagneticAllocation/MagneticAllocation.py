@@ -88,15 +88,13 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # register the first word
         rect_adding = Rect(
-                first_word_position,
-                (
-                    first_word_position[0] + first_word.text_size[0],
-                    first_word_position[1] + first_word.text_size[1],
-                ),
-            )
-        self.rects.add(
-            rect_adding
+            first_word_position,
+            (
+                first_word_position[0] + first_word.text_size[0],
+                first_word_position[1] + first_word.text_size[1],
+            ),
         )
+        self.rects.add(rect_adding)
         output.add(first_word.text, first_word.font_size, first_word_position)
 
         # verbose for iteration
@@ -115,7 +113,7 @@ class MagneticAllocation(StaticAllocationStrategy):
                 self.interval_x,
                 self.interval_y,
                 rect_adding,
-                magnet_outer_frontier
+                magnet_outer_frontier,
             )
 
             # find the best left-top position
@@ -135,9 +133,7 @@ class MagneticAllocation(StaticAllocationStrategy):
             )
 
             # register rect
-            self.rects.add(
-                rect_adding
-            )
+            self.rects.add(rect_adding)
 
             # register to output
             output.add(word.text, word.font_size, position)
@@ -243,7 +239,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         center_position_candidates = []
         for results_by_side in results_by_sides:
             center_position_candidates.extend(results_by_side)
-            
+
         # find the best position
         best_position = self._try_put_all_candidates(
             center_position_candidates, word.text_size, position_from
