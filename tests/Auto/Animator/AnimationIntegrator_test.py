@@ -2,7 +2,6 @@ import os
 import glob
 import subprocess
 from pathlib import Path
-from AnimatedWordCloud.Animator.ImageCreator import create_images
 from AnimatedWordCloud.Utils.Data import (
     AllocationTimelapse,
     AllocationInFrame,
@@ -10,7 +9,7 @@ from AnimatedWordCloud.Utils.Data import (
 from AnimatedWordCloud.Utils.Consts import (
     DEFAULT_ENG_FONT_PATH,
 )
-from AnimatedWordCloud.Animator.AnimationIntegrator import integrate_images
+from AnimatedWordCloud.Animator import integrate_images, create_images
 from AnimatedWordCloud.Utils import Config
 
 DIR = Path(__file__).parent
