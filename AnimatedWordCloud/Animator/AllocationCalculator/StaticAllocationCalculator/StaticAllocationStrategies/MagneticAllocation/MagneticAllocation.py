@@ -240,6 +240,11 @@ class MagneticAllocation(StaticAllocationStrategy):
         for results_by_side in results_by_sides:
             center_position_candidates.extend(results_by_side)
 
+        if len(center_position_candidates) == 0:
+            raise Exception(
+                "No available position found. Try to reduce font size or expand image size."
+            )
+
         # find the best position
         best_position = self._try_put_all_candidates(
             center_position_candidates, word.text_size, position_from
