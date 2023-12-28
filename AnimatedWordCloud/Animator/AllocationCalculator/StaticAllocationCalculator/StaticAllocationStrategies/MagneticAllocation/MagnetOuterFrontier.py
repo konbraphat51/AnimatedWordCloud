@@ -167,12 +167,13 @@ def _detect_frontier_linealy(
         frontier_former_side, detection_ray_direction
     )
 
+    # true while the launcher is in the area hitting the rect_added
+    hitting = False
+
     detected_points = []
     image_size = (image_width, image_height)
     launcher_position = launcher_point_start.clone()
-    hitting = (
-        False  # true while the launcher is in the area hitting the rect_added
-    )
+
     # while lancher is inside the image...
     while is_point_hitting_rect(launcher_position, Rect((0, 0), image_size)):
         # if ray will hit the new rect...
@@ -217,6 +218,7 @@ def _process_ray_result(
     :param tuple[Vector, Rect]|None result_ray_launched: Result of the ray launched
     :param list[tuple[int, int]] detected_points: List of points that are detected. This will be modified.
     :param Vector launcher_direction: Direction vector of the launcher
+    :rtype: None
     """
 
     if result_ray_launched == None:
@@ -238,18 +240,15 @@ def _launch_ray(
     image_rect: Rect,
 ) -> tuple[Vector, Rect] | None:
     """
-    Launch a detection ray from the launching position,
-        and find the first point hits.
+    Launch a detection ray from the launching position, and find the first point hits.
 
-    This finds the frontier on the ray line.
-    Intended to be used by `_detect_frontier_linealy()`
+    This finds the frontier on the ray line. Intended to be used by `_detect_frontier_linealy()`
 
     :param Vector launching_position: Starting position of the ray
     :param Vector detection_ray_direction: Direction vector of the detection ray moves
     :param Iterable[Rect] rects: Rectangles that are currently putted in the magnet
     :param Rect image_rect: Rectangle of the image
-    :return: If hitted -> (Position of the first point hits, Rectangle that is hitting),
-        If not hitted -> None
+    :return: If hitted -> (Position of the first point hits, Rectangle that is hitting); if not hitted -> None
     :rtype: Tuple[Vector, Rect]|None
     """
     # starting position of the ray
@@ -279,9 +278,6 @@ def _sort_by_direction(
     """
     Sort the points by the direction.
 
-    if direction is x-axis, sort by x.
-    if direction is y-axis, sort by y.
-
     :param list[tuple[int, int]] points: List of points. This won't be modified.
     :param Vector direction: Direction vector. Must be either TO_RIGHT, TO_LEFT, TO_UP, or TO_DOWN.
     :return: Sorted list of points
@@ -309,6 +305,7 @@ def _initialize_directions(interval_x: float, interval_y: float) -> None:
 
     :param float interval_x: interval of the precision; x
     :param float interval_y: interval of the precision; y
+    :rtype: None
     """
 
     global TO_RIGHT, TO_LEFT, TO_UP, TO_DOWN
@@ -372,6 +369,7 @@ def _add_newly_found_point(
     :param tuple[int, int] point_found: Point found
     :param list[tuple[int, int]] frontier_points: List of points of the frontier. This will be modified.
     :param Vector launcher_direction: Direction vector of the launcher
+    :rtype: None
     """
 
     # if the launcher moving vertically...
@@ -406,7 +404,6 @@ def _add_newly_found_point_with_specified_component(
     :param list[tuple[int, int]] frontier_points: List of points of the frontier. This will be modified.
     :param tuple[int, int] point_found: Point found
     :param int point_component: Component of the point found
-    :return: None
     :rtype: None
     """
     index = bisect(components, point_component)
