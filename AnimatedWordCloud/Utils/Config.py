@@ -43,6 +43,7 @@ class Config:
         self,
         font_path: str = None,
         output_path: str = None,
+        output_filename: str = "output.gif",
         max_words: int = 100,
         max_font_size: int = 50,
         min_font_size: int = 10,
@@ -63,7 +64,7 @@ class Config:
             font_path = DEFAULT_ENG_FONT_PATH
         if output_path is None:
             output_path = DEFAULT_OUTPUT_PATH
-
+        self.output_filename = output_path
         self.font_path = font_path
         self.output_path = output_path
         self.max_words = max_words
