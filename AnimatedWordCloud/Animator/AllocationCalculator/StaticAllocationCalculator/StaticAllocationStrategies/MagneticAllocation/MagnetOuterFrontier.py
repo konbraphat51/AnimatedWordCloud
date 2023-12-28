@@ -190,16 +190,11 @@ def _detect_frontier_linealy(
                 Rect((0, 0), image_size),
             )
 
-            # if the ray hits...
-            if result_ray_launched is not None:
-                # get the result
-                detection_ray_position, hitted_rect = result_ray_launched
-
-                # overwrite the old list
-                _add_newly_found_point(
-                    detection_ray_position, detected_points, launcher_direction
-                )
-
+            # update detected_points
+            _process_ray_result(
+                result_ray_launched, detected_points, launcher_direction
+            )
+            
         # if the ray launcher escapes from the new rect hitting area...
         elif hitting:
             # ...stop
@@ -210,6 +205,29 @@ def _detect_frontier_linealy(
 
     return detected_points
 
+def _process_ray_result(
+    result_ray_launched: tuple[Vector, Rect] | None,
+    detected_points: list[tuple[int, int]],
+    launcher_direction: Vector,
+) -> None:
+    """
+    process the result of the ray launched.
+    
+    :param tuple[Vector, Rect]|None result_ray_launched: Result of the ray launched
+    :param list[tuple[int, int]] detected_points: List of points that are detected. This will be modified.
+    :param Vector launcher_direction: Direction vector of the launcher
+    """
+    
+    if result_ray_launched == None:
+        return
+    
+    # get the result
+    detection_ray_position, hitted_rect = result_ray_launched
+
+    # overwrite the old list
+    _add_newly_found_point(
+        detection_ray_position, detected_points, launcher_direction
+    )
 
 def _launch_ray(
     launching_position: Vector,
