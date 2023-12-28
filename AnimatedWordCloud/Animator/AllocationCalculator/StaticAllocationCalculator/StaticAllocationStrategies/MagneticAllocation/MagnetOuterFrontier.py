@@ -313,27 +313,29 @@ def _will_hit_rect_added(
     :return: If the launcher will hit the rect_added -> True, else -> False
     :rtype: bool
     """
-    
+
     if (
         # if the launcher moving vertically...
-        (launcher_direction.x == 0) and
+        (launcher_direction.x == 0)
+        and
         # ...check y axis
         (
             rect_added.left_top[1]
             <= launcher_position.y
             <= rect_added.right_bottom[1]
-        )):
-            # ... is hitting
-            return True
+        )
+    ):
+        # ... is hitting
+        return True
     # if the launcher moving horizontally...
     # ...check x axis
     elif (
-            rect_added.left_top[0]
-            <= launcher_position.x
-            <= rect_added.right_bottom[0]
-        ):
-            # ... is hitting
-            return True
+        rect_added.left_top[0]
+        <= launcher_position.x
+        <= rect_added.right_bottom[0]
+    ):
+        # ... is hitting
+        return True
     else:
         # ... is not hitting
         return False
@@ -356,7 +358,7 @@ def _add_newly_found_point(
     if launcher_direction.x == 0:
         # find by y axis
         components = [point[1] for point in frontier_points]
-        
+
         _add_newly_found_point_with_specified_component(
             components, frontier_points, point_found, point_found[1]
         )
@@ -365,20 +367,21 @@ def _add_newly_found_point(
     else:
         # find by x axis
         components = [point[0] for point in frontier_points]
-        
+
         _add_newly_found_point_with_specified_component(
             components, frontier_points, point_found, point_found[0]
         )
+
 
 def _add_newly_found_point_with_specified_component(
     components: list[int],
     frontier_points: list[tuple[int, int]],
     point_found: tuple[int, int],
-    point_component: int
+    point_component: int,
 ) -> None:
     """
     Update the frontier with the newly found point by _add_newly_found_point()
-    
+
     :param list[int] components: List of components of the frontier points
     :param list[tuple[int, int]] frontier_points: List of points of the frontier. This will be modified.
     :param tuple[int, int] point_found: Point found
@@ -387,11 +390,9 @@ def _add_newly_found_point_with_specified_component(
     :rtype: None
     """
     index = bisect(components, point_component)
-    
+
     # if there was a proceeding point...
-    if (index < len(components)) and (
-        point_component == components[index]
-    ):
+    if (index < len(components)) and (point_component == components[index]):
         # ... overwrite
         frontier_points[index] = point_found
 
