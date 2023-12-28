@@ -54,6 +54,7 @@ class Config:
         image_division: int = 300,
         verbosity: Literal["silent", "minor", "debug"] = "silent",
         transition_symbol: str = "_to_",
+        duration_per_frame: int = 500,
     ) -> None:
         # explanation written above
 
@@ -62,7 +63,6 @@ class Config:
             font_path = DEFAULT_ENG_FONT_PATH
         if output_path is None:
             output_path = DEFAULT_OUTPUT_PATH
-
         self.font_path = font_path
         self.output_path = output_path
         self.max_words = max_words
@@ -76,3 +76,4 @@ class Config:
         self.image_division = image_division
         self.verbosity = verbosity
         self.transition_symbol = transition_symbol
+        self.duration_per_frame = duration_per_frame
