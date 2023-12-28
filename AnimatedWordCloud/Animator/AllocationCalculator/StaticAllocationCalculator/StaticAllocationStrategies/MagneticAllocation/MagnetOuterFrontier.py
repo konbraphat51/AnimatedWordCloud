@@ -313,7 +313,6 @@ def _will_hit_rect_added(
     :return: If the launcher will hit the rect_added -> True, else -> False
     :rtype: bool
     """
-
     
     if (
         # if the launcher moving vertically...
@@ -357,38 +356,48 @@ def _add_newly_found_point(
     if launcher_direction.x == 0:
         # find by y axis
         components = [point[1] for point in frontier_points]
-        index = bisect(components, point_found[1])
-
-        # if there was a proceeding point...
-        if (index < len(components)) and (
-            frontier_points[index][1] == point_found[1]
-        ):
-            # ... overwrite
-            frontier_points[index] = point_found
-
-        # if there was no proceeding point...
-        else:
-            # ... newly insert
-
-            # bisect.bisect returns the index of the point that is bigger than the target point
-            frontier_points.insert(index, point_found)
+        
+        _add_newly_found_point_with_specified_component(
+            components, frontier_points, point_found, point_found[1]
+        )
 
     # if the launcher moving horizontally...
     else:
         # find by x axis
         components = [point[0] for point in frontier_points]
-        index = bisect(components, point_found[0])
+        
+        _add_newly_found_point_with_specified_component(
+            components, frontier_points, point_found, point_found[0]
+        )
 
-        # if there was a proceeding point...
-        if (index < len(components)) and (
-            frontier_points[index][0] == point_found[0]
-        ):
-            # ... overwrite
-            frontier_points[index] = point_found
+def _add_newly_found_point_with_specified_component(
+    components: list[int],
+    frontier_points: list[tuple[int, int]],
+    point_found: tuple[int, int],
+    point_component: int
+) -> None:
+    """
+    Update the frontier with the newly found point by _add_newly_found_point()
+    
+    :param list[int] components: List of components of the frontier points
+    :param list[tuple[int, int]] frontier_points: List of points of the frontier. This will be modified.
+    :param tuple[int, int] point_found: Point found
+    :param int point_component: Component of the point found
+    :return: None
+    :rtype: None
+    """
+    index = bisect(components, point_component)
+    
+    # if there was a proceeding point...
+    if (index < len(components)) and (
+        point_component == components[index]
+    ):
+        # ... overwrite
+        frontier_points[index] = point_found
 
-        # if there was no proceeding point...
-        else:
-            # ... newly insert
+    # if there was no proceeding point...
+    else:
+        # ... newly insert
 
-            # bisect.bisect returns the index of the point that is bigger than the target point
-            frontier_points.insert(index, point_found)
+        # bisect.bisect returns the index of the point that is bigger than the target point
+        frontier_points.insert(index, point_found)
