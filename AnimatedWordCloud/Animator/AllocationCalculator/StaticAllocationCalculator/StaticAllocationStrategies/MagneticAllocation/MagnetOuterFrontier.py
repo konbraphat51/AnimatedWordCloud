@@ -221,7 +221,7 @@ def _process_ray_result(
     :rtype: None
     """
 
-    if result_ray_launched == None:
+    if result_ray_launched is None:
         return
 
     # get the result
