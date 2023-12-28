@@ -240,6 +240,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         for results_by_side in results_by_sides:
             center_position_candidates.extend(results_by_side)
 
+        # error handling: too small image area that cannot put the word anywhere anymore
         if len(center_position_candidates) == 0:
             raise Exception(
                 "No available position found. Try to reduce font size or expand image size."
