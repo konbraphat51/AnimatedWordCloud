@@ -7,7 +7,6 @@
 Calculate allocation of each words in each static time
 """
 
-from typing import Literal
 import numpy as np
 from tqdm import tqdm
 from PIL import Image, ImageFont, ImageDraw
