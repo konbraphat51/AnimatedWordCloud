@@ -329,7 +329,7 @@ class MagneticAllocation(StaticAllocationStrategy):
     def _is_hitting_other_words(
         self,
         center_position: tuple[int, int] | Vector,
-        size: [int, int] | Vector,
+        size: tuple[int, int] | Vector,
     ) -> bool:
         """
         Check if the given rect is hitting with other words
