@@ -140,14 +140,14 @@ def estimate_text_size(
 
 def allocate_all(
     timelapse: TimelapseWordVector, config: Config
-) -> AllocationInFrame:
+) -> AllocationTimelapse:
     """
     Calculate allocation of each words in each static time
 
     :param TimelapseWordVector timelapse: The timelapse word vector
     :param Config config: Config instance
-    :return: Allocation data of the frame
-    :rtype: AllocationInFrame
+    :return: Allocation data of all the frames
+    :rtype: AllocationTimelapse
     """
 
     times = len(timelapse)
