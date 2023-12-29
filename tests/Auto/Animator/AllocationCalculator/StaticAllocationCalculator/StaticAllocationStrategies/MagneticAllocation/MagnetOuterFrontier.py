@@ -25,6 +25,6 @@ def test_MagneticOuterFrontier():
 
 def test_get_magnet_outer_frontier():
     rect = Rect((30, 30), (50, 50))
-    frontier, _ = get_magnet_outer_frontier([rect], 100, 100, 10)
+    frontier = get_magnet_outer_frontier([rect], 100, 100, 10)
 
     assert is_point_hitting_rect(frontier.from_up[1], rect)

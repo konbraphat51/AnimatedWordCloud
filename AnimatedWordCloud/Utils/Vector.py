@@ -119,3 +119,15 @@ class Vector:
         :rtype: tuple[float, float]
         """
         return (self.x, self.y)
+
+    def cross(vec0: Vector, vec1: Vector) -> float:
+        """
+        Cross product of two vectors.
+        This is static method.
+
+        :param Vector vec0: Vector 0
+        :param Vector vec1: Vector 1
+        :return: Cross product of two vectors
+        :rtype: float
+        """
+        return vec0.x * vec1.y - vec0.y * vec1.x

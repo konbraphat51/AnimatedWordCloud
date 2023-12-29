@@ -16,6 +16,8 @@ Repeating this process, all words will be allocated.
 from __future__ import annotations
 import math
 from typing import Iterable
+from tqdm import tqdm
+import joblib
 from AnimatedWordCloud.Utils import (
     is_rect_hitting_rects,
     AllocationInFrame,
@@ -34,7 +36,11 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
 
 class MagneticAllocation(StaticAllocationStrategy):
     def __init__(
-        self, image_width: int, image_height: int, image_division: int = 100
+        self,
+        image_width: int,
+        image_height: int,
+        image_division: int = 100,
+        verbosity: str = "none",
     ):
         """
         Initialize allocation settings
@@ -45,6 +51,8 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         self.interval_x = self.image_width / self.image_division
         self.interval_y = self.image_height / self.image_division
+
+        self.verbosity = verbosity
 
     def allocate(
         self, words: Iterable[Word], allocation_before: AllocationInFrame
@@ -65,9 +73,10 @@ class MagneticAllocation(StaticAllocationStrategy):
         self.add_missing_word_to_previous_frame(allocation_before, words)
 
         output = AllocationInFrame()
+        magnet_outer_frontier = MagnetOuterFrontier()
 
         # Word rectangles that are currenly putted at the outermost of the magnet
-        self.rects_outermost = set()
+        self.rects = set()
 
         # put the first word at the center
         self.center = (self.image_width / 2, self.image_height / 2)
@@ -77,29 +86,36 @@ class MagneticAllocation(StaticAllocationStrategy):
             self.center[1] - first_word.text_size[1] / 2,
         )
 
-        # register
-        self.rects_outermost.add(
-            Rect(
-                first_word_position,
-                (
-                    first_word_position[0] + first_word.text_size[0],
-                    first_word_position[1] + first_word.text_size[1],
-                ),
-            )
+        # register the first word
+        rect_adding = Rect(
+            first_word_position,
+            (
+                first_word_position[0] + first_word.text_size[0],
+                first_word_position[1] + first_word.text_size[1],
+            ),
         )
+        self.rects.add(rect_adding)
         output.add(first_word.text, first_word.font_size, first_word_position)
 
+        # verbose for iteration
+        if self.verbosity == "debug":
+            print("MagneticAllocation: Start iteration...")
+            iterator = tqdm(self.words[1:])
+        else:
+            iterator = self.words[1:]
+
         # from second word
-        for word in self.words[1:]:
-            (
-                magnet_outer_frontier,
-                self.rects_outermost,
-            ) = get_magnet_outer_frontier(
-                self.rects_outermost,
+        for word in iterator:
+            # get outer frontier of the magnet
+            # The position candidates will be selected from this frontier
+            magnet_outer_frontier = get_magnet_outer_frontier(
+                self.rects,
                 self.image_width,
                 self.image_height,
                 self.interval_x,
                 self.interval_y,
+                rect_adding,
+                magnet_outer_frontier,
             )
 
             # find the best left-top position
@@ -109,16 +125,17 @@ class MagneticAllocation(StaticAllocationStrategy):
                 self.allocations_before[word.text][1],
             )
 
-            # register rect
-            self.rects_outermost.add(
-                Rect(
-                    position,
-                    (
-                        position[0] + word.text_size[0],
-                        position[1] + word.text_size[1],
-                    ),
-                )
+            # update for next iteration
+            rect_adding = Rect(
+                position,
+                (
+                    position[0] + word.text_size[0],
+                    position[1] + word.text_size[1],
+                ),
             )
+
+            # register rect
+            self.rects.add(rect_adding)
 
             # register to output
             output.add(word.text, word.font_size, position)
@@ -153,7 +170,13 @@ class MagneticAllocation(StaticAllocationStrategy):
         )
 
         # the larger, the better; This need manual adjustment
-        return -(distance_movement**2) - distance_center**2
+        # adjust the coefficient mannually by visual testing
+
+        # log(distance_movement): more important when near, not when fat
+        return (
+            -math.log(0.05 * distance_movement + 0.1)
+            - 1.0 * distance_center**2
+        )
 
     def _find_best_position(
         self,
@@ -181,36 +204,23 @@ class MagneticAllocation(StaticAllocationStrategy):
         x_half = word.text_size[0] / 2 + self.interval_x
         y_half = word.text_size[1] / 2 + self.interval_y
 
-        left_bottom_to_center = Vector(x_half, -y_half)
-        right_bottom_to_center = Vector(-x_half, -y_half)
-        left_top_to_center = Vector(x_half, y_half)
-        right_top_to_center = Vector(-x_half, y_half)
-
         # Prepare for iteration
         pivots_to_center_list = [
             # from lower
             [
-                left_top_to_center,
                 Vector(0, y_half),
-                right_top_to_center,
             ],
             # from top
             [
-                left_bottom_to_center,
                 Vector(0, -y_half),
-                right_bottom_to_center,
             ],
             # from left
             [
-                right_bottom_to_center,
-                Vector(x_half, 0),
-                right_top_to_center,
+                Vector(-x_half, 0),
             ],
             # from right
             [
-                left_bottom_to_center,
-                Vector(-x_half, 0),
-                left_top_to_center,
+                Vector(x_half, 0),
             ],
         ]
 
@@ -222,12 +232,20 @@ class MagneticAllocation(StaticAllocationStrategy):
         ]
 
         # get center position candidates
+        results_by_sides = joblib.Parallel(n_jobs=-1, verbose=0)(
+            joblib.delayed(self._get_candidates_from_one_side)(
+                pivots_to_center_list[cnt], frontier_sides[cnt]
+            )
+            for cnt in range(4)
+        )
         center_position_candidates = []
-        for cnt in range(4):
-            center_position_candidates.extend(
-                self._get_candidates_from_one_side(
-                    pivots_to_center_list[cnt], frontier_sides[cnt]
-                )
+        for results_by_side in results_by_sides:
+            center_position_candidates.extend(results_by_side)
+
+        # error handling: too small image area that cannot put the word anywhere anymore
+        if len(center_position_candidates) == 0:
+            raise Exception(
+                "No available position found. Try to reduce font size or expand image size."
             )
 
         # find the best position
@@ -235,12 +253,18 @@ class MagneticAllocation(StaticAllocationStrategy):
             center_position_candidates, word.text_size, position_from
         )
 
-        return best_position
+        # to left-top position
+        best_position_left_top = (
+            best_position[0] - word.text_size[0] / 2,
+            best_position[1] - word.text_size[1] / 2,
+        )
+
+        return best_position_left_top
 
     def _get_candidates_from_one_side(
         self,
         pivots_to_center: Iterable[Vector],
-        points_on_side: Iterable[tuple[int, int]],
+        points_on_side: Iterable[Vector],
     ) -> list[tuple[int, int]]:
         """
         Get all candidates of the center position from one side
@@ -249,7 +273,7 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         :param Iterable[Vector] pivots_to_center:
             Vector of  (center of the word) - (pivot)
-        :param Iterable[tuple[int,int]] points_on_side:
+        :param Iterable[Vector] points_on_side:
             Points on the side
         :return: Candidates of the center position
         :rtype: list[tuple[int, int]]
@@ -281,28 +305,33 @@ class MagneticAllocation(StaticAllocationStrategy):
         :rtype: tuple[int, int]
         """
 
+        results_evaluation = joblib.Parallel(n_jobs=-1, verbose=0)(
+            joblib.delayed(self._try_put_position)(
+                center_position, size, position_from
+            )
+            for center_position in center_positions
+        )
+
+        # find best score
         best_position = None
         best_score = -float("inf")
+        for cnt, result_evaluation in enumerate(results_evaluation):
+            if (result_evaluation is not None) and (
+                result_evaluation > best_score
+            ):
+                best_score = result_evaluation
+                best_position = center_positions[cnt]
 
-        for center_position in center_positions:
-            # if hitting with other word...
-            if self._is_hitting_other_words(center_position, size):
-                # ...skip this position
-                continue
-
-            score = self._evaluate_position(position_from, center_position)
-
-            if score > best_score:
-                # best score updated
-                best_position = center_position
-                best_score = score
+        # guard
+        if best_position is None:
+            raise Exception("No position found")
 
         return best_position
 
     def _is_hitting_other_words(
         self,
         center_position: tuple[int, int] | Vector,
-        size: [int, int] | Vector,
+        size: tuple[int, int] | Vector,
     ) -> bool:
         """
         Check if the given rect is hitting with other words
@@ -326,5 +355,30 @@ class MagneticAllocation(StaticAllocationStrategy):
                 left_top.convert_to_tuple(),
                 right_bottom.convert_to_tuple(),
             ),
-            self.rects_outermost,
+            self.rects,
         )
+
+    def _try_put_position(
+        self,
+        center_position: tuple[float, float],
+        size: tuple[float, float],
+        position_from: tuple[float, float],
+    ) -> float:
+        """
+        Evaluate the position the word if putted
+
+        :param tuple[float,float] center_position: Position of the center of the word
+        :param tuple[float,float] size: Size of the word
+        :param tuple[float,float] position_from: Position of the center of the word comming from
+        :return: Evaluation score. Smaller is the better
+        :rtype: float
+        """
+
+        # if hitting with other word...
+        if self._is_hitting_other_words(center_position, size):
+            # ...skip this position
+            return None
+
+        score = self._evaluate_position(position_from, center_position)
+
+        return score

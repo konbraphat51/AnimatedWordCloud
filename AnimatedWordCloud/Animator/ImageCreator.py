@@ -61,6 +61,9 @@ def create_image(
     :return: The path of the image.
     :rtype: str
     """
+    if color_func is None:
+        color_func = colormap_color_func(config.color_map)
+
     image = Image.new(
         "RGB",
         (config.image_width, config.image_height),
@@ -104,9 +107,6 @@ def create_images(
     ensure_directory_exists(config.output_path)
 
     image_paths = []
-
-    if color_func is None:
-        color_func = colormap_color_func(config.color_map)
 
     for time_name, allocation_in_frame in position_in_frames.timelapse:
         save_path = create_image(
