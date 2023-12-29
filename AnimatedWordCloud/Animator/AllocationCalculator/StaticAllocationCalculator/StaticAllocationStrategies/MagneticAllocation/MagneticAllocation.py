@@ -106,6 +106,8 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # from second word
         for word in iterator:
+            # get outer frontier of the magnet
+            # The position candidates will be selected from this frontier
             magnet_outer_frontier = get_magnet_outer_frontier(
                 self.rects,
                 self.image_width,
