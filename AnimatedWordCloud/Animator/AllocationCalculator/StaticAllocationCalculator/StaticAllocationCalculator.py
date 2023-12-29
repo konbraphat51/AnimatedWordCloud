@@ -7,6 +7,7 @@
 Calculate allocation of each words in each static time
 """
 
+from __future__ import annotations
 import numpy as np
 from tqdm import tqdm
 from PIL import Image, ImageFont, ImageDraw
@@ -107,7 +108,7 @@ def calculate_font_size(
 
 def estimate_text_size(
     word: str, font_size: int, font_path: str
-) -> (int, int):
+) -> tuple[int, int]:
     """
     Estimate text box size
 
@@ -117,7 +118,7 @@ def estimate_text_size(
     :param int font_size: The font size
     :param str font_path: The font path
     :return: Text box size (x, y)
-    :rtype: (int, int)
+    :rtype: tuple[int, int]
     """
 
     # according to https://watlab-blog.com/2019/08/27/add-text-pixel/
