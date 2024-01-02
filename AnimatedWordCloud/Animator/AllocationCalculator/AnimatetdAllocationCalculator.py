@@ -7,7 +7,7 @@ from AnimatedWordCloud.Utils import (
 )
 
 
-# For reviewers, I think that AllocationInFrame and AllocationTimelapse should be added to some methods. 
+# For reviewers, I think that AllocationInFrame and AllocationTimelapse should be added to some methods.
 
 
 def get_setdiff(
