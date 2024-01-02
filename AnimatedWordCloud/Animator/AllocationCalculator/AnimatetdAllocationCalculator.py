@@ -16,10 +16,10 @@ def get_setdiff(
     to_allocation_frame: AllocationInFrame,
 ) -> tuple[list[str], list[str]]:
     """
-    Extract the key to be added
+    Extract the keys to be added
 
     :param AllocationInFrame from_allocation_frame, to_allocation_frame: start frame and end frame
-    :return:
+    :return: the keys to be added
     """
     from_words: list[str] = list(from_allocation_frame.words.keys())
     to_words: list[str] = list(to_allocation_frame.words.keys())
@@ -37,6 +37,11 @@ def add_key_in_allocation_frame(
     from_words_to_be_added_key: list[str],
     to_words_to_be_added_key: list[str],
 ) -> tuple[AllocationInFrame, AllocationInFrame]:
+    """
+    :param  AllocationInFrame from_allocation_frame, to_allocation_frame: start frame and end frame
+    :param list[str] from_words_to_be_added_key, to_words_to_be_added_key: the keys to be added
+    :return: AllocationInFrame from_allocation_frame, to_allocation_frame: start and end frame added to the necessary keys
+    """
     for to_be_added_key in from_words_to_be_added_key:
         # add key in from_allocation_frame
         (font_size, (left_top)) = to_allocation_frame[to_be_added_key]
@@ -53,6 +58,9 @@ def add_key_in_allocation_frame(
 def calc_frame_value(
     from_value: float, to_value: float, index: int, n_frames: int
 ):
+    """
+    calculate interpolation's value
+    """
     # Linear only for now
     value = from_value + index / (n_frames + 1) * (to_value - from_value)
     return value
@@ -65,6 +73,9 @@ def calc_added_frame(
     n_frames: int,
     index: int,
 ) -> tuple[float, float, float]:
+    """
+    calculate interpolation's value. font_size, x_pos, y_pos
+    """
     # Linear only for now
     from_font_size = from_allocation_frame[key][0]
     to_font_size = to_allocation_frame[key][0]
