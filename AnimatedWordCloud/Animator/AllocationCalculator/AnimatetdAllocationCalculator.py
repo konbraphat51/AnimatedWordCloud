@@ -118,7 +118,9 @@ def get_interpolated_frames(
         from_words_to_be_added_key,
         to_words_to_be_added_key,
     )
-    to_be_added_frames: list[dict[str, tuple[float, tuple[float, float]]]] = [{} for _ in range(n_frames)] # not [{}] * n_frames
+    to_be_added_frames: list[dict[str, tuple[float, tuple[float, float]]]] = [
+        {} for _ in range(n_frames)
+    ]  # not [{}] * n_frames
     # dict[str, tuple[float, tuple[float, float]]]: word -> (font size, left-top position)
     all_keys = list(from_allocation_frame.words.keys())
     for key in all_keys:
@@ -171,13 +173,28 @@ def animated_allocate(
             from_allocation_frame = allocation_timelapse.get_frame(index)
             to_allocation_frame = allocation_timelapse.get_frame(index + 1)
             from_day = allocation_timelapse.timelapse[index][0]
-            to_day = allocation_timelapse.timelapse[index+1][0]
-            interpolated_frames: AllocationTimelapse = get_interpolated_frames(from_allocation_frame,to_allocation_frame,from_day,to_day,config)
+            to_day = allocation_timelapse.timelapse[index + 1][0]
+            interpolated_frames: AllocationTimelapse = get_interpolated_frames(
+                from_allocation_frame,
+                to_allocation_frame,
+                from_day,
+                to_day,
+                config,
+            )
 
-            animated_allocated_timelapse_data = animated_allocated_timelapse_data + [allocation_timelapse.timelapse[index]] + interpolated_frames.timelapse
-        animated_allocated_timelapse_data = animated_allocated_timelapse_data + [allocation_timelapse.timelapse[index+1]]
+            animated_allocated_timelapse_data = (
+                animated_allocated_timelapse_data
+                + [allocation_timelapse.timelapse[index]]
+                + interpolated_frames.timelapse
+            )
+        animated_allocated_timelapse_data = (
+            animated_allocated_timelapse_data
+            + [allocation_timelapse.timelapse[index + 1]]
+        )
         animated_allocated_timelapse = AllocationTimelapse()
-        animated_allocated_timelapse.timelapse = animated_allocated_timelapse_data
+        animated_allocated_timelapse.timelapse = (
+            animated_allocated_timelapse_data
+        )
         return animated_allocated_timelapse
     else:
         raise NotImplementedError()

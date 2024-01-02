@@ -168,8 +168,12 @@ def animated_allocate_test():
     config = Config()
     config.n_frames = 1
     config.interpolation_method = "linear"
-    animated_timelapse: AllocationTimelapse = animated_allocate(static_timelapse, config)
+    animated_timelapse: AllocationTimelapse = animated_allocate(
+        static_timelapse, config
+    )
     assert len(animated_timelapse.timelapse) == 3
     config.n_frames = 3
-    animated_timelapse: AllocationTimelapse = animated_allocate(static_timelapse, config)
+    animated_timelapse: AllocationTimelapse = animated_allocate(
+        static_timelapse, config
+    )
     assert len(animated_timelapse.timelapse) == 5
