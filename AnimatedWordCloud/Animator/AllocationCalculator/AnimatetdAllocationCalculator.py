@@ -22,9 +22,8 @@ def get_setdiff(
     """
     from_words: list[str] = list(from_allocation_frame.words.keys())
     to_words: list[str] = list(to_allocation_frame.words.keys())
-    """
-    np.setdiff1(x, y)'s returns an array x excluding the elements contained in array y.
-    """
+
+    # np.setdiff1(x, y)'s returns an array x excluding the elements contained in array y.
     from_words_to_be_added_key = np.setdiff1d(to_words, from_words)
     to_words_to_be_added_key = np.setdiff1d(from_words, to_words)
     return from_words_to_be_added_key, to_words_to_be_added_key
@@ -57,9 +56,7 @@ def add_key_in_allocation_frame(
 def calc_frame_value(
     from_value: float, to_value: float, index: int, n_frames: int
 ):
-    """
-    calculate interpolation's value
-    """
+    # calculate interpolation's value
     # Linear only for now
     value = from_value + index / (n_frames + 1) * (to_value - from_value)
     return value
@@ -72,9 +69,7 @@ def calc_added_frame(
     n_frames: int,
     index: int,
 ) -> tuple[float, float, float]:
-    """
-    calculate interpolation's value. font_size, x_pos, y_pos
-    """
+    # calculate interpolation's value. font_size, x_pos, y_pos
     # Linear only for now
     from_font_size = from_allocation_frame[key][0]
     to_font_size = to_allocation_frame[key][0]
@@ -124,9 +119,7 @@ def get_interpolated_frames(
     all_keys = list(from_allocation_frame.words.keys())
     for key in all_keys:
         for index in range(1, n_frames + 1):
-            """
-            from_value + index / (n_frames + 1) * (to_value - from_value)
-            """
+            # from_value + index / (n_frames + 1) * (to_value - from_value)
             # index: 1, 2, ..., n_frames, so 1 - indexed
             frame_font_size, frame_x_pos, frame_y_pos = calc_added_frame(
                 from_allocation_frame,
@@ -165,9 +158,7 @@ def animated_allocate(
     )  # get the number of timestamps
     animated_allocated_timelapse_data: list[tuple(str, AllocationInFrame)] = []
     if config.interpolation_method == "linear":
-        """
-        Interpolate between timestamps. the positions of words are changed by linear.
-        """
+        # Interpolate between timestamps. the positions of words are changed by linear.
         for index in range(n_timestamps - 1):
             from_allocation_frame = allocation_timelapse.get_frame(index)
             to_allocation_frame = allocation_timelapse.get_frame(index + 1)
