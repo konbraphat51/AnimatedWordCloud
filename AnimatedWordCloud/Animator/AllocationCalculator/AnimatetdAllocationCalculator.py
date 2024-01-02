@@ -107,13 +107,11 @@ def get_interpolated_frames(
         from_words_to_be_added_key,
         to_words_to_be_added_key,
     )
-    to_be_added_frames: list[dict[str, tuple[float, tuple[float, float]]]] = [
-        {}
-    ] * n_frames
+    to_be_added_frames: list[dict[str, tuple[float, tuple[float, float]]]] = [{} for _ in range(n_frames)] # not [{}] * n_frames
     # dict[str, tuple[float, tuple[float, float]]]: word -> (font size, left-top position)
     all_keys = list(from_allocation_frame.words.keys())
-    for index in range(1, n_frames + 1):
-        for key in all_keys:
+    for key in all_keys:
+        for index in range(1, n_frames + 1):
             """
             from_value + index / (n_frames + 1) * (to_value - from_value)
             """
