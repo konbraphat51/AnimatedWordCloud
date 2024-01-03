@@ -105,9 +105,7 @@ def _calc_frame_value(
     :param int n_frames: the number of all the interpolation frames
     :return: calculated interpolation's value
     :rtype: float
-    """
 
-    """
     Linear only for now
     Add non-Linear interpolation processes in the future.
     """
