@@ -6,10 +6,10 @@ from AnimatedWordCloud.Utils import (
     Config,
 )
 from AnimatedWordCloud.Animator.AllocationCalculator.AnimatetdAllocationCalculator import (
-    get_setdiff,
-    add_key_in_allocation_frame,
-    calc_added_frame,
-    get_interpolated_frames,
+    _get_setdiff,
+    _add_key_in_allocation_frame,
+    _calc_added_frame,
+    _get_interpolated_frames,
     animated_allocate,
 )
 
@@ -23,7 +23,7 @@ def get_setdiff_test():
     allocationframe2.add("apple", 10, (10, 10))
     allocationframe2.add("banana", 10, (10, 10))
     allocationframe2.add("orange", 10, (10, 10))
-    from_words_to_be_added_key, to_words_to_be_added_key = get_setdiff(
+    from_words_to_be_added_key, to_words_to_be_added_key = _get_setdiff(
         allocationframe1, allocationframe2
     )
     assert from_words_to_be_added_key == ["orange"]
@@ -39,10 +39,10 @@ def add_key_in_allocation_frame_test():
     allocationframe2.add("apple", 10, (10, 10))
     allocationframe2.add("banana", 10, (10, 10))
     allocationframe2.add("orange", 10, (10, 10))
-    from_words_to_be_added_key, to_words_to_be_added_key = get_setdiff(
+    from_words_to_be_added_key, to_words_to_be_added_key = _get_setdiff(
         allocationframe1, allocationframe2
     )
-    from_allocation_frame, to_allocation_frame = add_key_in_allocation_frame(
+    from_allocation_frame, to_allocation_frame = _add_key_in_allocation_frame(
         allocationframe1,
         allocationframe2,
         from_words_to_be_added_key,
@@ -71,10 +71,10 @@ def calc_added_value_test():
     allocationframe2.add("apple", 20, (20, 30))
     allocationframe2.add("banana", 10, (10, 10))
     allocationframe2.add("orange", 10, (10, 10))
-    from_words_to_be_added_key, to_words_to_be_added_key = get_setdiff(
+    from_words_to_be_added_key, to_words_to_be_added_key = _get_setdiff(
         allocationframe1, allocationframe2
     )
-    from_allocation_frame, to_allocation_frame = add_key_in_allocation_frame(
+    from_allocation_frame, to_allocation_frame = _add_key_in_allocation_frame(
         allocationframe1,
         allocationframe2,
         from_words_to_be_added_key,
@@ -84,7 +84,7 @@ def calc_added_value_test():
     index = 1
     assert index >= 1
     n_frames = 1
-    frame_font_size, frame_x_pos, frame_y_pos = calc_added_frame(
+    frame_font_size, frame_x_pos, frame_y_pos = _calc_added_frame(
         from_allocation_frame,
         to_allocation_frame,
         key,
@@ -97,7 +97,7 @@ def calc_added_value_test():
     key = "banana"
     index = 1
     n_frames = 20
-    frame_font_size, frame_x_pos, frame_y_pos = calc_added_frame(
+    frame_font_size, frame_x_pos, frame_y_pos = _calc_added_frame(
         from_allocation_frame,
         to_allocation_frame,
         key,
@@ -122,17 +122,17 @@ def get_interpolated_frames_test():
     allocationframe2.add("apple", 20, (20, 30))
     allocationframe2.add("banana", 10, (10, 10))
     allocationframe2.add("orange", 10, (10, 10))
-    from_words_to_be_added_key, to_words_to_be_added_key = get_setdiff(
+    from_words_to_be_added_key, to_words_to_be_added_key = _get_setdiff(
         allocationframe1, allocationframe2
     )
-    from_allocation_frame, to_allocation_frame = add_key_in_allocation_frame(
+    from_allocation_frame, to_allocation_frame = _add_key_in_allocation_frame(
         allocationframe1,
         allocationframe2,
         from_words_to_be_added_key,
         to_words_to_be_added_key,
     )
 
-    interpolated_frames = get_interpolated_frames(
+    interpolated_frames = _get_interpolated_frames(
         from_allocation_frame, to_allocation_frame, from_day, to_day, config
     )
     assert interpolated_frames.timelapse[0][0] == "2024-1-1_to_2024-1-2"
@@ -143,7 +143,7 @@ def get_interpolated_frames_test():
         "orange": (10, (10, 10)),
     }
     config.n_frames = 2
-    interpolated_frames = get_interpolated_frames(
+    interpolated_frames = _get_interpolated_frames(
         from_allocation_frame, to_allocation_frame, from_day, to_day, config
     )
     assert len(interpolated_frames.timelapse) == 2
