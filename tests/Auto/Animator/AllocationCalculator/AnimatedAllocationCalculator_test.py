@@ -80,29 +80,26 @@ def calc_added_value_test():
         from_words_to_be_added_key,
         to_words_to_be_added_key,
     )
+    config = Config()
     key = "apple"
     index = 1
     assert index >= 1
     n_frames = 1
     frame_font_size, frame_x_pos, frame_y_pos = _calc_added_frame(
-        from_allocation_frame,
-        to_allocation_frame,
-        key,
-        n_frames,
-        index,
+        from_allocation_frame, to_allocation_frame, key, index, config
     )
     assert frame_font_size == 15
     assert frame_x_pos == 15
     assert frame_y_pos == 20
     key = "banana"
     index = 1
-    n_frames = 20
+    config.n_frames = 20
     frame_font_size, frame_x_pos, frame_y_pos = _calc_added_frame(
         from_allocation_frame,
         to_allocation_frame,
         key,
-        n_frames,
         index,
+        config,
     )
     assert frame_font_size == 10
     assert frame_x_pos == 10

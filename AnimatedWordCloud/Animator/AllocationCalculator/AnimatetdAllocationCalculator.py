@@ -102,7 +102,7 @@ def _add_key_in_allocation_frame(
 
 
 def _calc_frame_value(
-    from_value: float, to_value: float, index: int, n_frames: int
+    from_value: float, to_value: float, index: int, config: Config
 ) -> float:
     """
     :param float from_value, to_value: font_size, x_position, or y_position
@@ -111,8 +111,17 @@ def _calc_frame_value(
     :return: calculated interpolation's value
     :rtype: float
     """
-    # Linear only for now
-    value = from_value + index / (n_frames + 1) * (to_value - from_value)
+
+    """
+    Linear only for now
+    Add non-Linear interpolation processes in the future.
+    """
+    if config.interpolation_method == "linear":
+        value = from_value + index / (config.n_frames + 1) * (
+            to_value - from_value
+        )
+    else:
+        raise NotImplementedError()
     return value
 
 
@@ -120,8 +129,8 @@ def _calc_added_frame(
     from_allocation_frame: AllocationInFrame,
     to_allocation_frame: AllocationInFrame,
     key: str,
-    n_frames: int,
     index: int,
+    config: Config,
 ) -> tuple[float, float, float]:
     """
     :param float from_allocation_frame, to_allocation_frame: start frame and end frame
@@ -130,8 +139,6 @@ def _calc_added_frame(
     :return: calculated interpolation's values (frame_font_size, frame_x_pos, frame_y_pos)
     :rtype: tuple[float, float, float]
     """
-    # calculate interpolation's value. font_size, x_pos, y_pos
-    # Linear only for now
     from_font_size = from_allocation_frame[key][0]
     to_font_size = to_allocation_frame[key][0]
     from_x_pos = from_allocation_frame[key][1][0]
@@ -139,10 +146,10 @@ def _calc_added_frame(
     from_y_pos = from_allocation_frame[key][1][1]
     to_y_pos = to_allocation_frame[key][1][1]
     frame_font_size = _calc_frame_value(
-        from_font_size, to_font_size, index, n_frames
+        from_font_size, to_font_size, index, config
     )
-    frame_x_pos = _calc_frame_value(from_x_pos, to_x_pos, index, n_frames)
-    frame_y_pos = _calc_frame_value(from_y_pos, to_y_pos, index, n_frames)
+    frame_x_pos = _calc_frame_value(from_x_pos, to_x_pos, index, config)
+    frame_y_pos = _calc_frame_value(from_y_pos, to_y_pos, index, config)
     return frame_font_size, frame_x_pos, frame_y_pos
 
 
@@ -183,11 +190,7 @@ def _get_interpolated_frames(
             # from_value + index / (n_frames + 1) * (to_value - from_value)
             # index: 1, 2, ..., n_frames, so 1 - indexed
             frame_font_size, frame_x_pos, frame_y_pos = _calc_added_frame(
-                from_allocation_frame,
-                to_allocation_frame,
-                key,
-                n_frames,
-                index,
+                from_allocation_frame, to_allocation_frame, key, index, config
             )
             to_be_added_frames[index - 1][key] = (
                 frame_font_size,
