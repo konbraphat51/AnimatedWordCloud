@@ -22,28 +22,25 @@ def animated_allocate(
         allocation_timelapse.timelapse
     )  # get the number of timestamps
     animated_allocated_timelapse_data: list[tuple(str, AllocationInFrame)] = []
-    if config.interpolation_method == "linear":
-        # Interpolate between timestamps. the positions of words are changed by linear.
-        for index in range(n_timestamps - 1):
-            from_allocation_frame = allocation_timelapse.get_frame(index)
-            to_allocation_frame = allocation_timelapse.get_frame(index + 1)
-            from_day = allocation_timelapse.timelapse[index][0]
-            to_day = allocation_timelapse.timelapse[index + 1][0]
-            interpolated_frames: AllocationTimelapse = (
-                _get_interpolated_frames(
-                    from_allocation_frame,
-                    to_allocation_frame,
-                    from_day,
-                    to_day,
-                    config,
-                )
-            )
+    # Interpolate between timestamps. the positions of words are changed by linear.
+    for index in range(n_timestamps - 1):
+        from_allocation_frame = allocation_timelapse.get_frame(index)
+        to_allocation_frame = allocation_timelapse.get_frame(index + 1)
+        from_day = allocation_timelapse.timelapse[index][0]
+        to_day = allocation_timelapse.timelapse[index + 1][0]
+        interpolated_frames: AllocationTimelapse = _get_interpolated_frames(
+            from_allocation_frame,
+            to_allocation_frame,
+            from_day,
+            to_day,
+            config,
+        )
 
-            animated_allocated_timelapse_data = (
-                animated_allocated_timelapse_data
-                + [allocation_timelapse.timelapse[index]]
-                + interpolated_frames.timelapse
-            )
+        animated_allocated_timelapse_data = (
+            animated_allocated_timelapse_data
+            + [allocation_timelapse.timelapse[index]]
+            + interpolated_frames.timelapse
+        )
         animated_allocated_timelapse_data = (
             animated_allocated_timelapse_data
             + [allocation_timelapse.timelapse[index + 1]]
@@ -52,9 +49,7 @@ def animated_allocate(
         animated_allocated_timelapse.timelapse = (
             animated_allocated_timelapse_data
         )
-        return animated_allocated_timelapse
-    else:
-        raise NotImplementedError()
+    return animated_allocated_timelapse
 
 
 def _get_setdiff(
