@@ -6,6 +6,7 @@ from AnimatedWordCloud.Utils import (
     Config,
 )
 
+
 def animated_allocate(
     allocation_timelapse: AllocationTimelapse, config: Config
 ) -> AllocationTimelapse:
@@ -28,12 +29,14 @@ def animated_allocate(
             to_allocation_frame = allocation_timelapse.get_frame(index + 1)
             from_day = allocation_timelapse.timelapse[index][0]
             to_day = allocation_timelapse.timelapse[index + 1][0]
-            interpolated_frames: AllocationTimelapse = _get_interpolated_frames(
-                from_allocation_frame,
-                to_allocation_frame,
-                from_day,
-                to_day,
-                config,
+            interpolated_frames: AllocationTimelapse = (
+                _get_interpolated_frames(
+                    from_allocation_frame,
+                    to_allocation_frame,
+                    from_day,
+                    to_day,
+                    config,
+                )
             )
 
             animated_allocated_timelapse_data = (
@@ -54,7 +57,7 @@ def animated_allocate(
         raise NotImplementedError()
 
 
-def get_setdiff(
+def _get_setdiff(
     from_allocation_frame: AllocationInFrame,
     to_allocation_frame: AllocationInFrame,
 ) -> tuple[list[str], list[str]]:
@@ -73,7 +76,7 @@ def get_setdiff(
     return from_words_to_be_added_key, to_words_to_be_added_key
 
 
-def add_key_in_allocation_frame(
+def _add_key_in_allocation_frame(
     from_allocation_frame: AllocationInFrame,
     to_allocation_frame: AllocationInFrame,
     from_words_to_be_added_key: list[str],
@@ -161,10 +164,10 @@ def _get_interpolated_frames(
     """
     # Linear only for now
     n_frames = config.n_frames
-    from_words_to_be_added_key, to_words_to_be_added_key = get_setdiff(
+    from_words_to_be_added_key, to_words_to_be_added_key = _get_setdiff(
         from_allocation_frame, to_allocation_frame
     )
-    from_allocation_frame, to_allocation_frame = add_key_in_allocation_frame(
+    from_allocation_frame, to_allocation_frame = _add_key_in_allocation_frame(
         from_allocation_frame,
         to_allocation_frame,
         from_words_to_be_added_key,
@@ -198,4 +201,3 @@ def _get_interpolated_frames(
         transition_day = from_day + config.transition_symbol + to_day
         interpolated_frames.add(transition_day, to_be_added_allocation_frame)
     return interpolated_frames
-
