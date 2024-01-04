@@ -34,7 +34,9 @@ class colormap_color_func(object):
     def __init__(self, color_map="dark2"):
         self.color_map = plt.get_cmap(name=color_map)
 
-    def __call__(self, word: str, font_size, position, random_state=None, **kwargs):
+    def __call__(
+        self, word: str, font_size, position, random_state=None, **kwargs
+    ):
         # MD5ハッシュを計算
         md5_hash = hashlib.md5(word.encode()).hexdigest()
         # 16進数を10進数に変換
