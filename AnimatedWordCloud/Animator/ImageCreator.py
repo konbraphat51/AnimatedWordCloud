@@ -11,6 +11,7 @@ Create images of each frame
 from __future__ import annotations
 import os
 from random import Random
+import hashlib
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
@@ -33,11 +34,15 @@ class colormap_color_func(object):
     def __init__(self, color_map="dark2"):
         self.color_map = plt.get_cmap(name=color_map)
 
-    def __call__(self, word, font_size, position, random_state=None, **kwargs):
-        if random_state is None:
-            random_state = Random()
+    def __call__(self, word: str, font_size, position, random_state=None, **kwargs):
+        # MD5ハッシュを計算
+        md5_hash = hashlib.md5(word.encode()).hexdigest()
+        # 16進数を10進数に変換
+        decimal_value = int(md5_hash, 16)
+        # 10進数を0から1の範囲に正規化
+        normalized_value = decimal_value / (16**32 - 1)
         r, g, b, _ = np.maximum(
-            0, 255 * np.array(self.color_map(random_state.uniform(0, 1)))
+            0, 255 * np.array(self.color_map(normalized_value))
         )
         return "rgb({:.0f}, {:.0f}, {:.0f})".format(r, g, b)
 
