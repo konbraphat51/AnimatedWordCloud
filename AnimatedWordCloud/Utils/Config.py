@@ -58,8 +58,8 @@ class Config:
         image_division: int = 300,
         verbosity: Literal["silent", "minor", "debug"] = "silent",
         transition_symbol: str = "_to_",
-        duration_per_frame: int = 500,
-        n_frames_for_interpolation: int = 10,
+        duration_per_frame: int = 50,
+        n_frames_for_interpolation: int = 20,
         interpolation_method: str = "linear",
     ) -> None:
         # explanation written above
