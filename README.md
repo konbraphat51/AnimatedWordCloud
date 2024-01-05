@@ -17,7 +17,7 @@ Using Elon Musk's tweets.
 
 ### Requirements
 
-Python (>= 3.8 version)
+Python (3.8 <= version <= 3.12)
 
 ### install
 
