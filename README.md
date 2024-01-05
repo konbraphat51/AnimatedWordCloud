@@ -111,3 +111,8 @@ Look at [CONTRIBUTING.md](CONTRIBUTING.md) first.
 
 - [SuperHotDogCat](<(https://github.com/SuperHotDogCat)>): Author  
   [![SuperHotDogCat](https://github.com/SuperHotDogCat.png)](https://github.com/SuperHotDogCat)
+
+## Want to support?
+
+**⭐Give this project a star⭐**  
+This is out first OSS project, ⭐**star**⭐ would make us very happy⭐⭐⭐
