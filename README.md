@@ -103,3 +103,11 @@ All has default value, so just edit what you need
 ## Want to contribute?
 
 Look at [CONTRIBUTING.md](CONTRIBUTING.md) first.
+
+### Maintainers
+
+- Konbraphat51: Head Author  
+  [![Konbraphat51 icon](https://github.com/konbraphat51.png)](https://github.com/konbraphat51)
+
+- SuperHotDogCat: Author  
+  [![SuperHotDogCat](https://github.com/SuperHotDogCat.png)](https://github.com/SuperHotDogCat)
