@@ -55,7 +55,7 @@ class Config:
         verbosity: Literal["silent", "minor", "debug"] = "silent",
         transition_symbol: str = "_to_",
         duration_per_frame: int = 500,
-        n_frames: int = 1,
+        n_frames: int = 10,
         interpolation_method: str = "linear",
     ) -> None:
         # explanation written above
