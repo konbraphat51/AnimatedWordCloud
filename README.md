@@ -10,8 +10,10 @@ AnimatedWordCloud animates the timelapse of your words vector.
 
 ## Examples!
 
-Using Elon Musk's tweets.
+Using [Elon Musk's tweets](https://data.world/adamhelsinger/elon-musk-tweets-until-4-6-17).  
 (C) Elon Musk
+
+[GIF HERE]
 
 ## How to use?
 
