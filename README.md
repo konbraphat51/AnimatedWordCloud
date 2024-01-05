@@ -7,3 +7,13 @@
 [![unit-test](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/python-tester.yml/badge.svg?branch=main)](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/python-tester.yml)[![codecov](https://codecov.io/gh/konbraphat51/AnimatedWordCloud/graph/badge.svg?token=4OOX0GSJDJ)](https://codecov.io/gh/konbraphat51/AnimatedWordCloud)
 
 AnimatedWordCloud animates the timelapse of your words vector.
+
+## How to use?
+
+### install
+
+(scheduled)
+
+```
+pip install AnimatedWordCloud
+```
