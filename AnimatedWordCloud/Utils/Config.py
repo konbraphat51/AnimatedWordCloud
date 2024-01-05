@@ -37,6 +37,10 @@ class Config:
         This is available for magnetic strategy only.
     :param str verbosity: Verbosity of the log.
         "silent" for no log, "minor" for only important logs, "debug" for all logs.
+    :param str transition_symbol: Symbol to be used for showing transition.
+        It will be shown as "(former) [transition_symbol] (latter)".
+    :param int duration_per_frame: Duration of each frame in milliseconds.
+    :param int n_frames: Number of frames in the animation.
     """
 
     def __init__(
@@ -55,7 +59,7 @@ class Config:
         verbosity: Literal["silent", "minor", "debug"] = "silent",
         transition_symbol: str = "_to_",
         duration_per_frame: int = 500,
-        n_frames: int = 10,
+        n_frames_for_interpolation: int = 10,
         interpolation_method: str = "linear",
     ) -> None:
         # explanation written above
@@ -79,5 +83,5 @@ class Config:
         self.verbosity = verbosity
         self.transition_symbol = transition_symbol
         self.duration_per_frame = duration_per_frame
-        self.n_frames = n_frames
+        self.n_frames = n_frames_for_interpolation
         self.interpolation_method = interpolation_method
