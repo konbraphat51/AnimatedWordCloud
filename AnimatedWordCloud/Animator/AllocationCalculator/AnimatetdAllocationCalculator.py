@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# Copyright (C) 2023 AnimatedWordCloud Project
+# https://github.com/konbraphat51/AnimatedWordCloud
+#
+# Licensed under the MIT License.
+"""
+Calculate interpolated allocations between timestamps
+"""
+
 from __future__ import annotations
 import numpy as np
 from AnimatedWordCloud.Utils import (
@@ -102,7 +111,7 @@ def _calc_frame_value(
     """
     :param float from_value, to_value: font_size, x_position, or y_position
     :param int index: interpolation frame index
-    :param int n_frames: the number of all the interpolation frames
+    :param int n_frames_for_interpolation: the number of all the interpolation frames
     :return: calculated interpolation's value
     :rtype: float
 
@@ -110,9 +119,9 @@ def _calc_frame_value(
     Add non-Linear interpolation processes in the future.
     """
     if config.interpolation_method == "linear":
-        value = from_value + index / (config.n_frames + 1) * (
-            to_value - from_value
-        )
+        value = from_value + index / (
+            config.n_frames_for_interpolation + 1
+        ) * (to_value - from_value)
     else:
         raise NotImplementedError()
     return value
@@ -128,7 +137,7 @@ def _calc_added_frame(
     """
     :param float from_allocation_frame, to_allocation_frame: start frame and end frame
     :param str key: a focused word. It's interpolation font size and positions are calculated.
-    :param int n_frames: the number of all the interpolation frames
+    :param int n_frames_for_interpolation: the number of all the interpolation frames
     :return: calculated interpolation's values (frame_font_size, frame_x_pos, frame_y_pos)
     :rtype: tuple[float, float, float]
     """
@@ -163,7 +172,7 @@ def _get_interpolated_frames(
     :return AllocationTimelapse:
     """
     # Linear only for now
-    n_frames = config.n_frames
+    n_frames_for_interpolation = config.n_frames_for_interpolation
     from_words_to_be_added_key, to_words_to_be_added_key = _get_setdiff(
         from_allocation_frame, to_allocation_frame
     )
@@ -174,14 +183,14 @@ def _get_interpolated_frames(
         to_words_to_be_added_key,
     )
     to_be_added_frames: list[dict[str, tuple[float, tuple[float, float]]]] = [
-        {} for _ in range(n_frames)
-    ]  # not [{}] * n_frames
+        {} for _ in range(n_frames_for_interpolation)
+    ]  # not [{}] * n_frames_for_interpolation
     # dict[str, tuple[float, tuple[float, float]]]: word -> (font size, left-top position)
     all_keys = list(from_allocation_frame.words.keys())
     for key in all_keys:
-        for index in range(1, n_frames + 1):
-            # from_value + index / (n_frames + 1) * (to_value - from_value)
-            # index: 1, 2, ..., n_frames, so 1 - indexed
+        for index in range(1, n_frames_for_interpolation + 1):
+            # from_value + index / (n_frames_for_interpolation + 1) * (to_value - from_value)
+            # index: 1, 2, ..., n_frames_for_interpolation, so 1 - indexed
             frame_font_size, frame_x_pos, frame_y_pos = _calc_added_frame(
                 from_allocation_frame, to_allocation_frame, key, index, config
             )
