@@ -124,9 +124,15 @@ def _calc_frame_value(
         raise NotImplementedError()
     return value
 
-def _calc_linear(from_value: float, to_value: float, index: int, config: Config):
-    value = from_value + index / (config.n_frames_for_interpolation + 1) * (to_value - from_value)
+
+def _calc_linear(
+    from_value: float, to_value: float, index: int, config: Config
+):
+    value = from_value + index / (config.n_frames_for_interpolation + 1) * (
+        to_value - from_value
+    )
     return value
+
 
 def _calc_added_frame(
     from_allocation_frame: AllocationInFrame,
