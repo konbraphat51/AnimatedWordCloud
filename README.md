@@ -110,7 +110,7 @@ Look at [CONTRIBUTING.md](CONTRIBUTING.md) first.
 - [Konbraphat51](https://github.com/konbraphat51): Head Author  
   [![Konbraphat51 icon](https://github.com/konbraphat51.png)](https://github.com/konbraphat51)
 
-- [SuperHotDogCat](<(https://github.com/SuperHotDogCat)>): Author  
+- [SuperHotDogCat](https://github.com/SuperHotDogCat)): Author  
   [![SuperHotDogCat](https://github.com/SuperHotDogCat.png)](https://github.com/SuperHotDogCat)
 
 ## Want to support?
