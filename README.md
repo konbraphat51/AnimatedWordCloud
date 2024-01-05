@@ -17,3 +17,40 @@ AnimatedWordCloud animates the timelapse of your words vector.
 ```
 pip install AnimatedWordCloud
 ```
+
+### coding
+
+#### Using default configuration
+
+```python
+from AnimatedWordCloud import animate
+
+# data must be list[("time name", dict[str, float])]
+timelapse_wordvector = [
+    (
+        "time_0",
+        {
+            "hanshin":0.334,
+            "chiba":0.226
+        }
+    ),
+    (
+        "time_1",
+        {
+            "hanshin":0.874,
+            "fujinami":0.609
+        }
+    ),
+    (
+        "time_2",
+        {
+            "fujinami":0.9,
+            "major":0.4
+        }
+    )
+]
+
+# animate!
+# the animation gif path is in this variable!
+path = animate(timelapse_wordvector)
+```
