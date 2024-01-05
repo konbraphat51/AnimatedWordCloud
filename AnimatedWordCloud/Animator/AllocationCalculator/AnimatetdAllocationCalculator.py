@@ -39,8 +39,8 @@ def animated_allocate(
         # get static frame data
         from_allocation_frame = allocation_timelapse.get_frame(index)
         to_allocation_frame = allocation_timelapse.get_frame(index + 1)
-        from_day = allocation_timelapse.timelapse[index][0]
-        to_day = allocation_timelapse.timelapse[index + 1][0]
+        time_name_from = allocation_timelapse.timelapse[index][0]
+        time_name_to = allocation_timelapse.timelapse[index + 1][0]
 
         # interpolate between two frames
         interpolated_frames: list[
@@ -52,15 +52,15 @@ def animated_allocate(
         )
 
         # add static frame first
-        timelapse_output.add(from_day, from_allocation_frame)
+        timelapse_output.add(time_name_from, from_allocation_frame)
 
         # add interpolated frames
-        time_name = from_day + config.transition_symbol + to_day
+        time_name = time_name_from + config.transition_symbol + time_name_to
         for interpolated_frame in interpolated_frames:
             timelapse_output.add(time_name, interpolated_frame)
 
     # add last static frame
-    timelapse_output.add(to_day, to_allocation_frame)
+    timelapse_output.add(time_name_to, to_allocation_frame)
 
     return timelapse_output
 
