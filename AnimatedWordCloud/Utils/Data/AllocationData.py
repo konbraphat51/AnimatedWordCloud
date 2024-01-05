@@ -18,7 +18,7 @@ class AllocationInFrame:
     def __init__(self, from_static_allocation: bool) -> None:
         """
         Prepare empty data
-        
+
         :param bool flag_static: Whether the frame is static or not
         """
 

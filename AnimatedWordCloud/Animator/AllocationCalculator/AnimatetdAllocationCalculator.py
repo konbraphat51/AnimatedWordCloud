@@ -220,7 +220,9 @@ def _get_interpolated_frames(
     # Generate interpolated_frames
     interpolated_frames: AllocationTimelapse = AllocationTimelapse()
     for index, to_be_added_frame in enumerate(to_be_added_frames):
-        to_be_added_allocation_frame = AllocationInFrame(from_static_allocation=False)
+        to_be_added_allocation_frame = AllocationInFrame(
+            from_static_allocation=False
+        )
         to_be_added_allocation_frame.words = to_be_added_frame
         transition_day = from_day + config.transition_symbol + to_day
         interpolated_frames.add(transition_day, to_be_added_allocation_frame)
