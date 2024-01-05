@@ -18,7 +18,7 @@ def requirements_from_file(file_name):
 
 
 setup(
-    name="WordCloudTimelapse",
+    name="AnimatedWordCloudTimelapse",
     version="0.9.0",
     description="Animate a timelapse of word cloud",
     long_description=readme,

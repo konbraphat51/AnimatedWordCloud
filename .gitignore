@@ -1,4 +1,5 @@
 build/**
 dist/**
 AnimatedWordCloud.egg-info/**
+AnimatedWordCloudTimelapse.egg-info/**
 **/__pycache__/**
