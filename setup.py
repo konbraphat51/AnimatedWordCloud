@@ -23,7 +23,7 @@ setup(
     long_description=readme,
     long_description_content_type="text/markdown",
     author="konbraphat51, superhotdogcat",
-    author_email="",
+    author_email="konbraphat51@gmail.com",
     url="https://github.com/konbraphat51/AnimatedWordCloud/tree/main",
     packages=find_packages(exclude=["tests", "tests.*"]),
     test_suite="tests",
