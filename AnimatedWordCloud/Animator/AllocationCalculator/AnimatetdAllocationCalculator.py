@@ -26,24 +26,26 @@ def animated_allocate(
     :rtype: AllocationTimelapse
     """
 
-    #final output
+    # final output
     timelapse_output: AllocationTimelapse = AllocationTimelapse()
 
     # Branching by interpolation_method
     n_timestamps = len(
         allocation_timelapse.timelapse
     )  # get the number of timestamps
-    
+
     # Interpolate between timestamps. the positions of words are changed by linear.
     for index in range(n_timestamps - 1):
-        #get static frame data
+        # get static frame data
         from_allocation_frame = allocation_timelapse.get_frame(index)
         to_allocation_frame = allocation_timelapse.get_frame(index + 1)
         from_day = allocation_timelapse.timelapse[index][0]
         to_day = allocation_timelapse.timelapse[index + 1][0]
-        
-        #interpolate between two frames
-        interpolated_frames: list[AllocationInFrame] = _get_interpolated_frames(
+
+        # interpolate between two frames
+        interpolated_frames: list[
+            AllocationInFrame
+        ] = _get_interpolated_frames(
             from_allocation_frame,
             to_allocation_frame,
             config,
@@ -51,15 +53,15 @@ def animated_allocate(
 
         # add static frame first
         timelapse_output.add(from_day, from_allocation_frame)
-        
+
         # add interpolated frames
         time_name = from_day + config.transition_symbol + to_day
         for interpolated_frame in interpolated_frames:
             timelapse_output.add(time_name, interpolated_frame)
-            
+
     # add last static frame
     timelapse_output.add(to_day, to_allocation_frame)
-                    
+
     return timelapse_output
 
 
@@ -217,7 +219,7 @@ def _get_interpolated_frames(
                 frame_font_size,
                 (frame_x_pos, frame_y_pos),
             )
-            
+
     # Generate interpolated_frames
     output = []
     for index, to_be_added_frame in enumerate(to_be_added_frames):
@@ -226,5 +228,5 @@ def _get_interpolated_frames(
         )
         to_be_added_allocation_frame.words = to_be_added_frame
         output.append(to_be_added_allocation_frame)
-        
+
     return output
