@@ -4,9 +4,7 @@
 #
 # Licensed under the MIT License.
 """
-Setup script for PyThaiNLP.
-
-https://github.com/PyThaiNLP/pythainlp
+Setup script
 """
 from setuptools import find_packages, setup
 
