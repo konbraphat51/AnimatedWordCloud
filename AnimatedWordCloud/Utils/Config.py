@@ -65,7 +65,7 @@ class Config:
         duration_per_frame: int = 50,
         n_frames_for_interpolation: int = 20,
         interpolation_method: Literal["linear"] = "linear",
-        intermediate_frames_id: str = None
+        intermediate_frames_id: str = None,
     ) -> None:
         # explanation written above
 
@@ -90,20 +90,24 @@ class Config:
         self.duration_per_frame = duration_per_frame
         self.n_frames_for_interpolation = n_frames_for_interpolation
         self.interpolation_method = interpolation_method
-        self.intermediate_frames_id = self._compute_intermediate_frames_id(intermediate_frames_id)
+        self.intermediate_frames_id = self._compute_intermediate_frames_id(
+            intermediate_frames_id
+        )
 
-    def _compute_intermediate_frames_id(self, intermediate_frames_id: str|None) -> str:
+    def _compute_intermediate_frames_id(
+        self, intermediate_frames_id: str | None
+    ) -> str:
         """
         returns intermediate_frames_id given from constructor
-        
+
         set random value if intermediate_frames_id is None
-        
+
         :param str|None intermediate_frames_id: intermediate_frames_id given
         :return: intermediate_frames_id computed
         :rtype: str
         """
-        
+
         if intermediate_frames_id is None:
-            #set randomly
+            # set randomly
             intermediate_frames_id = str(random.randint(0, 1000000000))
         return intermediate_frames_id

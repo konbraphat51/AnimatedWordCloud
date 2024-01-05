@@ -126,7 +126,7 @@ def create_images(
         )
 
         image_paths.append(save_path)
-        
+
         frame_number += 1
 
     return image_paths
