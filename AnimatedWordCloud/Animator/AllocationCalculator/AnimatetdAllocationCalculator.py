@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# Copyright (C) 2023 AnimatedWordCloud Project
+# https://github.com/konbraphat51/AnimatedWordCloud
+#
+# Licensed under the MIT License.
+"""
+Calculate interpolated allocations between timestamps
+"""
+
 from __future__ import annotations
 import numpy as np
 from AnimatedWordCloud.Utils import (
