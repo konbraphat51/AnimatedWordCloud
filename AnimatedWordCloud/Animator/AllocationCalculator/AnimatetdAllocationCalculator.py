@@ -111,7 +111,7 @@ def _calc_frame_value(
     """
     :param float from_value, to_value: font_size, x_position, or y_position
     :param int index: interpolation frame index
-    :param int n_frames_for_interpolation: the number of all the interpolation frames
+    :param Config config used for n_frames_for_interpolation and interpolation_method
     :return: calculated interpolation's value
     :rtype: float
 
@@ -128,6 +128,16 @@ def _calc_frame_value(
 def _calc_linear(
     from_value: float, to_value: float, index: int, config: Config
 ):
+    """
+    :param float from_value, to_value: font_size, x_position, or y_position
+    :param int index: interpolation frame index
+    :param Config config used for n_frames_for_interpolation
+    :return: calculated linear interpolation's value
+    :rtype: float
+
+    Linear only for now
+    Add non-Linear interpolation processes in the future.
+    """
     value = from_value + index / (config.n_frames_for_interpolation + 1) * (
         to_value - from_value
     )
@@ -144,7 +154,8 @@ def _calc_added_frame(
     """
     :param float from_allocation_frame, to_allocation_frame: start frame and end frame
     :param str key: a focused word. It's interpolation font size and positions are calculated.
-    :param int n_frames_for_interpolation: the number of all the interpolation frames
+    :param int index: interpolation frame index
+    :param Config config: used for the argument of _calc_frame_value
     :return: calculated interpolation's values (frame_font_size, frame_x_pos, frame_y_pos)
     :rtype: tuple[float, float, float]
     """
@@ -175,6 +186,7 @@ def _get_interpolated_frames(
     2. Calculate interpolated frames using each of these methods for example, linear
 
     :param AllocationInFrame from_allocation_frame, to_allocation_frame: start frame and end frame
+    :param str from_day, to_day: the start day and end day of interpolation
     :param Config config:
     :return AllocationTimelapse:
     """
