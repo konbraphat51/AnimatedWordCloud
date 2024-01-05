@@ -220,7 +220,7 @@ def _get_interpolated_frames(
                 (frame_x_pos, frame_y_pos),
             )
 
-    # Generate interpolated_frames
+    # Generate interpolated_frames as AllocationInFrame
     output = []
     for index, to_be_added_frame in enumerate(to_be_added_frames):
         to_be_added_allocation_frame = AllocationInFrame(
