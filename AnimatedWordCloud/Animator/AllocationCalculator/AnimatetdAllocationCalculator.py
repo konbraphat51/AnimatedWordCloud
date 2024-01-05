@@ -26,39 +26,41 @@ def animated_allocate(
     :rtype: AllocationTimelapse
     """
 
+    #final output
+    timelapse_output: AllocationTimelapse = AllocationTimelapse()
+
     # Branching by interpolation_method
     n_timestamps = len(
         allocation_timelapse.timelapse
     )  # get the number of timestamps
-    animated_allocated_timelapse_data: list[tuple(str, AllocationInFrame)] = []
+    
     # Interpolate between timestamps. the positions of words are changed by linear.
     for index in range(n_timestamps - 1):
+        #get static frame data
         from_allocation_frame = allocation_timelapse.get_frame(index)
         to_allocation_frame = allocation_timelapse.get_frame(index + 1)
         from_day = allocation_timelapse.timelapse[index][0]
         to_day = allocation_timelapse.timelapse[index + 1][0]
-        interpolated_frames: AllocationTimelapse = _get_interpolated_frames(
+        
+        #interpolate between two frames
+        interpolated_frames: list[AllocationInFrame] = _get_interpolated_frames(
             from_allocation_frame,
             to_allocation_frame,
-            from_day,
-            to_day,
             config,
         )
 
-        animated_allocated_timelapse_data = (
-            animated_allocated_timelapse_data
-            + [allocation_timelapse.timelapse[index]]
-            + interpolated_frames.timelapse
-        )
-        animated_allocated_timelapse_data = (
-            animated_allocated_timelapse_data
-            + [allocation_timelapse.timelapse[index + 1]]
-        )
-        animated_allocated_timelapse = AllocationTimelapse()
-        animated_allocated_timelapse.timelapse = (
-            animated_allocated_timelapse_data
-        )
-    return animated_allocated_timelapse
+        # add static frame first
+        timelapse_output.add(from_day, from_allocation_frame)
+        
+        # add interpolated frames
+        time_name = from_day + config.transition_symbol + to_day
+        for interpolated_frame in interpolated_frames:
+            timelapse_output.add(time_name, interpolated_frame)
+            
+    # add last static frame
+    timelapse_output.add(to_day, to_allocation_frame)
+                    
+    return timelapse_output
 
 
 def _get_setdiff(
@@ -176,19 +178,17 @@ def _calc_added_frame(
 def _get_interpolated_frames(
     from_allocation_frame: AllocationInFrame,
     to_allocation_frame: AllocationInFrame,
-    from_day: str,
-    to_day: str,
     config: Config,
-) -> AllocationTimelapse:
+) -> list[AllocationInFrame]:
     """
     get_interpolated_frames Algorithm:
     1. Align word counts in from_allocation_frame and to_allocation_frame
     2. Calculate interpolated frames using each of these methods for example, linear
 
     :param AllocationInFrame from_allocation_frame, to_allocation_frame: start frame and end frame
-    :param str from_day, to_day: the start day and end day of interpolation
     :param Config config:
-    :return AllocationTimelapse:
+    :return: interpolated frames
+    :rtype: list[AllocationInFrame]
     """
     # Linear only for now
     n_frames_for_interpolation = config.n_frames_for_interpolation
@@ -217,13 +217,14 @@ def _get_interpolated_frames(
                 frame_font_size,
                 (frame_x_pos, frame_y_pos),
             )
+            
     # Generate interpolated_frames
-    interpolated_frames: AllocationTimelapse = AllocationTimelapse()
+    output = []
     for index, to_be_added_frame in enumerate(to_be_added_frames):
         to_be_added_allocation_frame = AllocationInFrame(
             from_static_allocation=False
         )
         to_be_added_allocation_frame.words = to_be_added_frame
-        transition_day = from_day + config.transition_symbol + to_day
-        interpolated_frames.add(transition_day, to_be_added_allocation_frame)
-    return interpolated_frames
+        output.append(to_be_added_allocation_frame)
+        
+    return output
