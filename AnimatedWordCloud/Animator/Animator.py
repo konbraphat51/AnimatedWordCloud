@@ -42,7 +42,9 @@ def animate(
         config = Config()
 
     # convert data to TimelapseWordVector
-    timelapse_word_vector = TimelapseWordVector.convert_from_dicts_list(word_vector_timelapse)
+    timelapse_word_vector = TimelapseWordVector.convert_from_dicts_list(
+        word_vector_timelapse
+    )
 
     # Calculate allocation
     allocation_timelapse = allocate(timelapse_word_vector, config)
