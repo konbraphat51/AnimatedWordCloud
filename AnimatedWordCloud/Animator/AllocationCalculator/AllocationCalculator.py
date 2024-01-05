@@ -9,15 +9,20 @@ Calculate positions and size of words during each frame
 
 from typing import List
 from AnimatedWordCloud.Utils import AllocationTimelapse, TimelapseWordVector
-from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator import allocate_all as allocate_static
-from AnimatedWordCloud.Animator.AllocationCalculator.AnimatetdAllocationCalculator import animated_allocate
+from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator import (
+    allocate_all as allocate_static,
+)
+from AnimatedWordCloud.Animator.AllocationCalculator.AnimatetdAllocationCalculator import (
+    animated_allocate,
+)
+
 
 def calculate(
     word_vector_timelapse: TimelapseWordVector,
 ) -> AllocationTimelapse:
     """
     Calculate positions and size of words during each frame
-    
+
     This will call
     - StaticAllocationCalculator: Calculate positions and size of words in each frame
     - AnimatedAllocationCalculator: Calculate the motion of each word in between the static frames
