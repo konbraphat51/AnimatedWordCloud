@@ -25,7 +25,8 @@ def test_imagecreator():
     allocation_in_frame = AllocationInFrame()
     allocation_in_frame.words = {"word": (30, (50, 50))}  # dictionary
     position_in_frames.add("2023_04_01", allocation_in_frame)
-    create_images(position_in_frames, Config())
-    test_path = os.path.join(DEFAULT_OUTPUT_PATH, "2023_04_01.png")
+    config = Config(intermediate_frames_id="test")
+    create_images(position_in_frames, config)
+    test_path = os.path.join(DEFAULT_OUTPUT_PATH, "test_0.png")
     assert os.path.isfile(test_path)
-    os.remove(os.path.join(DEFAULT_OUTPUT_PATH, "2023_04_01.png"))
+    os.remove(os.path.join(DEFAULT_OUTPUT_PATH, "test_0.png"))
