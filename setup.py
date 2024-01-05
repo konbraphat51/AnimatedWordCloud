@@ -18,7 +18,7 @@ def requirements_from_file(file_name):
 
 setup(
     name="AnimatedWordCloud",
-    version="0.1.0",
+    version="0.9.0",
     description="Animate a word cloud",
     long_description=readme,
     long_description_content_type="text/markdown",
