@@ -44,6 +44,10 @@ class Config:
     :param int n_frames: Number of frames in the animation.
     :param bool drawing_time_stamp: Whether to draw time stamp on the image.
     :param str time_stamp_color: Color of the time stamp.
+    :param int time_stamp_font_size: Font size of the time stamp.
+        If None(default), it will be set to 75% of max_font_size
+    :param tuple[int, int] time_stamp_position: Position of the time stamp.
+        If None(default), it will be set to (image_width*0.75, image_height*0.75) which is right bottom.
     """
 
     def __init__(
