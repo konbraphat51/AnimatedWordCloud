@@ -73,6 +73,8 @@ config = Config(
     what_you_want_to_edit = editing_value
 )
 
+timelapse = # adding time lapse data
+
 #give the config to second parameter
 animate(timelapse, config)
 ```
