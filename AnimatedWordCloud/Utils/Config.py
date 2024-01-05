@@ -96,7 +96,11 @@ class Config:
         self.time_stamp_color = time_stamp_color
         
         if time_stamp_font_size is None:
-            time_stamp_font_size = max_font_size *0.75
+            self.time_stamp_font_size = max_font_size *0.75
+        else:
+            self.time_stamp_font_size = time_stamp_font_size
             
         if time_stamp_position is None:
-            time_stamp_position = (image_width *0.75, image_height *0.75)   #right bottom
+            self.time_stamp_position = (image_width *0.75, image_height *0.75)   #right bottom
+        else:
+            self.time_stamp_position = time_stamp_position
