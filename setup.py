@@ -7,11 +7,10 @@
 Setup script
 """
 from setuptools import find_packages, setup
+from pathlib import Path
 
-readme = """
-(readme here)
-"""
-
+# get README.md
+readme = (Path(__file__).parent / "README.md").read_text(encoding="utf-8")
 
 def requirements_from_file(file_name):
     return open(file_name).read().splitlines()
