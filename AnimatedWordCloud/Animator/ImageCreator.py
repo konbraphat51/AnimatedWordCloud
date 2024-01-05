@@ -101,24 +101,23 @@ def create_images(
     position_in_frames: AllocationTimelapse,
     config: Config,
     color_func=None,
-) -> tuple[list[str], dict[int, str]]:
+) -> list[str]:
     """
     Create images of each frame
 
     :param AllocationTimelapse position_in_frames: List of position/size data of each video frame.
     :param Config config: Config instance
     :param object color_func:  Custom function for color mapping, default is None.
-    :return: (paths of the images, dictionary of frame_number -> time_name)
-    :rtype: tuple[list[str], dict[int, str]]
+    :return: The path of the images. The order of the list is the same as the order of the input.
+    :rtype: list[str]
     """
 
     ensure_directory_exists(config.output_path)
 
     image_paths = []
-    frame_number_to_time_name = {}
 
     frame_number = 0
-    for time_name, allocation_in_frame in position_in_frames.timelapse:
+    for _, allocation_in_frame in position_in_frames.timelapse:
         save_path = create_image(
             allocation_in_frame=allocation_in_frame,
             config=config,
@@ -127,8 +126,7 @@ def create_images(
         )
 
         image_paths.append(save_path)
-        frame_number_to_time_name[frame_number] = time_name
         
         frame_number += 1
 
-    return image_paths, frame_number_to_time_name
+    return image_paths
