@@ -83,5 +83,5 @@ class Config:
         self.verbosity = verbosity
         self.transition_symbol = transition_symbol
         self.duration_per_frame = duration_per_frame
-        self.n_frames = n_frames_for_interpolation
+        self.n_frames_for_interpolation = n_frames_for_interpolation
         self.interpolation_method = interpolation_method
