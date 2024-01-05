@@ -15,10 +15,14 @@ class AllocationInFrame:
     Positions and size of each words in a frame
     """
 
-    def __init__(self) -> None:
+    def __init__(self, flag_static: bool) -> None:
         """
         Prepare empty data
+        
+        :param bool flag_static: Whether the frame is static or not
         """
+
+        self.flag_static = flag_static
 
         # word -> (font size, left-top position)
         self.words: dict[str, tuple[float, tuple[float, float]]] = {}
