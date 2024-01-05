@@ -7,6 +7,7 @@
 Config class for passing parameters through the modules
 """
 
+from __future__ import annotations
 from typing import Literal
 from AnimatedWordCloud.Utils.Consts import (
     DEFAULT_ENG_FONT_PATH,
@@ -65,6 +66,8 @@ class Config:
         interpolation_method: Literal["linear"] = "linear",
         drawing_time_stamp: bool = True,
         time_stamp_color: str = "black",
+        time_stamp_font_size: int = None,
+        time_stamp_position: tuple[int, int] = None,
     ) -> None:
         # explanation written above
 
@@ -91,3 +94,9 @@ class Config:
         self.interpolation_method = interpolation_method
         self.drawing_time_stamp = drawing_time_stamp
         self.time_stamp_color = time_stamp_color
+        
+        if time_stamp_font_size is None:
+            time_stamp_font_size = max_font_size *0.75
+            
+        if time_stamp_position is None:
+            time_stamp_position = (image_width *0.75, image_height *0.75)   #right bottom
