@@ -94,7 +94,7 @@ def create_image(
         )
     # save the image
     save_path = os.path.join(config.output_path, f"{time_name}.png")
-    image.save(save_path)  # TODO: changing the file path
+    image.save(save_path)
 
     return save_path
 
