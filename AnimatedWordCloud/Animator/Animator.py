@@ -21,7 +21,7 @@ from AnimatedWordCloud.Animator.AnimationIntegrator import integrate_images
 
 def animate(
     word_vector_timelapse: Iterable[tuple[str, dict[str, float]]],
-    config: Config,
+    config: Config = None,
 ) -> str:
     """
     Create an animation of word cloud,
@@ -34,9 +34,14 @@ def animate(
     Timelapse data of word vectors.
     The data structure is a list of tuples,
         which includes "name of the time(str)" and "word vector(Dict[str, float])"
+    :param Config config: Configuration of the animation. If None, default config will be used.
     :return: The path of the animation file.
     :rtype: str
     """
+    
+    #use default config if not specified
+    if config is None:
+        config = Config()
     
     #convert data to TimelapseWordVector
     timelapse_word_vector = TimelapseWordVector()
