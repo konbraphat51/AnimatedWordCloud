@@ -22,7 +22,7 @@ from AnimatedWordCloud.Utils import (
 def test_imagecreator():
     # test create_images function
     position_in_frames = AllocationTimelapse()
-    allocation_in_frame = AllocationInFrame()
+    allocation_in_frame = AllocationInFrame(from_static_allocation=True)
     allocation_in_frame.words = {"word": (30, (50, 50))}  # dictionary
     position_in_frames.add("2023_04_01", allocation_in_frame)
     create_images(position_in_frames, Config())

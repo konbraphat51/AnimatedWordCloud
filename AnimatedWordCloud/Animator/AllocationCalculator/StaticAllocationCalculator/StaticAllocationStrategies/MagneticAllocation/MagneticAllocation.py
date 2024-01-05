@@ -72,7 +72,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         # missing word for previous frame
         self.add_missing_word_to_previous_frame(allocation_before, words)
 
-        output = AllocationInFrame()
+        output = AllocationInFrame(from_static_allocation=True)
         magnet_outer_frontier = MagnetOuterFrontier()
 
         # Word rectangles that are currenly putted at the outermost of the magnet

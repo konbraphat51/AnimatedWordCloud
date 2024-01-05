@@ -15,8 +15,8 @@ from AnimatedWordCloud.Animator.AllocationCalculator.AnimatetdAllocationCalculat
 
 
 def get_setdiff_test():
-    allocationframe1 = AllocationInFrame()
-    allocationframe2 = AllocationInFrame()
+    allocationframe1 = AllocationInFrame(from_static_allocation=True)
+    allocationframe2 = AllocationInFrame(from_static_allocation=True)
     allocationframe1.add("apple", 10, (10, 10))
     allocationframe1.add("banana", 10, (10, 10))
     allocationframe1.add("grape", 10, (10, 10))
@@ -31,8 +31,8 @@ def get_setdiff_test():
 
 
 def add_key_in_allocation_frame_test():
-    allocationframe1 = AllocationInFrame()
-    allocationframe2 = AllocationInFrame()
+    allocationframe1 = AllocationInFrame(from_static_allocation=True)
+    allocationframe2 = AllocationInFrame(from_static_allocation=True)
     allocationframe1.add("apple", 10, (10, 10))
     allocationframe1.add("banana", 10, (10, 10))
     allocationframe1.add("grape", 10, (10, 10))
@@ -63,8 +63,8 @@ def add_key_in_allocation_frame_test():
 
 
 def calc_added_value_test():
-    allocationframe1 = AllocationInFrame()
-    allocationframe2 = AllocationInFrame()
+    allocationframe1 = AllocationInFrame(from_static_allocation=True)
+    allocationframe2 = AllocationInFrame(from_static_allocation=True)
     allocationframe1.add("apple", 10, (10, 10))
     allocationframe1.add("banana", 10, (10, 10))
     allocationframe1.add("grape", 10, (10, 10))
@@ -111,8 +111,8 @@ def get_interpolated_frames_test():
     config.n_frames = 1
     from_day = "2024-1-1"
     to_day = "2024-1-2"
-    allocationframe1 = AllocationInFrame()
-    allocationframe2 = AllocationInFrame()
+    allocationframe1 = AllocationInFrame(from_static_allocation=True)
+    allocationframe2 = AllocationInFrame(from_static_allocation=True)
     allocationframe1.add("apple", 10, (10, 10))
     allocationframe1.add("banana", 10, (10, 10))
     allocationframe1.add("grape", 10, (10, 10))
@@ -152,8 +152,8 @@ def animated_allocate_test():
     static_timelapse = AllocationTimelapse()
     from_day = "2024-1-1"
     to_day = "2024-1-2"
-    allocationframe1 = AllocationInFrame()
-    allocationframe2 = AllocationInFrame()
+    allocationframe1 = AllocationInFrame(from_static_allocation=True)
+    allocationframe2 = AllocationInFrame(from_static_allocation=True)
     allocationframe1.add("apple", 10, (10, 10))
     allocationframe1.add("banana", 10, (10, 10))
     allocationframe1.add("grape", 10, (10, 10))

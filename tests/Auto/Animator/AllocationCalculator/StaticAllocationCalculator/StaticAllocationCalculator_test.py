@@ -46,7 +46,7 @@ def test_estimate_text_size():
 
 
 def test_allocate():
-    allocation_before = AllocationInFrame()
+    allocation_before = AllocationInFrame(from_static_allocation=True)
     allocation_before.add("test_x", 10, (0, 0))
     allocation_before.add("test_y", 20, (600, 600))
 
