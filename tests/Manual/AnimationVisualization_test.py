@@ -5,7 +5,7 @@ Observes how animation words
 from AnimatedWordCloud import Config, animate
 from tests.TestDataGetter import timelapses_test
 
-#testing data
+# testing data
 timelapse = timelapses_test[0]
 
 config = Config(
