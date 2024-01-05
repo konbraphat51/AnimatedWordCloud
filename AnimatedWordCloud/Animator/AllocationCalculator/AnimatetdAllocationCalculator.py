@@ -119,9 +119,9 @@ def _calc_frame_value(
     Add non-Linear interpolation processes in the future.
     """
     if config.interpolation_method == "linear":
-        value = from_value + index / (config.n_frames_for_interpolation + 1) * (
-            to_value - from_value
-        )
+        value = from_value + index / (
+            config.n_frames_for_interpolation + 1
+        ) * (to_value - from_value)
     else:
         raise NotImplementedError()
     return value
