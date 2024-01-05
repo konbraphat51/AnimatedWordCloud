@@ -95,3 +95,7 @@ All has default value, so just edit what you need
 | duration_per_frame         | int          | milliseconds per frame                                                                                                                         |
 | n_frames_for_interpolation | int          | how many frames will be generated for interpolation between each frames                                                                        |
 | interpolation method       | str(literal) | The method of making movement<br>There is "linear" now                                                                                         |
+
+## Want to contribute?
+
+Look at [CONTRIBUTING.md](CONTRIBUTING.md) first.
