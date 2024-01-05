@@ -34,7 +34,7 @@ def allocate_randomly(
     :rtype: AllocationInFrame
     """
 
-    output = AllocationInFrame()
+    output = AllocationInFrame(from_static_allocation=True)
 
     for word in words:
         # put
