@@ -80,7 +80,7 @@ def create_image(
         config.background_color,
     )
     draw = ImageDraw.Draw(image)
-    
+
     # Draw all words
     allocation_in_frame_word_dict = allocation_in_frame.words
     for word, position in allocation_in_frame_word_dict.items():
@@ -93,7 +93,7 @@ def create_image(
             fill=color_func(word=word, font_size=font_size, position=(x, y)),
             font=font,
         )
-        
+
     # draw time stamp
     if config.drawing_time_stamp:
         font_size = config.time_stamp_font_size
@@ -104,7 +104,7 @@ def create_image(
             fill=config.time_stamp_color,
             font=font,
         )
-        
+
     # save the image
     save_path = os.path.join(config.output_path, f"{time_name}.png")
     image.save(save_path)
