@@ -1,5 +1,5 @@
-from AnimatedWordCloud.Animator.AllocationCalculator.AllocationCalculator import allocate
+from AnimatedWordCloud.Animator.AllocationCalculator.AllocationCalculator import (
+    allocate,
+)
 
-__all__ = [
-    "allocate"
-]
+__all__ = ["allocate"]
