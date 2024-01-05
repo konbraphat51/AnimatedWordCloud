@@ -99,15 +99,41 @@ class Config:
         self.drawing_time_stamp = drawing_time_stamp
         self.time_stamp_color = time_stamp_color
 
-        if time_stamp_font_size is None:
-            self.time_stamp_font_size = max_font_size * 0.75
-        else:
-            self.time_stamp_font_size = time_stamp_font_size
+        self.time_stamp_font_size = self._compute_time_stamp_font_size(
+            time_stamp_font_size
+        )
 
+        self.time_stamp_position = self._compute_time_stamp_position(
+            time_stamp_position
+        )
+
+    def _compute_time_stamp_font_size(
+        self, time_stamp_font_size: int | None
+    ) -> int:
+        """
+        Compute time_stamp_font_size from constructor argument.
+
+        :param int time_stamp_font_size: Font size of the time stamp by the argument.
+        :return: Font size of the time stamp.
+        """
+        if time_stamp_font_size is None:
+            return int(self.max_font_size * 0.75)
+        else:
+            return time_stamp_font_size
+
+    def _compute_time_stamp_position(
+        self, time_stamp_position: tuple[int, int] | None
+    ) -> tuple[int, int]:
+        """
+        Compute time_stamp_position from constructor argument.
+
+        :param tuple[int, int] time_stamp_position: Position of the time stamp by the argument.
+        :return: Position of the time stamp.
+        """
         if time_stamp_position is None:
-            self.time_stamp_position = (
-                image_width * 0.75,
-                image_height * 0.75,
+            return (
+                self.image_width * 0.75,
+                self.image_height * 0.75,
             )  # right bottom
         else:
-            self.time_stamp_position = time_stamp_position
+            return time_stamp_position
