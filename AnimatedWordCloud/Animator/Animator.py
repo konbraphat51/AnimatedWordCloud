@@ -11,13 +11,11 @@ Get the input and returns the output,
 
 from __future__ import annotations
 from typing import Iterable
-from AnimatedWordCloud.Utils import (
-    Config,
-    TimelapseWordVector
-)
+from AnimatedWordCloud.Utils import Config, TimelapseWordVector
 from AnimatedWordCloud.Animator.AllocationCalculator import allocate
 from AnimatedWordCloud.Animator.ImageCreator import create_images
 from AnimatedWordCloud.Animator.AnimationIntegrator import integrate_images
+
 
 def animate(
     word_vector_timelapse: Iterable[tuple[str, dict[str, float]]],
@@ -38,21 +36,21 @@ def animate(
     :return: The path of the animation file.
     :rtype: str
     """
-    
-    #use default config if not specified
+
+    # use default config if not specified
     if config is None:
         config = Config()
-    
-    #convert data to TimelapseWordVector
+
+    # convert data to TimelapseWordVector
     timelapse_word_vector = TimelapseWordVector()
     timelapse_word_vector.convert_from_dicts_list(word_vector_timelapse)
-    
+
     # Calculate allocation
     allocation_timelapse = allocate(timelapse_word_vector, config)
-    
+
     # to images
     image_paths = create_images(allocation_timelapse, config)
-    
+
     # to one animation file
     animation_path = integrate_images(image_paths, config)
 
