@@ -41,6 +41,8 @@ class Config:
         It will be shown as "(former) [transition_symbol] (latter)".
     :param int duration_per_frame: Duration of each frame in milliseconds.
     :param int n_frames: Number of frames in the animation.
+    :param bool drawing_time_stamp: Whether to draw time stamp on the image.
+    :param str time_stamp_color: Color of the time stamp.
     """
 
     def __init__(
@@ -61,6 +63,8 @@ class Config:
         duration_per_frame: int = 50,
         n_frames_for_interpolation: int = 20,
         interpolation_method: Literal["linear"] = "linear",
+        drawing_time_stamp: bool = True,
+        time_stamp_color: str = "black",
     ) -> None:
         # explanation written above
 
@@ -85,3 +89,5 @@ class Config:
         self.duration_per_frame = duration_per_frame
         self.n_frames_for_interpolation = n_frames_for_interpolation
         self.interpolation_method = interpolation_method
+        self.drawing_time_stamp = drawing_time_stamp
+        self.time_stamp_color = time_stamp_color
