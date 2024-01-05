@@ -115,4 +115,4 @@ Look at [CONTRIBUTING.md](CONTRIBUTING.md) first.
 ## Want to support?
 
 **⭐Give this project a star⭐**  
-This is out first OSS project, ⭐**star**⭐ would make us very happy⭐⭐⭐
+This is our first OSS project, ⭐**star**⭐ would make us very happy⭐⭐⭐
