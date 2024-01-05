@@ -54,7 +54,6 @@ class colormap_color_func(object):
 
 def create_image(
     allocation_in_frame: AllocationInFrame,
-    time_name: str,
     config: Config,
     frame_number: int,
     color_func=None,
@@ -63,7 +62,6 @@ def create_image(
     Create image of a frame
 
     :param AllocationInFrame allocation_in_frame: Position/size data of a video frame.
-    :param str time_name: Name of the frame
     :param Config config: Config instance
     :param int frame_number: Number of the frame. Used for filename
     :param object color_func:  Custom function for color mapping, default is None.
@@ -119,10 +117,9 @@ def create_images(
     image_paths = []
 
     frame_number = 0
-    for time_name, allocation_in_frame in position_in_frames.timelapse:
+    for _, allocation_in_frame in position_in_frames.timelapse:
         save_path = create_image(
             allocation_in_frame=allocation_in_frame,
-            time_name=time_name,
             config=config,
             frame_number=frame_number,
             color_func=color_func,
