@@ -38,7 +38,7 @@ class colormap_color_func(object):
     ):
         """
         To maintain each word's color
-        making a word -> color injective function
+        making a word -> color surjective function
         """
         # calculate MD5 hash
         md5_hash = hashlib.md5(word.encode()).hexdigest()
