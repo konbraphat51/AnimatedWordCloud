@@ -1,4 +1,5 @@
-# AnimatedWordCloud
+# AnimatedWordCloud ver 1.0.0
+
 **UNDER CONSTRUCTION**
 
 <a href="https://codeclimate.com/github/konbraphat51/AnimatedWordCloud/maintainability"><img src="https://api.codeclimate.com/v1/badges/7a03252f77e7af46dc0f/maintainability" /></a>
