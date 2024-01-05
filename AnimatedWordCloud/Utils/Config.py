@@ -40,7 +40,9 @@ class Config:
     :param str transition_symbol: Symbol to be used for showing transition.
         It will be shown as "(former) [transition_symbol] (latter)".
     :param int duration_per_frame: Duration of each frame in milliseconds.
-    :param int n_frames: Number of frames in the animation.
+    :param int n_frames_for_interpolation: Number of frames in the animation.
+    :param str interpolation_method: Method to interpolate the frames.
+        There are "linear" only for now.
     """
 
     def __init__(
