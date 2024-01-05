@@ -12,6 +12,7 @@ from pathlib import Path
 # get README.md
 readme = (Path(__file__).parent / "README.md").read_text(encoding="utf-8")
 
+
 def requirements_from_file(file_name):
     return open(file_name).read().splitlines()
 
