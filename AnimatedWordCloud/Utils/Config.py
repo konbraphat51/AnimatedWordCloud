@@ -53,7 +53,7 @@ class Config:
         image_width=800,
         image_height=600,
         background_color: str = "white",
-        color_map: str = "dark2",
+        color_map: str = "Dark2",
         allocation_strategy: Literal["magnetic"] = "magnetic",
         image_division: int = 300,
         verbosity: Literal["silent", "minor", "debug"] = "silent",
