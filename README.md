@@ -54,3 +54,16 @@ timelapse_wordvector = [
 # the animation gif path is in this variable!
 path = animate(timelapse_wordvector)
 ```
+
+#### Editing configuration
+
+```python
+from AnimatedWordCloud import animate, Config
+
+config = Config(
+    what_you_want_to_edit = editing_value
+)
+
+#give the config to second parameter
+animate(timelapse, config)
+```
