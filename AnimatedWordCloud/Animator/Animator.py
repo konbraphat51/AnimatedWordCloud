@@ -48,7 +48,7 @@ def animate(
     timelapse_word_vector.convert_from_dicts_list(word_vector_timelapse)
     
     # Calculate allocation
-    allocation_timelapse = allocate(timelapse_word_vector)
+    allocation_timelapse = allocate(timelapse_word_vector, config)
     
     # to images
     image_paths = create_images(allocation_timelapse, config)
