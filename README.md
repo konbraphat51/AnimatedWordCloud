@@ -15,6 +15,10 @@ Using Elon Musk's tweets.
 
 ## How to use?
 
+### Requirements
+
+Python (>= 3.8 version)
+
 ### install
 
 (scheduled)
