@@ -17,7 +17,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.AnimatetdAllocationCalculat
 )
 
 
-def calculate(
+def allocate(
     word_vector_timelapse: TimelapseWordVector,
 ) -> AllocationTimelapse:
     """
