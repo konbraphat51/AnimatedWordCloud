@@ -119,13 +119,14 @@ def _calc_frame_value(
     Add non-Linear interpolation processes in the future.
     """
     if config.interpolation_method == "linear":
-        value = from_value + index / (
-            config.n_frames_for_interpolation + 1
-        ) * (to_value - from_value)
+        value = _calc_linear(from_value, to_value, index, config)
     else:
         raise NotImplementedError()
     return value
 
+def _calc_linear(from_value: float, to_value: float, index: int, config: Config):
+    value = from_value + index / (config.n_frames_for_interpolation + 1) * (to_value - from_value)
+    return value
 
 def _calc_added_frame(
     from_allocation_frame: AllocationInFrame,
