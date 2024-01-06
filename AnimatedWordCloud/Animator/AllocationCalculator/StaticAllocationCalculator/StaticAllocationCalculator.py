@@ -156,9 +156,7 @@ def allocate_all(
 
     # first frame
     first_frame = _allocate_first_frame(timelapse[0].word_vector, config)
-    allocation_timelapse.add(
-        config.starting_time_stamp, first_frame
-    )
+    allocation_timelapse.add(config.starting_time_stamp, first_frame)
 
     # verbose for iteration
     if config.verbosity in ["debug", "minor"]:
