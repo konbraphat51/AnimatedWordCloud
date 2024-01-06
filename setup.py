@@ -29,11 +29,6 @@ setup(
     packages=find_packages(exclude=["tests", "Docs"]),
     test_suite="tests",
     python_requires=">=3.8",
-    package_data={
-        "AnimatedWordCloud/Assets": [
-            "Fonts/NotoSansMono-VariableFont_wdth,wght.ttf"
-        ]
-    },
     include_package_data=True,
     install_requires=requirements_from_file("requirements.txt"),
     license="MIT License",
@@ -65,8 +60,4 @@ setup(
     project_urls={
         "GitHub Repository": "https://github.com/konbraphat51/AnimatedWordCloud"
     },
-    package_data={
-        "fonts": ["AnimatedWordCloud/Assets/Fonts/*.ttf"]
-    },
-    include_package_data=True,
 )
