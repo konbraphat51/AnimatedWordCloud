@@ -56,6 +56,7 @@ def create_image(
     allocation_in_frame: AllocationInFrame,
     config: Config,
     frame_number: int,
+    time_name: str,
     color_func=None,
 ) -> str:
     """
@@ -64,6 +65,7 @@ def create_image(
     :param AllocationInFrame allocation_in_frame: Position/size data of a video frame.
     :param Config config: Config instance
     :param int frame_number: Number of the frame. Used for filename
+    :param str time_name: Name of the time. Used for time stamp
     :param object color_func:  Custom function for color mapping, default is None.
     :return: The path of the image.
     :rtype: str
@@ -77,8 +79,9 @@ def create_image(
         config.background_color,
     )
     draw = ImageDraw.Draw(image)
-    allocation_in_frame_word_dict = allocation_in_frame.words
 
+    # Draw all words
+    allocation_in_frame_word_dict = allocation_in_frame.words
     for word, position in allocation_in_frame_word_dict.items():
         font_size = position[0]
         (x, y) = position[1]
@@ -89,10 +92,22 @@ def create_image(
             fill=color_func(word=word, font_size=font_size, position=(x, y)),
             font=font,
         )
+
+    # draw time stamp
+    if config.drawing_time_stamp:
+        font_size = config.time_stamp_font_size
+        font = ImageFont.truetype(config.font_path, font_size)
+        draw.text(
+            config.time_stamp_position,
+            time_name,
+            fill=config.time_stamp_color,
+            font=font,
+        )
+
     # save the image
     filename = f"{config.intermediate_frames_id}_{frame_number}.png"
     save_path = os.path.join(config.output_path, filename)
-    image.save(save_path)  # TODO: changing the file path
+    image.save(save_path)
 
     return save_path
 
@@ -117,12 +132,13 @@ def create_images(
     image_paths = []
 
     frame_number = 0
-    for _, allocation_in_frame in position_in_frames.timelapse:
+    for time_name, allocation_in_frame in position_in_frames.timelapse:
         save_path = create_image(
             allocation_in_frame=allocation_in_frame,
             config=config,
             frame_number=frame_number,
             color_func=color_func,
+            time_name=time_name,
         )
 
         image_paths.append(save_path)
