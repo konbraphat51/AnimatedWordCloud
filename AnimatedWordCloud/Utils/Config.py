@@ -67,7 +67,7 @@ class Config:
         allocation_strategy: Literal["magnetic"] = "magnetic",
         image_division: int = 300,
         verbosity: Literal["silent", "minor", "debug"] = "silent",
-        transition_symbol: str = "_to_",
+        transition_symbol: str = " to ",
         duration_per_frame: int = 50,
         n_frames_for_interpolation: int = 20,
         interpolation_method: Literal["linear"] = "linear",
