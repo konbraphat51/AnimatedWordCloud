@@ -110,7 +110,7 @@ class Config:
         self.time_stamp_position = self._compute_time_stamp_position(
             time_stamp_position
         )
-        
+
         self.intermediate_frames_id = self._compute_intermediate_frames_id(
             intermediate_frames_id
         )
@@ -143,7 +143,7 @@ class Config:
             )  # right bottom
         else:
             return time_stamp_position
-        
+
     def _compute_intermediate_frames_id(
         self, intermediate_frames_id: str | None
     ) -> str:
