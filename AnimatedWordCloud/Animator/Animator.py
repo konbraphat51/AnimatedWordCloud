@@ -19,6 +19,7 @@ from AnimatedWordCloud.Animator.AnimationIntegrator import integrate_images
 
 def animate(
     word_vector_timelapse: Iterable[tuple[str, dict[str, float]]],
+    output_filename: str = "output.gif",
     config: Config = None,
 ) -> str:
     """
@@ -33,6 +34,7 @@ def animate(
     The data structure is a list of tuples,
         which includes "name of the time(str)" and "word vector(Dict[str, float])"
     :param Config config: Configuration of the animation. If None, default config will be used.
+    :param str output_filename: Filename of the animation file.
     :return: The path of the animation file.
     :rtype: str
     """
@@ -53,6 +55,6 @@ def animate(
     image_paths = create_images(allocation_timelapse, config)
 
     # to one animation file
-    animation_path = integrate_images(image_paths, allocation_timelapse, config)
+    animation_path = integrate_images(image_paths, allocation_timelapse, config, filename=output_filename)
 
     return animation_path
