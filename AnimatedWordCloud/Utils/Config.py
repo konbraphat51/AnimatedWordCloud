@@ -42,7 +42,8 @@ class Config:
     :param str transition_symbol: Symbol to be used for showing transition.
         It will be shown as "(former) [transition_symbol] (latter)".
     :param str starting_time_stamp: Time stamp of the starting time. (Before the first time stamp in the input data)
-    :param int duration_per_frame: Duration of each frame in milliseconds.
+    :param int duration_per_interpolation_frame: Duration of each interpolation frame in milliseconds.
+    :param int duration_per_static_frame: Duration of each static frame in milliseconds.
     :param int n_frames_for_interpolation: Number of frames in the animation.
     :param str interpolation_method: Method to interpolate the frames.
         There are "linear" only for now.
@@ -72,7 +73,8 @@ class Config:
         verbosity: Literal["silent", "minor", "debug"] = "silent",
         transition_symbol: str = " to ",
         starting_time_stamp: str = " ",
-        duration_per_frame: int = 50,
+        duration_per_interpolation_frame: int = 50,
+        duration_per_static_frame: int = 700,
         n_frames_for_interpolation: int = 20,
         interpolation_method: Literal["linear"] = "linear",
         drawing_time_stamp: bool = True,
@@ -102,7 +104,10 @@ class Config:
         self.verbosity = verbosity
         self.transition_symbol = transition_symbol
         self.starting_time_stamp = starting_time_stamp
-        self.duration_per_frame = duration_per_frame
+        self.duration_per_interpolation_frame = (
+            duration_per_interpolation_frame
+        )
+        self.duration_per_static_frame = duration_per_static_frame
         self.n_frames_for_interpolation = n_frames_for_interpolation
         self.interpolation_method = interpolation_method
         self.drawing_time_stamp = drawing_time_stamp
