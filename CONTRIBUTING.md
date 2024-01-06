@@ -44,7 +44,6 @@ git submodule update
 - All `#TODO` must be reported at issues.
 - Comments cannot be too much. Write what you intended **in English**.
 - One module's responsibility (to-do) should be only one. If you are trying to add a method of another functionality, **make a new module**
-  - When adding module, follow [this module structure rule](https://github.com/konbraphat51/module_rule/blob/main/RULE.md)
 
 ### Commit message
 
@@ -63,3 +62,19 @@ Submit PR as **draft** for the first. The GitHub Actions will start analyzing yo
 If there is something pointed out from GitHub Actions, please fix it.
 
 **If all problems are solved, turn your draft PR to open PR, and report as a comment that you are ready to get reviewed**
+
+## Updating Pypi
+
+**Only for maintainers**
+
+1. Update version of `README.md` & `setup.py`
+2. Commit 1. as "UpVer: [version]" to `dev`
+3. Merge to `main`
+4. Upload
+
+```
+python setup.py sdist bdist_wheel
+twine upload --repository pypi dist/*
+  username: __token__
+  password: (your personal pypi API token)
+```
