@@ -56,6 +56,7 @@ def create_image(
     allocation_in_frame: AllocationInFrame,
     config: Config,
     frame_number: int,
+    time_name: str,
     color_func=None,
 ) -> str:
     """
@@ -64,6 +65,7 @@ def create_image(
     :param AllocationInFrame allocation_in_frame: Position/size data of a video frame.
     :param Config config: Config instance
     :param int frame_number: Number of the frame. Used for filename
+    :param str time_name: Name of the time. Used for time stamp
     :param object color_func:  Custom function for color mapping, default is None.
     :return: The path of the image.
     :rtype: str
@@ -130,12 +132,13 @@ def create_images(
     image_paths = []
 
     frame_number = 0
-    for _, allocation_in_frame in position_in_frames.timelapse:
+    for time_name, allocation_in_frame in position_in_frames.timelapse:
         save_path = create_image(
             allocation_in_frame=allocation_in_frame,
             config=config,
             frame_number=frame_number,
             color_func=color_func,
+            time_name=time_name,
         )
 
         image_paths.append(save_path)
