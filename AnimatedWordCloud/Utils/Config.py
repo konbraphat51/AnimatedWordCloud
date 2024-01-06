@@ -72,7 +72,7 @@ class Config:
         image_division: int = 300,
         verbosity: Literal["silent", "minor", "debug"] = "silent",
         transition_symbol: str = " to ",
-        starting_time_stamp: str = "*",
+        starting_time_stamp: str = " ",
         duration_per_interpolation_frame: int = 50,
         duration_per_static_frame: int = 700,
         n_frames_for_interpolation: int = 20,
