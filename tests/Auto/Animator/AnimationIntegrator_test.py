@@ -43,4 +43,4 @@ def test_imagecreator_and_integrateimages():
         config,
     )
     print(image_paths)
-    assert integrate_images(image_paths, allocation_in_frame, config) == None
+    assert integrate_images(image_paths, position_in_frames, config) == None
