@@ -49,6 +49,8 @@ class Config:
         If None(default), it will be set to 75% of max_font_size
     :param tuple[int, int] time_stamp_position: Position of the time stamp.
         If None(default), it will be set to (image_width*0.75, image_height*0.75) which is right bottom.
+    :param str intermediate_frames_id: Static images of each frame of itermediate product will be saved as "{intermediate_frames_id}_{frame_number}.png".
+        If None(default), this will be set randomly.
     """
 
     def __init__(
@@ -73,6 +75,7 @@ class Config:
         time_stamp_color: str = "black",
         time_stamp_font_size: int = None,
         time_stamp_position: tuple[int, int] = None,
+        intermediate_frames_id: str = None,
     ) -> None:
         # explanation written above
 
@@ -107,6 +110,10 @@ class Config:
         self.time_stamp_position = self._compute_time_stamp_position(
             time_stamp_position
         )
+        
+        self.intermediate_frames_id = self._compute_intermediate_frames_id(
+            intermediate_frames_id
+        )
 
     def _compute_time_stamp_font_size(
         self, time_stamp_font_size: int | None
@@ -136,3 +143,18 @@ class Config:
             )  # right bottom
         else:
             return time_stamp_position
+        
+    def _compute_intermediate_frames_id(
+        self, intermediate_frames_id: str | None
+    ) -> str:
+        """
+        returns intermediate_frames_id given from constructor
+        set random value if intermediate_frames_id is None
+        :param str|None intermediate_frames_id: intermediate_frames_id given
+        :return: intermediate_frames_id computed
+        :rtype: str
+        """
+
+        if intermediate_frames_id is None:
+            # set randomly
+            intermediate_frames_id = str(random.randint(0, 1000000000))
