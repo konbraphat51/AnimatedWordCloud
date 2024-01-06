@@ -60,7 +60,7 @@ def animate(
     )
 
     if config.verbosity == "minor" or config.verbosity == "debug":
-        _success_message()
+        _success_message(animation_path)
 
     return animation_path
 
