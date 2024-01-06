@@ -1,2 +1,2 @@
 include LICENSE
-recursice-include AnimatedWordCloud/Assets *
+recursive-include AnimatedWordCloud/Assets *
