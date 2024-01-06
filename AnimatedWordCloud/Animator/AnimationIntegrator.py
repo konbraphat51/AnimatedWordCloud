@@ -18,7 +18,7 @@ def integrate_images(
     allocation_timelapse: AllocationTimelapse,
     config: Config,
     filename: str = "output.gif",
-) -> None:
+) -> str:
     """
     Create images of each frame
 
@@ -26,7 +26,8 @@ def integrate_images(
     List[str] image_paths: List of image_paths created by AnimatedWordCloud.Animator.ImageCreator.create_images
     :param AllocationTimelapse allocation_timelapse: AllocationTimelapse instance
     :param Config config: Config instance
-    :return: None
+    :return: The path of the output animation file
+    :rtype: str
     """
 
     # input
@@ -52,4 +53,4 @@ def integrate_images(
         loop=0,
     )
 
-    return
+    return filepath_output
