@@ -59,7 +59,7 @@ def animate(
         image_paths, allocation_timelapse, config, filename=output_filename
     )
 
-    if config.verbosity == "minor":
+    if config.verbosity == "minor" or config.verbosity == "debug":
         _success_message()
 
     return animation_path
