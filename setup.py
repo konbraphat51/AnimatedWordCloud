@@ -26,7 +26,7 @@ setup(
     author="konbraphat51, superhotdogcat",
     author_email="konbraphat51@gmail.com",
     url="https://github.com/konbraphat51/AnimatedWordCloud/tree/main",
-    packages=find_packages(exclude=["tests", "tests.*"]),
+    packages=find_packages(exclude=["tests", "Docs"]),
     test_suite="tests",
     python_requires=">=3.8",
     package_data={
