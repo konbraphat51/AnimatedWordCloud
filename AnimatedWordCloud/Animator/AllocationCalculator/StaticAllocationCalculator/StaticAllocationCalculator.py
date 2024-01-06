@@ -157,7 +157,7 @@ def allocate_all(
     # first frame
     first_frame = _allocate_first_frame(timelapse[0].word_vector, config)
     allocation_timelapse.add(
-        config.transition_symbol + timelapse[0].time_name, first_frame
+        config.starting_time_stamp, first_frame
     )
 
     # verbose for iteration

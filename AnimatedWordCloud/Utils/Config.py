@@ -41,6 +41,7 @@ class Config:
         "silent" for no log, "minor" for only important logs, "debug" for all logs.
     :param str transition_symbol: Symbol to be used for showing transition.
         It will be shown as "(former) [transition_symbol] (latter)".
+    :param str starting_time_stamp: Time stamp of the starting time. (Before the first time stamp in the input data)
     :param int duration_per_frame: Duration of each frame in milliseconds.
     :param int n_frames: Number of frames in the animation.
         :param bool drawing_time_stamp: Whether to draw time stamp on the image.
@@ -68,6 +69,7 @@ class Config:
         image_division: int = 300,
         verbosity: Literal["silent", "minor", "debug"] = "silent",
         transition_symbol: str = " to ",
+        starting_time_stamp: str = "*",
         duration_per_frame: int = 50,
         n_frames_for_interpolation: int = 20,
         interpolation_method: Literal["linear"] = "linear",
@@ -97,6 +99,7 @@ class Config:
         self.image_division = image_division
         self.verbosity = verbosity
         self.transition_symbol = transition_symbol
+        self.starting_time_stamp = starting_time_stamp
         self.duration_per_frame = duration_per_frame
         self.n_frames_for_interpolation = n_frames_for_interpolation
         self.interpolation_method = interpolation_method
