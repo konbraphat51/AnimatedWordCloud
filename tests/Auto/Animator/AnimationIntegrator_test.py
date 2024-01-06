@@ -21,14 +21,21 @@ def test_integrateimages():
     image_path0 = os.path.join(DIR, "tests0.png")
     image_path1 = os.path.join(DIR, "tests1.png")
     image_paths: list[str] = [image_path0, image_path1]  # temporary path
-    assert integrate_images(image_paths, config) == None
+    dummy_timelapse = AllocationTimelapse()
+    dummy_timelapse.add(
+        "2023_04_01", AllocationInFrame(from_static_allocation=True)
+    )
+    dummy_timelapse.add(
+        "2023_04_02", AllocationInFrame(from_static_allocation=False)
+    )
+    assert integrate_images(image_paths, dummy_timelapse, config) != None
 
 
 def test_imagecreator_and_integrateimages():
     # test create_images function
     config = Config()
     position_in_frames = AllocationTimelapse()
-    allocation_in_frame = AllocationInFrame()
+    allocation_in_frame = AllocationInFrame(from_static_allocation=True)
     allocation_in_frame.words = {"word": (30, (50, 50))}  # dictionary
     position_in_frames.add("2023_04_01", allocation_in_frame)
     image_paths = create_images(
@@ -36,4 +43,4 @@ def test_imagecreator_and_integrateimages():
         config,
     )
     print(image_paths)
-    assert integrate_images(image_paths, config) == None
+    assert integrate_images(image_paths, position_in_frames, config) != None

@@ -19,12 +19,12 @@ def test_StaticAllocationStrategy():
     instance = StaticAllocationStrategy(1000, 1000)
 
     with raises(NotImplementedError):
-        instance.allocate([], AllocationInFrame())
+        instance.allocate([], AllocationInFrame(from_static_allocation=True))
 
-    allocation_previous = AllocationInFrame()
+    allocation_previous = AllocationInFrame(from_static_allocation=True)
     allocation_previous.add("test", 10, (30, 10))
 
-    allocation_current = AllocationInFrame()
+    allocation_current = AllocationInFrame(from_static_allocation=True)
     allocation_current.add("test1", 20, (40, 10))
 
     words_current = [Word("test2", 30, 30, (20, 30))]

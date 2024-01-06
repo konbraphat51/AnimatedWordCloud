@@ -14,7 +14,7 @@ from AnimatedWordCloud.Utils import (
 
 
 def test_AllocationInFrame():
-    instance = AllocationInFrame()
+    instance = AllocationInFrame(from_static_allocation=True)
 
     # test add + getitem
     instance.add("test", 10, (0, 0))
@@ -26,6 +26,6 @@ def test_AllocationTimelapse():
     instance = AllocationTimelapse()
 
     # test add + getitem
-    instance.add(0, AllocationInFrame())
-    instance.add(1, AllocationInFrame())
+    instance.add(0, AllocationInFrame(from_static_allocation=True))
+    instance.add(1, AllocationInFrame(from_static_allocation=True))
     assert instance.get_frame(0) is not None
