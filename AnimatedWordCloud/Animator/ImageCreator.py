@@ -107,7 +107,7 @@ def create_image(
     # save the image
     filename = f"{config.intermediate_frames_id}_{frame_number}.png"
     save_path = os.path.join(config.output_path, filename)
-    image.save(save_path)  # TODO: changing the file path
+    image.save(save_path)
 
     return save_path
 
