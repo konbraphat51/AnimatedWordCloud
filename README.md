@@ -25,8 +25,6 @@ Python (3.8 <= version <= 3.12)
 
 ### install
 
-(scheduled)
-
 **BE CAREFUL of the name**
 
 ❌AnimatedWordCloud  
