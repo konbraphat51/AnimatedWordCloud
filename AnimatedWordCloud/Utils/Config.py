@@ -8,6 +8,7 @@ Config class for passing parameters through the modules
 """
 
 from __future__ import annotations
+import random
 from typing import Literal
 from AnimatedWordCloud.Utils.Consts import (
     DEFAULT_ENG_FONT_PATH,
@@ -42,12 +43,6 @@ class Config:
         It will be shown as "(former) [transition_symbol] (latter)".
     :param int duration_per_frame: Duration of each frame in milliseconds.
     :param int n_frames: Number of frames in the animation.
-    :param bool drawing_time_stamp: Whether to draw time stamp on the image.
-    :param str time_stamp_color: Color of the time stamp.
-    :param int time_stamp_font_size: Font size of the time stamp.
-        If None(default), it will be set to 75% of max_font_size
-    :param tuple[int, int] time_stamp_position: Position of the time stamp.
-        If None(default), it will be set to (image_width*0.75, image_height*0.75) which is right bottom.
     """
 
     def __init__(
@@ -68,10 +63,6 @@ class Config:
         duration_per_frame: int = 50,
         n_frames_for_interpolation: int = 20,
         interpolation_method: Literal["linear"] = "linear",
-        drawing_time_stamp: bool = True,
-        time_stamp_color: str = "black",
-        time_stamp_font_size: int = None,
-        time_stamp_position: tuple[int, int] = None,
     ) -> None:
         # explanation written above
 
@@ -96,44 +87,3 @@ class Config:
         self.duration_per_frame = duration_per_frame
         self.n_frames_for_interpolation = n_frames_for_interpolation
         self.interpolation_method = interpolation_method
-        self.drawing_time_stamp = drawing_time_stamp
-        self.time_stamp_color = time_stamp_color
-
-        self.time_stamp_font_size = self._compute_time_stamp_font_size(
-            time_stamp_font_size
-        )
-
-        self.time_stamp_position = self._compute_time_stamp_position(
-            time_stamp_position
-        )
-
-    def _compute_time_stamp_font_size(
-        self, time_stamp_font_size: int | None
-    ) -> int:
-        """
-        Compute time_stamp_font_size from constructor argument.
-
-        :param int time_stamp_font_size: Font size of the time stamp by the argument.
-        :return: Font size of the time stamp.
-        """
-        if time_stamp_font_size is None:
-            return int(self.max_font_size * 0.75)
-        else:
-            return time_stamp_font_size
-
-    def _compute_time_stamp_position(
-        self, time_stamp_position: tuple[int, int] | None
-    ) -> tuple[int, int]:
-        """
-        Compute time_stamp_position from constructor argument.
-
-        :param tuple[int, int] time_stamp_position: Position of the time stamp by the argument.
-        :return: Position of the time stamp.
-        """
-        if time_stamp_position is None:
-            return (
-                self.image_width * 0.75,
-                self.image_height * 0.75,
-            )  # right bottom
-        else:
-            return time_stamp_position
