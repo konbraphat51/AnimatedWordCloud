@@ -70,11 +70,12 @@ If there is something pointed out from GitHub Actions, please fix it.
 1. Update version of `README.md` & `setup.py` [[Example Commit]](https://github.com/konbraphat51/AnimatedWordCloud/commit/c886f593d590ebe990cd451c219df3d2733a5a48)
 2. Commit 1. as "UpVer: [version]" to `dev`
 3. Merge to `main`
-4. Upload
+4. Access to [Releases](https://github.com/konbraphat51/AnimatedWordCloud/releases) and make a new release with configuration below:
+  - new tag: vX.X.X (new version)
+  - Target branch: main
+  - Release title: version X.X.X(new version)
+  - Description: what changed
+   ![image](https://github.com/konbraphat51/AnimatedWordCloud/assets/101827492/1bc79398-5458-4a8b-b03f-26efd51917fe)
 
-```
-python setup.py sdist bdist_wheel
-twine upload --repository pypi dist/*
-  username: __token__
-  password: (your personal pypi API token)
-```
+5. GitHub Actions automatically upload the newest version to PyPI
+
