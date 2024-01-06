@@ -59,4 +59,30 @@ def animate(
         image_paths, allocation_timelapse, config, filename=output_filename
     )
 
+    if config.verbosity == "minor":
+        _success_message()
+
     return animation_path
+
+
+def _success_message(animation_path: str) -> None:
+    """
+    print success message.
+
+    :param str animation_path: animation saved path
+    :return: None
+    :rtype: None
+    """
+    success_message = (
+        f"your animation was successfully saved in {animation_path}."
+    )
+    string_frame_over = (
+        "-" * (len(success_message) // 2)
+        + "Success!"
+        + "-" * (len(success_message) // 2)
+    )
+    string_frame_under = "-" * len(success_message + "Success!")
+    success_message = " " * 4 + success_message + " " * 4
+    print(string_frame_over)
+    print(success_message)
+    print(string_frame_under)
