@@ -31,7 +31,13 @@ setup(
     python_requires=">=3.8",
     package_data={"AnimatedWordCloud": ["Assets/**"]},
     include_package_data=True,
-    install_requires=requirements_from_file("requirements.txt"),
+    install_requires=[
+        "Pillow==10.1.0",
+        "numpy",
+        "matplotlib",
+        "joblib",
+        "tqdm",
+    ],
     license="MIT License",
     zip_safe=False,
     keywords=[
