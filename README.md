@@ -15,6 +15,8 @@ Using [Elon Musk's tweets](https://data.world/adamhelsinger/elon-musk-tweets-unt
 
 ![ElonMuskExample](https://private-user-images.githubusercontent.com/101827492/294658923-7fa092d5-149d-443a-842e-d68fddf352e1.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MDQ1Mjg0ODAsIm5iZiI6MTcwNDUyODE4MCwicGF0aCI6Ii8xMDE4Mjc0OTIvMjk0NjU4OTIzLTdmYTA5MmQ1LTE0OWQtNDQzYS04NDJlLWQ2OGZkZGYzNTJlMS5naWY_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwMTA2JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDEwNlQwODAzMDBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT00NDIyZDA3NzUwNTIxY2I1NjEyMzkyMGM5ZGQyMDFhNmNmMmVkMGFhMTRmYzk2N2M3NDYwYWI4YTNkM2Q0ZWQ0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.TbbNib0oLU3ZZzeUFdm2tFNfiu-xnXSTrPMLfy03emY)
 
+[Procedure Notebook](https://github.com/konbraphat51/AnimatedWordCloudExampleElon)
+
 ## How to use?
 
 ### Requirements
@@ -35,6 +37,8 @@ pip install AnimatedWordCloudTimelapse
 ```
 
 ### coding
+
+See [Example Notebook](https://github.com/konbraphat51/AnimatedWordCloudExampleElon) for details
 
 #### Using default configuration
 
