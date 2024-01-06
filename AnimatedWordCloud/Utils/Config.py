@@ -101,7 +101,9 @@ class Config:
         self.image_division = image_division
         self.verbosity = verbosity
         self.transition_symbol = transition_symbol
-        self.duration_per_interpolation_frame = duration_per_interpolation_frame
+        self.duration_per_interpolation_frame = (
+            duration_per_interpolation_frame
+        )
         self.duration_per_static_frame = duration_per_static_frame
         self.n_frames_for_interpolation = n_frames_for_interpolation
         self.interpolation_method = interpolation_method

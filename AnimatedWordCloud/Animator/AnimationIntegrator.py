@@ -14,7 +14,10 @@ from AnimatedWordCloud.Utils import Config, AllocationTimelapse
 
 
 def integrate_images(
-    image_paths: list[str], allocation_timelapse: AllocationTimelapse, config: Config, filename: str = "output.gif"
+    image_paths: list[str],
+    allocation_timelapse: AllocationTimelapse,
+    config: Config,
+    filename: str = "output.gif",
 ) -> None:
     """
     Create images of each frame
@@ -26,12 +29,12 @@ def integrate_images(
     :return: None
     """
 
-    #input
+    # input
     gif_images = [Image.open(path) for path in image_paths]
-    
-    #output
+
+    # output
     filepath_output = os.path.join(config.output_path, filename)
-    
+
     # compute the duration of each frame
     durations = []
     for _, allocation_in_frame in allocation_timelapse.timelapse:
@@ -39,7 +42,7 @@ def integrate_images(
             durations.append(config.duration_per_static_frame)
         else:
             durations.append(config.duration_per_interpolation_frame)
-    
+
     # save gif
     gif_images[0].save(
         filepath_output,
