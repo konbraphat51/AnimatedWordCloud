@@ -74,7 +74,7 @@ def _success_message(animation_path: str) -> None:
     :rtype: None
     """
     success_message = (
-        f"your animation was successfully saved in {animation_path}."
+        f"your animation was successfully saved in {animation_path}"
     )
     string_frame_over = (
         "-" * (len(success_message) // 2)
