@@ -22,8 +22,12 @@ def test_integrateimages():
     image_path1 = os.path.join(DIR, "tests1.png")
     image_paths: list[str] = [image_path0, image_path1]  # temporary path
     dummy_timelapse = AllocationTimelapse()
-    dummy_timelapse.add("2023_04_01", AllocationInFrame(from_static_allocation=True))
-    dummy_timelapse.add("2023_04_02", AllocationInFrame(from_static_allocation=False))
+    dummy_timelapse.add(
+        "2023_04_01", AllocationInFrame(from_static_allocation=True)
+    )
+    dummy_timelapse.add(
+        "2023_04_02", AllocationInFrame(from_static_allocation=False)
+    )
     assert integrate_images(image_paths, dummy_timelapse, config) == None
 
 
