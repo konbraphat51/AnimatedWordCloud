@@ -44,9 +44,9 @@ from AnimatedWordCloud import animate
 # data must be list[("time name", dict[str, float])]
 timelapse_wordvector = [
     (
-        "time_0",
+        "time_0",   #time stamp
         {
-            "hanshin":0.334,
+            "hanshin":0.334,    #word -> weight
             "chiba":0.226
         }
     ),
