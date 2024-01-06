@@ -19,7 +19,7 @@ def requirements_from_file(file_name):
 
 setup(
     name="AnimatedWordCloudTimelapse",
-    version="0.9.0",
+    version="0.9.1",
     description="Animate a timelapse of word cloud",
     long_description=readme,
     long_description_content_type="text/markdown",
@@ -62,5 +62,11 @@ setup(
         # "console_scripts": [
         # ],
     },
-    project_urls={},
+    project_urls={
+        "GitHub Repository": "https://github.com/konbraphat51/AnimatedWordCloud"
+    },
+    package_data={
+        "fonts": ["AnimatedWordCloud/Assets/Fonts/*.ttf"]
+    },
+    include_package_data=True,
 )
