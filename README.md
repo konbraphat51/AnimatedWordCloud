@@ -1,4 +1,4 @@
-# AnimatedWordCloud ver 1.0.2
+# AnimatedWordCloud ver 1.0.3
 
 **UNDER CONSTRUCTION**
 
