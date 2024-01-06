@@ -324,7 +324,7 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # guard
         if best_position is None:
-            raise Exception("No position found")
+            raise Exception("No available position found. Try to reduce font size or expand image size.")
 
         return best_position
 
