@@ -19,7 +19,7 @@ def requirements_from_file(file_name):
 
 setup(
     name="AnimatedWordCloudTimelapse",
-    version="0.9.2",
+    version="0.9.3",
     description="Animate a timelapse of word cloud",
     long_description=readme,
     long_description_content_type="text/markdown",
@@ -29,7 +29,7 @@ setup(
     packages=find_packages(exclude=["tests", "Docs"]),
     test_suite="tests",
     python_requires=">=3.8",
-    package_data={"AnimatedWordCloud": ["Assets/*"]},
+    package_data={"AnimatedWordCloud": ["Assets/**"]},
     include_package_data=True,
     install_requires=requirements_from_file("requirements.txt"),
     license="MIT License",
