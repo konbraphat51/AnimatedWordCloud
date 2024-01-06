@@ -55,6 +55,8 @@ def animate(
     image_paths = create_images(allocation_timelapse, config)
 
     # to one animation file
-    animation_path = integrate_images(image_paths, allocation_timelapse, config, filename=output_filename)
+    animation_path = integrate_images(
+        image_paths, allocation_timelapse, config, filename=output_filename
+    )
 
     return animation_path
