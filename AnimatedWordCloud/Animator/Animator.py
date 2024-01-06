@@ -19,8 +19,8 @@ from AnimatedWordCloud.Animator.AnimationIntegrator import integrate_images
 
 def animate(
     word_vector_timelapse: Iterable[tuple[str, dict[str, float]]],
-    output_filename: str = "output.gif",
     config: Config = None,
+    output_filename: str = "output.gif",
 ) -> str:
     """
     Create an animation of word cloud,
