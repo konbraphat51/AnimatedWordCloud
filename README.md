@@ -85,28 +85,30 @@ animate(timelapse, config)
 
 All has default value, so just edit what you need
 
-| parameter name             | type            | meaning                                                                                                                                        |
-| -------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| font_path                  | str             | Path to the font file.                                                                                                                         |
-| output_path                | str             | Parh of the output directory                                                                                                                   |
-| max_words                  | int             | max number of the words in the screen                                                                                                          |
-| max_font_size              | int             | Maximum font size of the word                                                                                                                  |
-| min_font_size              | int             | Minimum font size of the word                                                                                                                  |
-| image_width                | int             | Width of the image                                                                                                                             |
-| image_height               | int             | Height of the image                                                                                                                            |
-| background_color           | str             | Background color. <br>This is based on [Pillow.Image.new()](https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.new)        |
-| color_map                  | str             | color map used for coloring words<br>This is based on [matplotlib colormap](https://matplotlib.org/stable/users/explain/colors/colormaps.html) |
-| allocation_strategy        | str(literal)    | allocation algorithm method. This will change the allocation of the words in the output. <br> There is "magnetic" now.                         |
-| image_division             | int             | precision of allocation calculation. Higher the preciser, but calculation slower                                                               |
-| verbosity                  | str(literal)    | logging.<br>silent: nothing<br>minor: bars to know the progress<br>debug: all progress. noisy                                                  |
-| transition_symbol          | str             | written in the image                                                                                                                           |
-| duration_per_frame         | int             | milliseconds per frame                                                                                                                         |
-| n_frames_for_interpolation | int             | how many frames will be generated for interpolation between each frames                                                                        |
-| interpolation_method       | str(literal)    | The method of making movement<br>There is "linear" now                                                                                         |
-| drawing_time_stamp         | bool            | Whether to draw time stamp on the image                                                                                                        |
-| time_stamp_color           | str             | Color of the time stamp. This is based on [`Pillow ImageColor`](https://pillow.readthedocs.io/en/stable/reference/ImageColor.html#color-names) |
-| time_stamp_font_size       | int             | Font size of the time stamp.<br>If None(default), it will be set to 75% of max_font_size                                                       |
-| time_stamp_position        | tuple[int, int] | Position of the time stamp.<br>If None(default), it will be set to (image_width*0.75, image_height*0.75) which is right bottom.                |
+| parameter name                   | type            | meaning                                                                                                                                                            |
+| -------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| font_path                        | str             | Path to the font file.                                                                                                                                             |
+| output_path                      | str             | Parh of the output directory                                                                                                                                       |
+| max_words                        | int             | max number of the words in the screen                                                                                                                              |
+| max_font_size                    | int             | Maximum font size of the word                                                                                                                                      |
+| min_font_size                    | int             | Minimum font size of the word                                                                                                                                      |
+| image_width                      | int             | Width of the image                                                                                                                                                 |
+| image_height                     | int             | Height of the image                                                                                                                                                |
+| background_color                 | str             | Background color. <br>This is based on [Pillow.Image.new()](https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.new)                            |
+| color_map                        | str             | color map used for coloring words<br>This is based on [matplotlib colormap](https://matplotlib.org/stable/users/explain/colors/colormaps.html)                     |
+| allocation_strategy              | str(literal)    | allocation algorithm method. This will change the allocation of the words in the output. <br> There is "magnetic" now.                                             |
+| image_division                   | int             | precision of allocation calculation. Higher the preciser, but calculation slower                                                                                   |
+| verbosity                        | str(literal)    | logging.<br>silent: nothing<br>minor: bars to know the progress<br>debug: all progress. noisy                                                                      |
+| transition_symbol                | str             | written in the image                                                                                                                                               |
+| duration_per_interpolation_frame | int             | milliseconds per interpolation frame                                                                                                                               |
+| duration_per_static_frame        | int             | milliseconds per staic (frame correspond to timestamp of wordvector) frame                                                                                         |
+| n_frames_for_interpolation       | int             | how many frames will be generated for interpolation between each frames                                                                                            |
+| interpolation_method             | str(literal)    | The method of making movement<br>There is "linear" now                                                                                                             |
+| drawing_time_stamp               | bool            | Whether to draw time stamp on the image                                                                                                                            |
+| time_stamp_color                 | str             | Color of the time stamp. This is based on [`Pillow ImageColor`](https://pillow.readthedocs.io/en/stable/reference/ImageColor.html#color-names)                     |
+| time_stamp_font_size             | int             | Font size of the time stamp.<br>If None(default), it will be set to 75% of max_font_size                                                                           |
+| time_stamp_position              | tuple[int, int] | Position of the time stamp.<br>If None(default), it will be set to (image_width*0.75, image_height*0.75) which is right bottom.                                    |
+| intermediate_frames_id           | str             | Static images of each frame of itermediate product will be saved as "{intermediate*frames_id}*{frame_number}.png".<br>If None(default), this will be set randomly. |
 
 ## Want to contribute?
 
