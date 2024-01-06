@@ -1,4 +1,4 @@
-# AnimatedWordCloudTimelapse ver 1.0.-1
+# AnimatedWordCloud ver 1.0.-1
 
 **UNDER CONSTRUCTION**
 
@@ -6,7 +6,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/20a71da0d9d841a2af236f6362a08ae7)](https://app.codacy.com/gh/konbraphat51/AnimatedWordCloud/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![unit-test](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/python-tester.yml/badge.svg?branch=main)](https://github.com/konbraphat51/AnimatedWordCloud/actions/workflows/python-tester.yml)[![codecov](https://codecov.io/gh/konbraphat51/AnimatedWordCloud/graph/badge.svg?token=4OOX0GSJDJ)](https://codecov.io/gh/konbraphat51/AnimatedWordCloud)
 
-AnimatedWordCloudTimelapse animates the timelapse of your words vector.
+AnimatedWordCloud animates the timelapse of your words vector.
 
 ## Examples!
 
@@ -25,6 +25,11 @@ Python (3.8 <= version <= 3.12)
 
 (scheduled)
 
+**BE CAREFUL of the name**
+
+❌AnimatedWordCloud  
+✅AnimatedWordCloudTimelapse
+
 ```
 pip install AnimatedWordCloudTimelapse
 ```
@@ -34,7 +39,7 @@ pip install AnimatedWordCloudTimelapse
 #### Using default configuration
 
 ```python
-from AnimatedWordCloudTimelapse import animate
+from AnimatedWordCloud import animate
 
 # data must be list[("time name", dict[str, float])]
 timelapse_wordvector = [
@@ -69,7 +74,7 @@ path = animate(timelapse_wordvector)
 #### Editing configuration
 
 ```python
-from AnimatedWordCloudTimelapse import animate, Config
+from AnimatedWordCloud import animate, Config
 
 config = Config(
     what_you_want_to_edit = editing_value
