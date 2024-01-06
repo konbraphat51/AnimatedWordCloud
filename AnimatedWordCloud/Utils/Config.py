@@ -157,4 +157,6 @@ class Config:
 
         if intermediate_frames_id is None:
             # set randomly
-            intermediate_frames_id = str(random.randint(0, 1000000000))
+            return str(random.randint(0, 1000000000))
+        else:
+            return intermediate_frames_id
