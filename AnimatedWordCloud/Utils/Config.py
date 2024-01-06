@@ -7,6 +7,8 @@
 Config class for passing parameters through the modules
 """
 
+from __future__ import annotations
+import random
 from typing import Literal
 from AnimatedWordCloud.Utils.Consts import (
     DEFAULT_ENG_FONT_PATH,
@@ -41,6 +43,8 @@ class Config:
         It will be shown as "(former) [transition_symbol] (latter)".
     :param int duration_per_frame: Duration of each frame in milliseconds.
     :param int n_frames: Number of frames in the animation.
+    :param str intermediate_frames_id: Static images of each frame of itermediate product will be saved as "{intermediate_frames_id}_{frame_number}.png".
+        If None(default), this will be set randomly.
     """
 
     def __init__(
@@ -61,6 +65,7 @@ class Config:
         duration_per_frame: int = 50,
         n_frames_for_interpolation: int = 20,
         interpolation_method: Literal["linear"] = "linear",
+        intermediate_frames_id: str = None,
     ) -> None:
         # explanation written above
 
@@ -85,3 +90,24 @@ class Config:
         self.duration_per_frame = duration_per_frame
         self.n_frames_for_interpolation = n_frames_for_interpolation
         self.interpolation_method = interpolation_method
+        self.intermediate_frames_id = self._compute_intermediate_frames_id(
+            intermediate_frames_id
+        )
+
+    def _compute_intermediate_frames_id(
+        self, intermediate_frames_id: str | None
+    ) -> str:
+        """
+        returns intermediate_frames_id given from constructor
+
+        set random value if intermediate_frames_id is None
+
+        :param str|None intermediate_frames_id: intermediate_frames_id given
+        :return: intermediate_frames_id computed
+        :rtype: str
+        """
+
+        if intermediate_frames_id is None:
+            # set randomly
+            intermediate_frames_id = str(random.randint(0, 1000000000))
+        return intermediate_frames_id

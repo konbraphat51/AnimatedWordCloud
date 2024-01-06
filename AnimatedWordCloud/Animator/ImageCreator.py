@@ -54,20 +54,17 @@ class colormap_color_func(object):
 
 def create_image(
     allocation_in_frame: AllocationInFrame,
-    time_name: str,
     config: Config,
+    frame_number: int,
     color_func=None,
 ) -> str:
     """
     Create image of a frame
 
     :param AllocationInFrame allocation_in_frame: Position/size data of a video frame.
-    :param str time_name: Name of the frame
-    :param Tuple[float, float] image_size: Tuple of float values (width, height) representing the size of the image.
-    :param str font_path: Path to the font file.
-    :param str background_color:  Background color of the image, default is "white".
-    :param str color_map:  Colormap to be used for the image, default is "magma".
-    :param str color_func:  Custom function for color mapping, default is None.
+    :param Config config: Config instance
+    :param int frame_number: Number of the frame. Used for filename
+    :param object color_func:  Custom function for color mapping, default is None.
     :return: The path of the image.
     :rtype: str
     """
@@ -93,7 +90,8 @@ def create_image(
             font=font,
         )
     # save the image
-    save_path = os.path.join(config.output_path, f"{time_name}.png")
+    filename = f"{config.intermediate_frames_id}_{frame_number}.png"
+    save_path = os.path.join(config.output_path, filename)
     image.save(save_path)  # TODO: changing the file path
 
     return save_path
@@ -118,14 +116,17 @@ def create_images(
 
     image_paths = []
 
-    for time_name, allocation_in_frame in position_in_frames.timelapse:
+    frame_number = 0
+    for _, allocation_in_frame in position_in_frames.timelapse:
         save_path = create_image(
             allocation_in_frame=allocation_in_frame,
-            time_name=time_name,
             config=config,
+            frame_number=frame_number,
             color_func=color_func,
         )
 
         image_paths.append(save_path)
+
+        frame_number += 1
 
     return image_paths
