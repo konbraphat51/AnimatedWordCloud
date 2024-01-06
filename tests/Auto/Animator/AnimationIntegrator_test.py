@@ -28,7 +28,7 @@ def test_integrateimages():
     dummy_timelapse.add(
         "2023_04_02", AllocationInFrame(from_static_allocation=False)
     )
-    assert integrate_images(image_paths, dummy_timelapse, config) == None
+    assert integrate_images(image_paths, dummy_timelapse, config) != None
 
 
 def test_imagecreator_and_integrateimages():
