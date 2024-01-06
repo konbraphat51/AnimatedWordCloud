@@ -67,7 +67,7 @@ If there is something pointed out from GitHub Actions, please fix it.
 
 **Only for maintainers**
 
-1. Update version of `README.md` & `setup.py`
+1. Update version of `README.md` & `setup.py` [[Example Commit]](https://github.com/konbraphat51/AnimatedWordCloud/commit/c886f593d590ebe990cd451c219df3d2733a5a48)
 2. Commit 1. as "UpVer: [version]" to `dev`
 3. Merge to `main`
 4. Upload
