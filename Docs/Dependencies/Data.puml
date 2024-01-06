@@ -1,0 +1,47 @@
+@startuml Dependency_Data
+' Image can be obtained from
+' https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000
+
+' Write all modules here
+folder Animator {
+    folder AllocationData {
+        object AllocationInFrame {
+            Positions and size of each words in a frame
+        }
+
+        object AllocationTimelapse {
+            Timelapse of positions and size of each words
+        }
+
+        AllocationTimelapse *-- AllocationInFrame
+    }
+
+    folder TimelapseWordVector {
+        object WordVector {
+            Contains each word's weight
+        }
+
+        object TimeFrame {
+            A single time frame of word vector
+        }
+
+        object TimelapseWordVector {
+            Timelapse data of word vectors.
+        }
+
+        WordVector *-- TimeFrame
+        TimelapseWordVector *-- TimeFrame
+    }
+
+    folder StaticAllocationStrategies {
+        object Rect {
+            A rectangle of a word
+        }
+
+        object Word {
+            Data class contains attributes of each words.
+        }
+    }
+}
+
+@enduml
