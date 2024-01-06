@@ -69,7 +69,7 @@ path = animate(timelapse_wordvector)
 #### Editing configuration
 
 ```python
-from AnimatedWordCloud import animate, Config
+from AnimatedWordCloudTimelapse import animate, Config
 
 config = Config(
     what_you_want_to_edit = editing_value
