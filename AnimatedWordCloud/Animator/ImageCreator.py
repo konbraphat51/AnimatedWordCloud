@@ -128,6 +128,9 @@ def create_images(
     :rtype: list[str]
     """
 
+    if config.verbosity in ["debug"]:
+        print("Creating images of each frame...")
+
     ensure_directory_exists(config.output_path)
 
     image_paths = []
