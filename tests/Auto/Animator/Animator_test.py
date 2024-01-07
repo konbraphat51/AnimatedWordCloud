@@ -16,4 +16,4 @@ config = Config(
 
 
 def test_animate():
-    animate(less_raw_timelapse, config)
+    assert animate(less_raw_timelapse, config) != None
