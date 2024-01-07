@@ -135,8 +135,12 @@ def create_images(
 
     image_paths = []
 
+    verbosity = 0
+    if config.verbosity in ["debug"]:
+        verbosity = 5
+
     # create images of each frame
-    result = joblib.Parallel(n_jobs=-1)(
+    result = joblib.Parallel(n_jobs=-1, verbose=verbosity)(
         joblib.delayed(create_image)(
             allocation_in_frame=allocation_in_frame,
             config=config,
