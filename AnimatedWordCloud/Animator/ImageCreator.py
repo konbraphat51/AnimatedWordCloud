@@ -152,10 +152,10 @@ def create_images(
             position_in_frames.timelapse
         )
     )
-    
+
     # sort by frame number (ascending)
     result.sort(key=lambda x: x[0])
-    
+
     # get only the path
     image_paths = [path for _, path in result]
 
