@@ -71,7 +71,7 @@ class Config:
         color_map: str = "Dark2",
         allocation_strategy: Literal["magnetic"] = "magnetic",
         image_division: int = 300,
-        movement_reluctance: float = 0.5,
+        movement_reluctance: float = 0.05,
         verbosity: Literal["silent", "minor", "debug"] = "silent",
         transition_symbol: str = " to ",
         starting_time_stamp: str = " ",
