@@ -163,9 +163,7 @@ def _detect_frontier_linealy(
     :rtype: list[tuple[int, int]]
     """
     # a clone made
-    frontier_side = _sort_by_direction(
-        frontier_side, detection_ray_direction
-    )
+    frontier_side = _sort_by_direction(frontier_side, detection_ray_direction)
 
     # true while the launcher is in the area hitting the rect_added
     hitting = False
@@ -331,7 +329,7 @@ def _will_hit_rect_added(
     """
 
     # if the launcher moving vertically...
-    if (launcher_direction.x == 0):
+    if launcher_direction.x == 0:
         # ...check y axis...
         if (
             rect_added.left_top[1]
@@ -343,14 +341,14 @@ def _will_hit_rect_added(
         else:
             # ... is not hitting
             return False
-    
+
     # if the launcher moving horizontally...
     else:
         # ...check x axis...
         if (
-        rect_added.left_top[0]
-        <= launcher_position.x
-        <= rect_added.right_bottom[0]
+            rect_added.left_top[0]
+            <= launcher_position.x
+            <= rect_added.right_bottom[0]
         ):
             # ... is hitting
             return True
