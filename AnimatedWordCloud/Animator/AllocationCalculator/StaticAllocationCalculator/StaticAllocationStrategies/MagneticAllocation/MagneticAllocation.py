@@ -24,6 +24,7 @@ from AnimatedWordCloud.Utils import (
     Vector,
     Rect,
     Word,
+    Config,
 )
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.StaticAllocationStrategy import (
     StaticAllocationStrategy,
@@ -37,22 +38,15 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
 class MagneticAllocation(StaticAllocationStrategy):
     def __init__(
         self,
-        image_width: int,
-        image_height: int,
-        image_division: int = 100,
-        verbosity: str = "none",
+        config: Config,
     ):
         """
         Initialize allocation settings
         """
-        super().__init__(image_width, image_height)
+        super().__init__(config)
 
-        self.image_division = image_division
-
-        self.interval_x = self.image_width / self.image_division
-        self.interval_y = self.image_height / self.image_division
-
-        self.verbosity = verbosity
+        self.interval_x = self.config.image_width / self.config.image_division
+        self.interval_y = self.config.image_height / self.config.image_division
 
     def allocate(
         self, words: Iterable[Word], allocation_before: AllocationInFrame
@@ -79,7 +73,10 @@ class MagneticAllocation(StaticAllocationStrategy):
         self.rects = set()
 
         # put the first word at the center
-        self.center = (self.image_width / 2, self.image_height / 2)
+        self.center = (
+            self.config.image_width / 2,
+            self.config.image_height / 2,
+        )
         first_word = self.words[0]
         first_word_position = (
             self.center[0] - first_word.text_size[0] / 2,
@@ -98,7 +95,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         output.add(first_word.text, first_word.font_size, first_word_position)
 
         # verbose for iteration
-        if self.verbosity == "debug":
+        if self.config.verbosity == "debug":
             print("MagneticAllocation: Start iteration...")
             iterator = tqdm(self.words[1:])
         else:
@@ -110,8 +107,8 @@ class MagneticAllocation(StaticAllocationStrategy):
             # The position candidates will be selected from this frontier
             magnet_outer_frontier = get_magnet_outer_frontier(
                 self.rects,
-                self.image_width,
-                self.image_height,
+                self.config.image_width,
+                self.config.image_height,
                 self.interval_x,
                 self.interval_y,
                 rect_adding,
@@ -172,9 +169,10 @@ class MagneticAllocation(StaticAllocationStrategy):
         # the larger, the better; This need manual adjustment
         # adjust the coefficient mannually by visual testing
 
-        # log(distance_movement): more important when near, not when fat
+        # log(distance_movement): more important when near, not when far
         return (
-            -math.log(0.05 * distance_movement + 0.1)
+            -self.config.movement_reluctance
+            * math.log(distance_movement + 0.01)
             - 1.0 * distance_center**2
         )
 
@@ -324,7 +322,9 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # guard
         if best_position is None:
-            raise Exception("No position found")
+            raise Exception(
+                "No available position found. Try to reduce font size or expand image size."
+            )
 
         return best_position
 
