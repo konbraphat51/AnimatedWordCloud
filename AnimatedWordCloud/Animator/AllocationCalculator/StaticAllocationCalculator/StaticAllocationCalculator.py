@@ -66,10 +66,7 @@ def allocate(
     # calculate allocation by selected strategy
     if config.allocation_strategy == "magnetic":
         allocator = MagneticAllocation(
-            config.image_width,
-            config.image_height,
-            config.image_division,
-            config.verbosity,
+            config
         )
         return allocator.allocate(words, allocation_before)
     else:
