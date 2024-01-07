@@ -13,6 +13,7 @@ import os
 import hashlib
 import numpy as np
 import matplotlib.pyplot as plt
+import joblib
 from PIL import Image, ImageDraw, ImageFont
 from AnimatedWordCloud.Utils import (
     ensure_directory_exists,
@@ -58,7 +59,7 @@ def create_image(
     frame_number: int,
     time_name: str,
     color_func=None,
-) -> str:
+) -> tuple[int, str]:
     """
     Create image of a frame
 
@@ -67,8 +68,8 @@ def create_image(
     :param int frame_number: Number of the frame. Used for filename
     :param str time_name: Name of the time. Used for time stamp
     :param object color_func:  Custom function for color mapping, default is None.
-    :return: The path of the image.
-    :rtype: str
+    :return: (frame_number, save_path)
+    :rtype: tuple[int, str]
     """
     if color_func is None:
         color_func = colormap_color_func(config.color_map)
@@ -109,7 +110,7 @@ def create_image(
     save_path = os.path.join(config.output_path, filename)
     image.save(save_path)
 
-    return save_path
+    return (frame_number, save_path)
 
 
 def create_images(
@@ -127,22 +128,35 @@ def create_images(
     :rtype: list[str]
     """
 
+    if config.verbosity in ["debug"]:
+        print("Creating images of each frame...")
+
     ensure_directory_exists(config.output_path)
 
     image_paths = []
 
-    frame_number = 0
-    for time_name, allocation_in_frame in position_in_frames.timelapse:
-        save_path = create_image(
+    verbosity = 0
+    if config.verbosity in ["debug"]:
+        verbosity = 5
+
+    # create images of each frame
+    result = joblib.Parallel(n_jobs=-1, verbose=verbosity)(
+        joblib.delayed(create_image)(
             allocation_in_frame=allocation_in_frame,
             config=config,
             frame_number=frame_number,
             color_func=color_func,
             time_name=time_name,
         )
+        for frame_number, (time_name, allocation_in_frame) in enumerate(
+            position_in_frames.timelapse
+        )
+    )
 
-        image_paths.append(save_path)
+    # sort by frame number (ascending)
+    result.sort(key=lambda x: x[0])
 
-        frame_number += 1
+    # get only the path
+    image_paths = [path for _, path in result]
 
     return image_paths

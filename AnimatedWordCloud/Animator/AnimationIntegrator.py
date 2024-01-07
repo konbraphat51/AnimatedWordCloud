@@ -30,6 +30,9 @@ def integrate_images(
     :rtype: str
     """
 
+    if config.verbosity == "debug":
+        print("Integrating images...")
+
     # input
     gif_images = [Image.open(path) for path in image_paths]
 
