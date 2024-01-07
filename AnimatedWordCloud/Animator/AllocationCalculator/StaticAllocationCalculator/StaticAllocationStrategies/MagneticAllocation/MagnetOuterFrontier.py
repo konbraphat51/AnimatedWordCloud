@@ -136,7 +136,7 @@ def _detect_frontier_linealy(
     image_width: int,
     image_height: int,
     rect_added: Rect,
-    frontier_former_side: list[tuple[int, int]],
+    frontier_side: list[tuple[int, int]],
 ) -> list[tuple[int, int]]:
     """
     Detect the frontier from 1 line.
@@ -163,14 +163,11 @@ def _detect_frontier_linealy(
     :rtype: list[tuple[int, int]]
     """
     # a clone made
-    frontier_former_side = _sort_by_direction(
-        frontier_former_side, detection_ray_direction
-    )
+    frontier_side = _sort_by_direction(frontier_side, detection_ray_direction)
 
     # true while the launcher is in the area hitting the rect_added
     hitting = False
 
-    detected_points = []
     image_size = (image_width, image_height)
     launcher_position = launcher_point_start.clone()
 
@@ -191,9 +188,9 @@ def _detect_frontier_linealy(
                 Rect((0, 0), image_size),
             )
 
-            # update detected_points
-            _process_ray_result(
-                result_ray_launched, detected_points, launcher_direction
+            # update frontier
+            _remember_ray_result(
+                result_ray_launched, frontier_side, launcher_direction
             )
 
         # if the ray launcher escapes from the new rect hitting area...
@@ -204,16 +201,16 @@ def _detect_frontier_linealy(
         # move launcher
         launcher_position += launcher_direction
 
-    return detected_points
+    return frontier_side
 
 
-def _process_ray_result(
+def _remember_ray_result(
     result_ray_launched: tuple[Vector, Rect] | None,
     detected_points: list[tuple[int, int]],
     launcher_direction: Vector,
 ) -> None:
     """
-    process the result of the ray launched.
+    remember the result of the ray launched.
 
     :param tuple[Vector, Rect]|None result_ray_launched: Result of the ray launched
     :param list[tuple[int, int]] detected_points: List of points that are detected. This will be modified.
@@ -331,31 +328,23 @@ def _will_hit_rect_added(
     :rtype: bool
     """
 
-    if (
-        # if the launcher moving vertically...
-        (launcher_direction.x == 0)
-        and
+    # if the launcher moving vertically...
+    if launcher_direction.x == 0:
         # ...check y axis
-        (
+        return (
             rect_added.left_top[1]
             <= launcher_position.y
             <= rect_added.right_bottom[1]
         )
-    ):
-        # ... is hitting
-        return True
+
     # if the launcher moving horizontally...
-    # ...check x axis
-    elif (
-        rect_added.left_top[0]
-        <= launcher_position.x
-        <= rect_added.right_bottom[0]
-    ):
-        # ... is hitting
-        return True
     else:
-        # ... is not hitting
-        return False
+        # ...check x axis
+        return (
+            rect_added.left_top[0]
+            <= launcher_position.x
+            <= rect_added.right_bottom[0]
+        )
 
 
 def _add_newly_found_point(
