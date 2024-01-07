@@ -11,12 +11,14 @@ from pytest import raises
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.StaticAllocationStrategy import (
     StaticAllocationStrategy,
     Word,
+    Config,
     AllocationInFrame,
 )
 
 
 def test_StaticAllocationStrategy():
-    instance = StaticAllocationStrategy(1000, 1000)
+    config = Config(image_width=1000, image_height=1000)
+    instance = StaticAllocationStrategy(config)
 
     with raises(NotImplementedError):
         instance.allocate([], AllocationInFrame(from_static_allocation=True))

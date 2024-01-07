@@ -11,7 +11,7 @@ from typing import Iterable
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.RandomAllocation import (
     put_randomly,
 )
-from AnimatedWordCloud.Utils import Word, AllocationInFrame
+from AnimatedWordCloud.Utils import Word, AllocationInFrame, Config
 
 
 class StaticAllocationStrategy:
@@ -19,13 +19,8 @@ class StaticAllocationStrategy:
     Base class for static allocation strategies
     """
 
-    def __init__(
-        self,
-        image_width: int,
-        image_height: int,
-    ):
-        self.image_width = image_width
-        self.image_height = image_height
+    def __init__(self, config: Config):
+        self.config = config
 
     def allocate(
         self, words: Iterable[Word], allocation_before: AllocationInFrame
@@ -76,7 +71,9 @@ class StaticAllocationStrategy:
         for word in missing_words:
             # put randomly
             text_lefttop_position = put_randomly(
-                self.image_width, self.image_height, words_size[word]
+                self.config.image_width,
+                self.config.image_height,
+                words_size[word],
             )
 
             # allocate in the output
@@ -118,6 +115,8 @@ class StaticAllocationStrategy:
                 frame_previous[word][0],
             )
             lefttop_position = put_randomly(
-                self.image_width, self.image_height, estimated_size
+                self.config.image_width,
+                self.config.image_height,
+                estimated_size,
             )
             frame_current.add(word, frame_previous[word][0], lefttop_position)

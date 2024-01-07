@@ -11,11 +11,13 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
     MagneticAllocation,
     AllocationInFrame,
     Word,
+    Config,
 )
 
 
 def test_MagneticAllocation():
-    instance = MagneticAllocation(1000, 1000, 200)
+    config = Config(image_width=1000, image_height=1000, image_division=200)
+    instance = MagneticAllocation(config)
 
     allocation_previous = AllocationInFrame(from_static_allocation=True)
     allocation_previous.add("test", 10, (30, 10))
