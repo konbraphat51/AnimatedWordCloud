@@ -136,7 +136,7 @@ def _detect_frontier_linealy(
     image_width: int,
     image_height: int,
     rect_added: Rect,
-    frontier_former_side: list[tuple[int, int]],
+    frontier_side: list[tuple[int, int]],
 ) -> list[tuple[int, int]]:
     """
     Detect the frontier from 1 line.
@@ -163,14 +163,13 @@ def _detect_frontier_linealy(
     :rtype: list[tuple[int, int]]
     """
     # a clone made
-    frontier_former_side = _sort_by_direction(
-        frontier_former_side, detection_ray_direction
+    frontier_side = _sort_by_direction(
+        frontier_side, detection_ray_direction
     )
 
     # true while the launcher is in the area hitting the rect_added
     hitting = False
 
-    detected_points = []
     image_size = (image_width, image_height)
     launcher_position = launcher_point_start.clone()
 
@@ -191,9 +190,9 @@ def _detect_frontier_linealy(
                 Rect((0, 0), image_size),
             )
 
-            # update detected_points
+            # update frontier
             _remember_ray_result(
-                result_ray_launched, detected_points, launcher_direction
+                result_ray_launched, frontier_side, launcher_direction
             )
 
         # if the ray launcher escapes from the new rect hitting area...
@@ -204,7 +203,7 @@ def _detect_frontier_linealy(
         # move launcher
         launcher_position += launcher_direction
 
-    return detected_points
+    return frontier_side
 
 
 def _remember_ray_result(
