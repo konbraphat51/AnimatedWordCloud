@@ -192,7 +192,7 @@ def _detect_frontier_linealy(
             )
 
             # update detected_points
-            _process_ray_result(
+            _remember_ray_result(
                 result_ray_launched, detected_points, launcher_direction
             )
 
@@ -207,13 +207,13 @@ def _detect_frontier_linealy(
     return detected_points
 
 
-def _process_ray_result(
+def _remember_ray_result(
     result_ray_launched: tuple[Vector, Rect] | None,
     detected_points: list[tuple[int, int]],
     launcher_direction: Vector,
 ) -> None:
     """
-    process the result of the ray launched.
+    remember the result of the ray launched.
 
     :param tuple[Vector, Rect]|None result_ray_launched: Result of the ray launched
     :param list[tuple[int, int]] detected_points: List of points that are detected. This will be modified.
