@@ -19,10 +19,7 @@ class StaticAllocationStrategy:
     Base class for static allocation strategies
     """
 
-    def __init__(
-        self,
-        config: Config
-    ):
+    def __init__(self, config: Config):
         self.config = config
 
     def allocate(
@@ -74,7 +71,9 @@ class StaticAllocationStrategy:
         for word in missing_words:
             # put randomly
             text_lefttop_position = put_randomly(
-                self.config.image_width, self.config.image_height, words_size[word]
+                self.config.image_width,
+                self.config.image_height,
+                words_size[word],
             )
 
             # allocate in the output

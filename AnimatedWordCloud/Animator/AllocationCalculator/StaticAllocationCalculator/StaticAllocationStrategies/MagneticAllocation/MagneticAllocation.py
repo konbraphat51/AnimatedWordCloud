@@ -24,7 +24,7 @@ from AnimatedWordCloud.Utils import (
     Vector,
     Rect,
     Word,
-    Config
+    Config,
 )
 from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.StaticAllocationStrategy import (
     StaticAllocationStrategy,
@@ -73,7 +73,10 @@ class MagneticAllocation(StaticAllocationStrategy):
         self.rects = set()
 
         # put the first word at the center
-        self.center = (self.config.image_width / 2, self.config.image_height / 2)
+        self.center = (
+            self.config.image_width / 2,
+            self.config.image_height / 2,
+        )
         first_word = self.words[0]
         first_word_position = (
             self.center[0] - first_word.text_size[0] / 2,
@@ -168,7 +171,7 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # log(distance_movement): more important when near, not when far
         return (
-            - self.config.movement_reluctance * math.log(distance_movement)
+            -self.config.movement_reluctance * math.log(distance_movement)
             - 1.0 * distance_center**2
         )
 
@@ -318,7 +321,9 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # guard
         if best_position is None:
-            raise Exception("No available position found. Try to reduce font size or expand image size.")
+            raise Exception(
+                "No available position found. Try to reduce font size or expand image size."
+            )
 
         return best_position
 

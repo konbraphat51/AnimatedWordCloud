@@ -65,9 +65,7 @@ def allocate(
 
     # calculate allocation by selected strategy
     if config.allocation_strategy == "magnetic":
-        allocator = MagneticAllocation(
-            config
-        )
+        allocator = MagneticAllocation(config)
         return allocator.allocate(words, allocation_before)
     else:
         raise ValueError(

@@ -11,7 +11,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
     MagneticAllocation,
     AllocationInFrame,
     Word,
-    Config
+    Config,
 )
 
 
