@@ -171,7 +171,8 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # log(distance_movement): more important when near, not when far
         return (
-            -self.config.movement_reluctance * math.log(distance_movement)
+            -self.config.movement_reluctance
+            * math.log(distance_movement + 0.01)
             - 1.0 * distance_center**2
         )
 
