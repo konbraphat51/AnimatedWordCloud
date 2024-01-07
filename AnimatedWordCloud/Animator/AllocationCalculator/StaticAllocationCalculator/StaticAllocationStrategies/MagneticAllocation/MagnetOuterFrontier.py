@@ -263,7 +263,7 @@ def _launch_ray(
         )
 
         if flag_hitted:
-            return (detection_ray_position -detection_ray_direction, hitted_rect)
+            return (detection_ray_position, hitted_rect)
 
         # move detection ray
         detection_ray_position += detection_ray_direction
