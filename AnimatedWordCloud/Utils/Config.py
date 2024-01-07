@@ -37,6 +37,7 @@ class Config:
         There are "magnetic" only for now.
     :param int image_division: The number of division of the image.
         This is available for magnetic strategy only.
+    :param float movement_reluctance: Reluctance of the movement of the word. If higher, the word tends to stay near to the previous position.
     :param str verbosity: Verbosity of the log.
         "silent" for no log, "minor" for only important logs, "debug" for all logs.
     :param str transition_symbol: Symbol to be used for showing transition.
@@ -70,6 +71,7 @@ class Config:
         color_map: str = "Dark2",
         allocation_strategy: Literal["magnetic"] = "magnetic",
         image_division: int = 300,
+        movement_reluctance: float = 0.5,
         verbosity: Literal["silent", "minor", "debug"] = "silent",
         transition_symbol: str = " to ",
         starting_time_stamp: str = " ",
@@ -101,6 +103,7 @@ class Config:
         self.color_map = color_map
         self.allocation_strategy = allocation_strategy
         self.image_division = image_division
+        self.movement_reluctance = movement_reluctance
         self.verbosity = verbosity
         self.transition_symbol = transition_symbol
         self.starting_time_stamp = starting_time_stamp
