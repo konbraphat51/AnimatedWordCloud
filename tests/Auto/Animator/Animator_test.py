@@ -10,7 +10,9 @@ raw_timelapse = raw_timelapses_test[0]
 
 less_raw_timelapse = raw_timelapse[:2]
 
-config = Config(max_words=50, max_font_size=20, min_font_size=10, verbosity="debug")
+config = Config(
+    max_words=50, max_font_size=20, min_font_size=10, verbosity="debug"
+)
 
 
 def test_animate():
