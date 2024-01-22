@@ -32,7 +32,7 @@ setup(
     package_data={"AnimatedWordCloud": ["Assets/**"]},
     include_package_data=True,
     install_requires=[
-        "Pillow==10.1.0",
+        "Pillow==10.2.0",
         "numpy",
         "matplotlib",
         "joblib",
