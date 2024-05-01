@@ -65,9 +65,9 @@ def animate(
     from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.MagneticAllocation.MagneticAllocation import (
         MagneticAllocation
     )
-    print("entire: " + MagneticAllocation.time_entire)
-    print("put: " + MagneticAllocation.time_put)
-    print("candidate: " + MagneticAllocation.time_candidate)
+    print("entire: " + str(MagneticAllocation.time_entire))
+    print("put: " + str(MagneticAllocation.time_put))
+    print("candidate: " + str(MagneticAllocation.time_candidate))
 
     return animation_path
 
