@@ -34,6 +34,7 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
 )
 from time import time
 
+
 class MagneticAllocation(StaticAllocationStrategy):
     def __init__(
         self,
@@ -251,7 +252,7 @@ class MagneticAllocation(StaticAllocationStrategy):
         )
 
         return best_position_left_top
-    
+
     def _compute_candidates(
         self,
         pivots_to_center_list: Iterable[Iterable[Vector]],
@@ -259,14 +260,14 @@ class MagneticAllocation(StaticAllocationStrategy):
     ) -> list[tuple[int, int]]:
         """
         Compute all candidates of the center position
-        
+
         :param Iterable[Iterable[Vector]] pivots_to_center_list:
             List of vectors from the pivot to the center of the word
         :param Iterable[Iterable[Vector]]
             List of vectors from the frontier to the center of the word
         :return: Candidates of the center position
         """
-        
+
         center_position_candidates = []
         for cnt in range(4):
             center_position_candidates.extend(
@@ -274,7 +275,7 @@ class MagneticAllocation(StaticAllocationStrategy):
                     pivots_to_center_list[cnt], frontier_sides[cnt]
                 )
             )
-            
+
         return center_position_candidates
 
     def _get_candidates_from_one_side(
