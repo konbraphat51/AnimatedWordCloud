@@ -17,7 +17,6 @@ from __future__ import annotations
 import math
 from typing import Iterable
 from tqdm import tqdm
-import joblib
 from AnimatedWordCloud.Utils import (
     is_rect_hitting_rects,
     AllocationInFrame,
