@@ -281,16 +281,13 @@ class MagneticAllocation(StaticAllocationStrategy):
         :return: Candidates of the center position
         """
         
-        # get center position candidates
-        results_by_sides = joblib.Parallel(n_jobs=-1, verbose=0)(
-            joblib.delayed(self._get_candidates_from_one_side)(
-                pivots_to_center_list[cnt], frontier_sides[cnt]
-            )
-            for cnt in range(4)
-        )
         center_position_candidates = []
-        for results_by_side in results_by_sides:
-            center_position_candidates.extend(results_by_side)
+        for cnt in range(4):
+            center_position_candidates.extend(
+                self._get_candidates_from_one_side(
+                    pivots_to_center_list[cnt], frontier_sides[cnt]
+                )
+            )
             
         return center_position_candidates
 
