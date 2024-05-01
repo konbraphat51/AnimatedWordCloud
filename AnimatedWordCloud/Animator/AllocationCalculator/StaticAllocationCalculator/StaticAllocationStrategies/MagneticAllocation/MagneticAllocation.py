@@ -33,15 +33,9 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
     MagnetOuterFrontier,
     get_magnet_outer_frontier,
 )
-from time import time
 
 
 class MagneticAllocation(StaticAllocationStrategy):
-    time_entire = 0
-    time_outer = 0
-    time_hitting = 0
-    time_positioning = 0
-    
     def __init__(
         self,
         config: Config,
@@ -65,8 +59,6 @@ class MagneticAllocation(StaticAllocationStrategy):
         :return: Allocation data of the frame
         :rtype: AllocationInFrame
         """
-        
-        time_entire_start = time()
 
         self.words = words
         self.allocations_before = allocation_before
@@ -113,7 +105,6 @@ class MagneticAllocation(StaticAllocationStrategy):
         for word in iterator:
             # get outer frontier of the magnet
             # The position candidates will be selected from this frontier
-            time_outer_start = time()
             magnet_outer_frontier = get_magnet_outer_frontier(
                 self.rects,
                 self.config.image_width,
@@ -123,16 +114,13 @@ class MagneticAllocation(StaticAllocationStrategy):
                 rect_adding,
                 magnet_outer_frontier,
             )
-            MagneticAllocation.time_outer += time() - time_outer_start
 
             # find the best left-top position
-            time_positioning_start = time()
             position = self._find_best_position(
                 word,
                 magnet_outer_frontier,
                 self.allocations_before[word.text][1],
             )
-            MagneticAllocation.time_positioning += time() - time_positioning_start
 
             # update for next iteration
             rect_adding = Rect(
@@ -151,9 +139,6 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # add missing words for this frame
         self.add_missing_word_from_previous_frame(allocation_before, output)
-
-        time_entire_end = time()
-        MagneticAllocation.time_entire += time_entire_end - time_entire_start
 
         return output
 
@@ -387,17 +372,13 @@ class MagneticAllocation(StaticAllocationStrategy):
         left_top = center_position - size / 2
         right_bottom = center_position + size / 2
 
-        time_hitting_start = time()
-        result = is_rect_hitting_rects(
+        return is_rect_hitting_rects(
             Rect(
                 left_top.convert_to_tuple(),
                 right_bottom.convert_to_tuple(),
             ),
             self.rects,
         )
-        MagneticAllocation.time_hitting += time() - time_hitting_start
-        
-        return result
 
     def _try_put_position(
         self,
