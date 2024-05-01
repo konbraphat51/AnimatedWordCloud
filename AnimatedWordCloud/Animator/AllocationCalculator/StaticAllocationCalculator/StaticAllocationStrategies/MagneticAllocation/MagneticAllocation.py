@@ -33,9 +33,13 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
     MagnetOuterFrontier,
     get_magnet_outer_frontier,
 )
-
+from time import time
 
 class MagneticAllocation(StaticAllocationStrategy):
+    time_entire = 0
+    time_candidate = 0
+    time_put = 0
+    
     def __init__(
         self,
         config: Config,
@@ -59,6 +63,8 @@ class MagneticAllocation(StaticAllocationStrategy):
         :return: Allocation data of the frame
         :rtype: AllocationInFrame
         """
+        
+        time_entire_start = time()
 
         self.words = words
         self.allocations_before = allocation_before
@@ -139,6 +145,8 @@ class MagneticAllocation(StaticAllocationStrategy):
 
         # add missing words for this frame
         self.add_missing_word_from_previous_frame(allocation_before, output)
+
+        MagneticAllocation.time_entire += time() - time_entire_start
 
         return output
 
@@ -230,9 +238,11 @@ class MagneticAllocation(StaticAllocationStrategy):
         ]
 
         # get center position candidates
+        time_candidate_start = time()
         center_position_candidates = self._compute_candidates(
             pivots_to_center_list, frontier_sides
         )
+        MagneticAllocation.time_candidate += time() - time_candidate_start
 
         # error handling: too small image area that cannot put the word anywhere anymore
         if len(center_position_candidates) == 0:
@@ -241,9 +251,11 @@ class MagneticAllocation(StaticAllocationStrategy):
             )
 
         # find the best position
+        time_put_start = time()
         best_position = self._try_put_all_candidates(
             center_position_candidates, word.text_size, position_from
         )
+        MagneticAllocation.time_put += time() - time_put_start
 
         # to left-top position
         best_position_left_top = (
