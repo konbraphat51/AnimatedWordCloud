@@ -321,11 +321,10 @@ class MagneticAllocation(StaticAllocationStrategy):
         :rtype: tuple[int, int]
         """
 
-        results_evaluation = []
-        for center_position in center_positions:
-            results_evaluation.append(
-                self._try_put_position(center_position, size, position_from)
-            )
+        results_evaluation = [
+            self._try_put_position(center_position, size, position_from)
+            for center_position in center_positions
+        ]
 
         # find best score
         best_position = None
