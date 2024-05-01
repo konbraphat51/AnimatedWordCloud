@@ -68,6 +68,7 @@ def animate(
     print("entire: " + str(MagneticAllocation.time_entire))
     print("put: " + str(MagneticAllocation.time_put))
     print("candidate: " + str(MagneticAllocation.time_candidate))
+    print("try_put: " + str(MagneticAllocation.time_trying))
 
     return animation_path
 

@@ -39,6 +39,7 @@ class MagneticAllocation(StaticAllocationStrategy):
     time_entire = 0
     time_candidate = 0
     time_put = 0
+    time_trying = 0
     
     def __init__(
         self,
@@ -337,12 +338,20 @@ class MagneticAllocation(StaticAllocationStrategy):
         :rtype: tuple[int, int]
         """
 
-        results_evaluation = joblib.Parallel(n_jobs=-1, verbose=0)(
-            joblib.delayed(self._try_put_position)(
-                center_position, size, position_from
+        # results_evaluation = joblib.Parallel(n_jobs=-1, verbose=0)(
+        #     joblib.delayed(self._try_put_position)(
+        #         center_position, size, position_from
+        #     )
+        #     for center_position in center_positions
+        # )
+
+        results_evaluation = []
+        time_trying_start = time()
+        for center_position in center_positions:
+            results_evaluation.append(
+                self._try_put_position(center_position, size, position_from)
             )
-            for center_position in center_positions
-        )
+        MagneticAllocation.time_trying += time() - time_trying_start
 
         # find best score
         best_position = None
