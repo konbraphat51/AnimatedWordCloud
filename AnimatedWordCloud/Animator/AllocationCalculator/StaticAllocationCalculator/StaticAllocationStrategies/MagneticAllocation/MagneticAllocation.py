@@ -338,13 +338,6 @@ class MagneticAllocation(StaticAllocationStrategy):
         :rtype: tuple[int, int]
         """
 
-        # results_evaluation = joblib.Parallel(n_jobs=-1, verbose=0)(
-        #     joblib.delayed(self._try_put_position)(
-        #         center_position, size, position_from
-        #     )
-        #     for center_position in center_positions
-        # )
-
         results_evaluation = []
         time_trying_start = time()
         for center_position in center_positions:
