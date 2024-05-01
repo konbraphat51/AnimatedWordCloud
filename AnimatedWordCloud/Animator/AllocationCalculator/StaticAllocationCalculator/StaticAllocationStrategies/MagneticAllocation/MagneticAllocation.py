@@ -32,7 +32,6 @@ from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.
     MagnetOuterFrontier,
     get_magnet_outer_frontier,
 )
-from time import time
 
 
 class MagneticAllocation(StaticAllocationStrategy):
