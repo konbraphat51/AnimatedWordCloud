@@ -61,14 +61,6 @@ def animate(
 
     if config.verbosity == "minor" or config.verbosity == "debug":
         _success_message(animation_path)
-        
-    from AnimatedWordCloud.Animator.AllocationCalculator.StaticAllocationCalculator.StaticAllocationStrategies.MagneticAllocation.MagneticAllocation import (
-        MagneticAllocation
-    )
-    print("entire: " + str(MagneticAllocation.time_entire))
-    print("put: " + str(MagneticAllocation.time_put))
-    print("candidate: " + str(MagneticAllocation.time_candidate))
-    print("try_put: " + str(MagneticAllocation.time_trying))
 
     return animation_path
 
