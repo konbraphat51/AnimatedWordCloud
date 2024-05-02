@@ -17,7 +17,6 @@ from __future__ import annotations
 import math
 from typing import Iterable
 from tqdm import tqdm
-import joblib
 from AnimatedWordCloud.Utils import (
     is_rect_hitting_rects,
     AllocationInFrame,
@@ -230,15 +229,9 @@ class MagneticAllocation(StaticAllocationStrategy):
         ]
 
         # get center position candidates
-        results_by_sides = joblib.Parallel(n_jobs=-1, verbose=0)(
-            joblib.delayed(self._get_candidates_from_one_side)(
-                pivots_to_center_list[cnt], frontier_sides[cnt]
-            )
-            for cnt in range(4)
+        center_position_candidates = self._compute_candidates(
+            pivots_to_center_list, frontier_sides
         )
-        center_position_candidates = []
-        for results_by_side in results_by_sides:
-            center_position_candidates.extend(results_by_side)
 
         # error handling: too small image area that cannot put the word anywhere anymore
         if len(center_position_candidates) == 0:
@@ -258,6 +251,31 @@ class MagneticAllocation(StaticAllocationStrategy):
         )
 
         return best_position_left_top
+
+    def _compute_candidates(
+        self,
+        pivots_to_center_list: Iterable[Iterable[Vector]],
+        frontier_sides: Iterable[Iterable[Vector]],
+    ) -> list[tuple[int, int]]:
+        """
+        Compute all candidates of the center position
+
+        :param Iterable[Iterable[Vector]] pivots_to_center_list:
+            List of vectors from the pivot to the center of the word
+        :param Iterable[Iterable[Vector]]
+            List of vectors from the frontier to the center of the word
+        :return: Candidates of the center position
+        """
+
+        center_position_candidates = []
+        for cnt in range(4):
+            center_position_candidates.extend(
+                self._get_candidates_from_one_side(
+                    pivots_to_center_list[cnt], frontier_sides[cnt]
+                )
+            )
+
+        return center_position_candidates
 
     def _get_candidates_from_one_side(
         self,
@@ -303,12 +321,10 @@ class MagneticAllocation(StaticAllocationStrategy):
         :rtype: tuple[int, int]
         """
 
-        results_evaluation = joblib.Parallel(n_jobs=-1, verbose=0)(
-            joblib.delayed(self._try_put_position)(
-                center_position, size, position_from
-            )
+        results_evaluation = [
+            self._try_put_position(center_position, size, position_from)
             for center_position in center_positions
-        )
+        ]
 
         # find best score
         best_position = None

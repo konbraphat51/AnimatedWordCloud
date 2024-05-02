@@ -43,9 +43,7 @@ def animated_allocate(
         time_name_to = allocation_timelapse.timelapse[index + 1][0]
 
         # interpolate between two frames
-        interpolated_frames: list[
-            AllocationInFrame
-        ] = _get_interpolated_frames(
+        interpolated_frames = _get_interpolated_frames(
             from_allocation_frame,
             to_allocation_frame,
             config,
