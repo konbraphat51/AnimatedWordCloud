@@ -19,7 +19,7 @@ def requirements_from_file(file_name):
 
 setup(
     name="AnimatedWordCloudTimelapse",
-    version="1.0.8",
+    version="1.0.9",
     description="Animate a timelapse of word cloud",
     long_description=readme,
     long_description_content_type="text/markdown",
@@ -32,7 +32,7 @@ setup(
     package_data={"AnimatedWordCloud": ["Assets/**"]},
     include_package_data=True,
     install_requires=[
-        "Pillow==10.1.0",
+        "Pillow==10.3.0",
         "numpy",
         "matplotlib",
         "joblib",
